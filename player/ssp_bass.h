@@ -20,8 +20,13 @@
 
 #include <stdio.h>
 #import "ssp_errors.h"
-#import "bass.h"
 
-SSP_ERROR bass_init(DWORD device, DWORD sampleRate, DWORD bufferSize, DWORD updatePeriod, bool useFloatingPoint);
+SSP_ERROR bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+
+int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatingPoint, STREAMPROC *streamProc);
+int bass_createDecodeStream(char* filePath, bool useFloatingPoint);
+
+long bass_getPosition(uint32_t handle);
+long bass_getLength(uint32_t handle);
 
 #endif /* defined(__player__ssp_bass__) */

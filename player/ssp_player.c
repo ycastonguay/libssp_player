@@ -22,6 +22,8 @@
 #include "ssp_eqpreset.h"
 #include "ssp_playhead.h"
 #include "ssp_bass.h"
+#include "ssp_structs.h"
+#include "ssp_privatestructs.h"
 
 #pragma mark Initialization
 
@@ -32,6 +34,7 @@ SSP_PLAYER* player_create() {
     player->playhead = playhead_create();
     player->device = malloc(sizeof(SSP_DEVICE));
     player->mixer = malloc(sizeof(SSP_MIXER));
+    player->channels = malloc(sizeof(SSP_PLAYER_CHANNELS));
     player->loop = NULL;
     player->marker = NULL;
     return player;
@@ -61,6 +64,10 @@ void player_free(SSP_PLAYER* player) {
         free(player->mixer);
         player->mixer = NULL;
     }
+    if(player->channels) {
+        free(player->channels);
+        player->channels = NULL;
+    }
     if(player->loop) {
         free(player->loop);
         player->loop = NULL;
@@ -87,18 +94,25 @@ SSP_ERROR player_init(SSP_PLAYER* player, int device, int sampleRate, int buffer
     return error;
 }
 
+#pragma mark Callbacks
+
+DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, void *user) {
+    return 0;
+}
+
 #pragma mark Playback
 
 SSP_ERROR player_pause(SSP_PLAYER* player) {
-    return SSP_ERROR_OK;
+    return SSP_OK;
 }
 
 SSP_ERROR player_stop(SSP_PLAYER* player) {
-    return SSP_ERROR_OK;
+    return SSP_OK;
 }
 
 SSP_ERROR player_play(SSP_PLAYER* player) {
 
+    printf("player_play\n");
     if(player->playhead->isPlaying) {
         if(player->playhead->isPlayingLoop) {
             // TODO: stop loop
@@ -107,27 +121,42 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         player_stop(player);
     }
 
-    int channelsToLoad = playlist_getCount(player->playlist) - player->playlist->currentIndex;
+    printf("player_play - Getting current index and count...\n");
+    int currentIndex = player->playlist->currentIndex;
+    int count = playlist_getCount(player->playlist);
+
+    int channelsToLoad = count - currentIndex;
     if(channelsToLoad > 2)
         channelsToLoad = 2;
 
     if(channelsToLoad == 0) {
+        printf("player_play - ERROR: There are no channels to load!\n");
         return SSP_ERROR_UNKNOWN;
     }
 
-    //sspPlayer->
+    for(int a = currentIndex; a < currentIndex + channelsToLoad; a++) {
+        printf("player_play - Loading playlist item %d...\n", a);
+        playlistitem_load(playlist_getItemAt(player->playlist, a), player->mixer->useFloatingPoint);
+    }
 
-    return SSP_ERROR_OK;
+    // Default output driver (i.e. DirectSound)
+    printf("player_play - Setting stream channel and proc...\n");
+    player->channels->streamProc = (STREAMPROC*)player_streamProc;
+    player->channels->streamChannel = bass_createMemoryStream(player->mixer->sampleRate, 2, player->mixer->useFloatingPoint, player->channels->streamProc);
+    // fx channel here
+
+    return SSP_OK;
 }
 
 SSP_ERROR player_previous(SSP_PLAYER* player) {
-    return SSP_ERROR_OK;
+    return SSP_OK;
 }
 
 SSP_ERROR player_next(SSP_PLAYER* player) {
-    return SSP_ERROR_OK;
+    return SSP_OK;
 }
 
 SSP_ERROR player_goTo(SSP_PLAYER* player, int index) {
-    return SSP_ERROR_OK;
+    return SSP_OK;
 }
+

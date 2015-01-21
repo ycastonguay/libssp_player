@@ -33,5 +33,6 @@ int playlist_getCount(SSP_PLAYLIST *playlist);
 
 SSP_PLAYLISTITEM* playlistitem_create();
 void playlistitem_free(SSP_PLAYLISTITEM *item);
+void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint);
 
 #endif

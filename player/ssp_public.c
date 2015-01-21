@@ -35,7 +35,7 @@ int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool 
     }
 
     player_init(sspPlayer, device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
-    return SSP_ERROR_OK;
+    return SSP_OK;
 }
 
 #pragma mark Device

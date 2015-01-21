@@ -19,7 +19,7 @@
 #include "ssp_public.h"
 
 void checkForError(SSP_ERROR error) {
-    if(error != SSP_ERROR_OK) {
+    if(error != SSP_OK) {
         printf("SSP Error code: %d\n", error);
     }
 }
@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
     // Initialize player
     printf("Initializing player...\n");
     SSP_ERROR error = SSP_Init(-1, 44100, 1000, 100, true);
-    if(error != SSP_ERROR_OK) {
+    if(error != SSP_OK) {
         checkForError(error);
         return 1;
     }
@@ -38,15 +38,18 @@ int main(int argc, const char * argv[]) {
     }
 
     printf("Adding items to playlist...\n");
-    SSP_Playlist_AddItem("hello");
-    SSP_Playlist_AddItem("hello2");
-    SSP_Playlist_RemoveItemAt(0); // works and reorders the array, similar to a pop
+    SSP_Playlist_AddItem("/Users/usr/Documents/mp3/1.mp3");
+    SSP_Playlist_AddItem("/Users/usr/Documents/mp3/2.mp3");
+    //SSP_Playlist_RemoveItemAt(0); // works and reorders the array, similar to a pop
     //SSP_Playlist_RemoveItemAt(1); // fails, vector.c vector_delete does not manage the last index of the list correctly... this does not reorder the array
-    SSP_Playlist_AddItem("hello3");
+    //SSP_Playlist_AddItem("hello3");
 
     printf("Starting playback...\n");
     error = SSP_Play();
     checkForError(error);
+
+    printf("Press ENTER to stop playback...\n");
+    int ch = getchar();
 
     printf("Finished execution with success!\n");
     
