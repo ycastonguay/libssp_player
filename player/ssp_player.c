@@ -1,24 +1,27 @@
+// Copyright © 2011-2015 Yanick Castonguay
 //
-//  ssp_player.c
-//  ssp_player
+// This file is part of Sessions, a music player for musicians.
 //
-//  Created by Yanick Castonguay on 2015-01-19.
-//  Copyright (c) 2015 Yanick Castonguay. All rights reserved.
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <string.h>
 #include <stdlib.h>
 #include "ssp_player.h"
 #include "ssp_playlist.h"
-#include "ssp_structs.h"
 #include "ssp_eqpreset.h"
 #include "ssp_playhead.h"
-#include "ssp_privatestructs.h"
 #include "ssp_bass.h"
-
-//static SSP_PLAYER* sspPlayer; // static makes it private to this file
-
-// TODO: Maybe put all public methods (i.e. SSP_*) in a different file than ssp_player.c?
 
 #pragma mark Initialization
 
@@ -70,16 +73,18 @@ void player_free(SSP_PLAYER* player) {
 
 SSP_ERROR player_init(SSP_PLAYER* player, int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
     // TODO: validate input
+
+    // Set mixer properties
     player->mixer->sampleRate = sampleRate;
     player->mixer->bufferSize = bufferSize;
     player->mixer->updatePeriod = updatePeriod;
     player->mixer->useFloatingPoint = useFloatingPoint;
 
-    // Set default sspPlayer properties
+    // Reset playhead
     playhead_reset(player->playhead);
 
-    bass_init(device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
-    return SSP_ERROR_OK;
+    SSP_ERROR error = bass_init(device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
+    return error;
 }
 
 #pragma mark Playback
