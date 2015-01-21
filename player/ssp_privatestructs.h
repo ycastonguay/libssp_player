@@ -20,20 +20,6 @@ typedef struct {
 } SSP_BASS_CHANNELS;
 
 typedef struct {
-    SSP_AUDIOFILE* audioFile;
-    HCHANNEL channel;
-    long length;
-    bool isLoaded;
-} SSP_PLAYLISTITEM;
-
-typedef struct {
-    void* items;
-    char* name;
-    int currentIndex;
-    int currentMixerIndex;
-} SSP_PLAYLIST;
-
-typedef struct {
 
     // private
     SSP_BASS_CHANNELS* bassChannels;

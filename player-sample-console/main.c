@@ -7,18 +7,13 @@
 //
 
 #include <stdio.h>
-#include "ssp_player.h"
+#include "ssp_public.h"
 
 int main(int argc, const char * argv[]) {
     
-    SSP_MIXER mixerProperties;
-    mixerProperties.sampleRate = 44100;
-    mixerProperties.bufferSize = 1000;
-    mixerProperties.updatePeriod = 100;
-    
     // Initialize sspPlayer
     printf("Initializing sspPlayer...\n");
-    int error = SSP_Init(-1, 44100, 1000, 100, true);
+    SSP_ERROR error = SSP_Init(-1, 44100, 1000, 100, true);
     if(error != SSP_ERROR_OK) {
         printf("Player initialization failed!\n");
         return 1;
@@ -34,7 +29,7 @@ int main(int argc, const char * argv[]) {
     //SSP_Playlist_RemoveItemAt(1); // fails, vector.c vector_delete does not manage the last index of the list correctly... this does not reorder the array
     SSP_Playlist_AddItem("hello3");
 
-    SSP_Play();
+    error = SSP_Play();
 
     printf("Finished execution with success.\n");
     

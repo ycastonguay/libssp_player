@@ -71,6 +71,18 @@ typedef struct {
     int numberOfChannels;
 } SSP_AUDIOFILE;
 
+typedef struct {
+    SSP_AUDIOFILE* audioFile;
+    int channel;
+    long length;
+    bool isLoaded;
+} SSP_PLAYLISTITEM;
 
+typedef struct {
+    void* items;
+    char* name;
+    int currentIndex;
+    int currentMixerIndex;
+} SSP_PLAYLIST;
 
 #endif

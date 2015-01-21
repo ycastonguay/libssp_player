@@ -68,38 +68,19 @@ void player_free(SSP_PLAYER* player) {
     }
 }
 
-void player_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
-    
-    if(!sspPlayer) {
-        sspPlayer = player_create();
-    } else {
-        // TODO: Add reset?
-    }
-
-    sspPlayer->mixer->sampleRate = sampleRate;
-    sspPlayer->mixer->bufferSize = bufferSize;
-    sspPlayer->mixer->updatePeriod = updatePeriod;
-    sspPlayer->mixer->useFloatingPoint = useFloatingPoint;
+SSP_ERROR player_init(SSP_PLAYER* player, int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
+    // TODO: validate input
+    player->mixer->sampleRate = sampleRate;
+    player->mixer->bufferSize = bufferSize;
+    player->mixer->updatePeriod = updatePeriod;
+    player->mixer->useFloatingPoint = useFloatingPoint;
 
     // Set default sspPlayer properties
-    playhead_reset(sspPlayer->playhead);
+    playhead_reset(player->playhead);
 
     bass_init(device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
-}
-
-int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
-    // TODO: validate input
-
-    player_init(device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
     return SSP_ERROR_OK;
 }
-
-#pragma mark Device
-
-//SSP_DEVICE SSP_GetDevice() {
-//    //return sspPlayer.device;
-//    return NULL;
-//}
 
 #pragma mark Playback
 
@@ -134,64 +115,14 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     return SSP_ERROR_OK;
 }
 
-SSP_ERROR SSP_Play() {
-    return player_play(sspPlayer);
-}
-
-SSP_ERROR SSP_Pause() {
-    return player_pause(sspPlayer);
-}
-
-SSP_ERROR SSP_Stop() {
-    return player_stop(sspPlayer);
-}
-
-SSP_ERROR SSP_Previous() {
+SSP_ERROR player_previous(SSP_PLAYER* player) {
     return SSP_ERROR_OK;
 }
 
-SSP_ERROR SSP_Next() {
+SSP_ERROR player_next(SSP_PLAYER* player) {
     return SSP_ERROR_OK;
 }
 
-SSP_ERROR SSP_GoTo(int index) {
+SSP_ERROR player_goTo(SSP_PLAYER* player, int index) {
     return SSP_ERROR_OK;
-}
-
-#pragma mark Playlist
-
-int SSP_Playlist_AddItem(char* filePath) {
-    return playlist_addItem(sspPlayer->playlist, filePath);
-}
-
-int SSP_Playlist_InsertItemAt(char* filePath, int index) {
-    return playlist_insertItemAt(sspPlayer->playlist, filePath, index);
-}
-
-int SSP_Playlist_RemoveItemAt(int index) {
-    return playlist_removeItemAt(sspPlayer->playlist, index);
-}
-
-int SSP_Playlist_RemoveItems() {
-    return playlist_removeItems(sspPlayer->playlist);
-}
-
-SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index) {
-    return playlist_getItemAt(sspPlayer->playlist, index);
-}
-
-int SSP_Playlist_GetCount() {
-    return playlist_getCount(sspPlayer->playlist);
-}
-
-int SSP_Playlist_GetCurrentIndex() {
-    return sspPlayer->playlist->currentIndex;
-}
-
-#pragma mark EQ Presets
-
-SSP_EQPRESET* SSP_GetEQPreset() {
-    SSP_EQPRESET* preset = malloc(sizeof(SSP_EQPRESET));
-    memcpy(preset, sspPlayer->eqPreset, sizeof(SSP_EQPRESET));
-    return preset;
 }
