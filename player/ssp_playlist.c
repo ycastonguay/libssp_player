@@ -42,6 +42,7 @@ void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     item->length = bass_getLength(item->channel);
     printf("playlistitem_load -- Setting flags...\n");
     item->isLoaded = true;
+    item->test = 777;
 }
 
 #pragma mark Playlist
@@ -97,15 +98,33 @@ int playlist_removeItemAt(SSP_PLAYLIST *playlist, int index) {
     return SSP_OK;
 }
 
-int playlist_removeItems(SSP_PLAYLIST *playlist) {
-    // TODO: Free each playlist item with a for loop
-    //vector_free(playlist->items);
-    //vector_init(playlist->items);
+int playlist_clear(SSP_PLAYLIST *playlist) {
+    if(playlist->items != NULL) {
+        // Clear all items
+        for(int a = 0; a < playlist_getCount(playlist); a++) {
+            playlistitem_free(playlist_getItemAt(playlist, a));
+        }
+        
+        // Clear vector
+        vector_free(playlist->items);
+        free(playlist->items);
+        playlist->items = NULL;
+    }
+    
+    // Initialize vector
+    playlist->items = malloc(sizeof(vector));
+    vector_init(playlist->items);
+    
     return SSP_OK;
 }
 
 SSP_PLAYLISTITEM* playlist_getItemAt(SSP_PLAYLIST *playlist, int index) {
     return vector_get(playlist->items, index);
+}
+
+SSP_PLAYLISTITEM* playlist_getCurrentItem(SSP_PLAYLIST *playlist) {
+    SSP_PLAYLISTITEM* currentItem = playlist_getItemAt(playlist, playlist->currentIndex);
+    return currentItem;
 }
 
 int playlist_getCount(SSP_PLAYLIST *playlist) {

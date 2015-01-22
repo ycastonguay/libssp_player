@@ -85,8 +85,8 @@ int SSP_Playlist_RemoveItemAt(int index) {
     return playlist_removeItemAt(sspPlayer->playlist, index);
 }
 
-int SSP_Playlist_RemoveItems() {
-    return playlist_removeItems(sspPlayer->playlist);
+int SSP_Playlist_Clear() {
+    return playlist_clear(sspPlayer->playlist);
 }
 
 SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index) {
@@ -107,4 +107,14 @@ SSP_EQPRESET* SSP_GetEQPreset() {
     SSP_EQPRESET* preset = malloc(sizeof(SSP_EQPRESET));
     memcpy(preset, sspPlayer->eqPreset, sizeof(SSP_EQPRESET));
     return preset;
+}
+
+#pragma mark Seek / Position
+
+uint64_t SSP_GetPosition() {
+    return player_getPosition(sspPlayer);
+}
+
+SSP_ERROR SSP_SetPosition(uint64_t position) {
+    return player_setPosition(sspPlayer, position);
 }

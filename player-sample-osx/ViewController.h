@@ -10,6 +10,11 @@
 
 @interface ViewController : NSViewController
 
+@property (weak) IBOutlet NSTextField *lblFilePath;
+@property (weak) IBOutlet NSTextField *lblPosition;
+@property (weak) IBOutlet NSTextField *lblPlaylist;
+- (IBAction)actionOpenAudioFiles:(id)sender;
+- (IBAction)actionClose:(id)sender;
 
 @end
 

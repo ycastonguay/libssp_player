@@ -51,15 +51,15 @@ SSP_ERROR SSP_GoTo(int index);
 //void SSP_GoTo(int playlistItemId); // how do we manage ids?
 
 void SSP_Seek();
-long SSP_GetPosition();
-void SSP_SetPosition(long positionBytes);
+uint64_t SSP_GetPosition();
+SSP_ERROR SSP_SetPosition(uint64_t position);
 //void SSP_SetPosition(double positionPercentage);
 
 // Playlist
 int SSP_Playlist_AddItem(char* filePath);
 int SSP_Playlist_InsertItemAt(char* filePath, int index);
 int SSP_Playlist_RemoveItemAt(int index);
-int SSP_Playlist_RemoveItems();
+int SSP_Playlist_Clear();
 //SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
 int SSP_Playlist_GetCount();
 int SSP_Playlist_GetCurrentIndex();

@@ -68,8 +68,8 @@ typedef struct {
 
 typedef struct {
     char* name;
-    long startPosition;
-    long endPosition;
+    uint64_t startPosition;
+    uint64_t endPosition;
 } SSP_LOOP;
 
 typedef struct {
@@ -83,7 +83,8 @@ typedef struct {
 typedef struct {
     SSP_AUDIOFILE* audioFile;
     uint32_t channel;
-    long length;
+    uint64_t length;
+    uint64_t test;
     bool isLoaded;
 } SSP_PLAYLISTITEM;
 

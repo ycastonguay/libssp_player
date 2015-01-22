@@ -16,6 +16,7 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
+#include <ncurses.h>
 #include "ssp_public.h"
 
 void checkForError(SSP_ERROR error) {
@@ -50,6 +51,22 @@ int main(int argc, const char * argv[]) {
 
     printf("Press ENTER to stop playback...\n");
     int ch = getchar();
+
+    //delay_output(0);
+
+    //getch();
+
+//    printf("--1\n");
+//    initscr();			/* Start curses mode 		  */
+//    printf("--2\n");
+//    printw("Hello World !!!");	/* Print Hello World		  */
+//    printf("--3\n");
+//    refresh();			/* Print it on to the real screen */
+//    printf("--4\n");
+//    getch();			/* Wait for user input */
+//    printf("--5\n");
+//    endwin();			/* End curses mode		  */
+//    printf("--6\n");
 
     printf("Finished execution with success!\n");
     

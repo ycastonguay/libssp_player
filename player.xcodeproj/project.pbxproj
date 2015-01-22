@@ -7,6 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12218CEB1A705BF60011CAFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEA1A705BF60011CAFF /* SystemConfiguration.framework */; };
+		12218CED1A705BFF0011CAFF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEC1A705BFF0011CAFF /* CFNetwork.framework */; };
+		12218CEF1A705C070011CAFF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEE1A705C070011CAFF /* Accelerate.framework */; };
+		12218CF11A705C120011CAFF /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CF01A705C120011CAFF /* CoreMIDI.framework */; };
+		12218CF21A705D8F0011CAFF /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59701A6D877500E071A5 /* libbass.a */; };
+		12218CF31A705D8F0011CAFF /* libbass_ape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59711A6D877500E071A5 /* libbass_ape.a */; };
+		12218CF41A705D8F0011CAFF /* libbass_fx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59721A6D877500E071A5 /* libbass_fx.a */; };
+		12218CF51A705D8F0011CAFF /* libbass_mpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59731A6D877500E071A5 /* libbass_mpc.a */; };
+		12218CF61A705D8F0011CAFF /* libbassenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59741A6D877500E071A5 /* libbassenc.a */; };
+		12218CF71A705D8F0011CAFF /* libbassflac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59751A6D877500E071A5 /* libbassflac.a */; };
+		12218CF81A705D8F0011CAFF /* libbassmidi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59761A6D877500E071A5 /* libbassmidi.a */; };
+		12218CF91A705D8F0011CAFF /* libbassmix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59771A6D877500E071A5 /* libbassmix.a */; };
+		12218CFA1A705D8F0011CAFF /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59781A6D877500E071A5 /* libbasswv.a */; };
+		12218CFB1A705D8F0011CAFF /* libtags.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59791A6D877500E071A5 /* libtags.a */; };
+		12218CFC1A708D930011CAFF /* ssp_public.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C594E89792D82E39300E9D8 /* ssp_public.h */; };
+		12218CFD1A708E2E0011CAFF /* libplayer-ios-library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59C21A6DB3A500E071A5 /* libplayer-ios-library.a */; };
+		12218CFE1A708E950011CAFF /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59701A6D877500E071A5 /* libbass.a */; };
+		12218CFF1A708E950011CAFF /* libbass_ape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59711A6D877500E071A5 /* libbass_ape.a */; };
+		12218D001A708E950011CAFF /* libbass_fx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59721A6D877500E071A5 /* libbass_fx.a */; };
+		12218D011A708E950011CAFF /* libbass_mpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59731A6D877500E071A5 /* libbass_mpc.a */; };
+		12218D021A708E950011CAFF /* libbassenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59741A6D877500E071A5 /* libbassenc.a */; };
+		12218D031A708E950011CAFF /* libbassflac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59751A6D877500E071A5 /* libbassflac.a */; };
+		12218D041A708E950011CAFF /* libbassmidi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59761A6D877500E071A5 /* libbassmidi.a */; };
+		12218D051A708E950011CAFF /* libbassmix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59771A6D877500E071A5 /* libbassmix.a */; };
+		12218D061A708E950011CAFF /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59781A6D877500E071A5 /* libbasswv.a */; };
+		12218D071A708E950011CAFF /* libtags.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59791A6D877500E071A5 /* libtags.a */; };
+		12218D081A708EA10011CAFF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59E51A6DB91100E071A5 /* AudioToolbox.framework */; };
+		12218D091A708EA70011CAFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEA1A705BF60011CAFF /* SystemConfiguration.framework */; };
+		12218D0A1A708EB40011CAFF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEE1A705C070011CAFF /* Accelerate.framework */; };
+		12218D0B1A708EBA0011CAFF /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CF01A705C120011CAFF /* CoreMIDI.framework */; };
+		12218D0C1A708EC30011CAFF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEC1A705BFF0011CAFF /* CFNetwork.framework */; };
+		12218D0D1A708F300011CAFF /* libplayer-osx-library.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */; };
+		12218D0E1A708F3B0011CAFF /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; };
+		12218D0F1A708F3B0011CAFF /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597C1A6D877500E071A5 /* libbass_ape.dylib */; };
+		12218D101A708F3B0011CAFF /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597D1A6D877500E071A5 /* libbass_fx.dylib */; };
+		12218D111A708F3B0011CAFF /* libbass_mpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597E1A6D877500E071A5 /* libbass_mpc.dylib */; };
+		12218D121A708F3B0011CAFF /* libbass_tta.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597F1A6D877500E071A5 /* libbass_tta.dylib */; };
+		12218D131A708F3B0011CAFF /* libbassenc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59801A6D877500E071A5 /* libbassenc.dylib */; };
+		12218D141A708F3B0011CAFF /* libbassflac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59811A6D877500E071A5 /* libbassflac.dylib */; };
+		12218D151A708F3B0011CAFF /* libbassmidi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59821A6D877500E071A5 /* libbassmidi.dylib */; };
+		12218D161A708F3B0011CAFF /* libbassmix.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59831A6D877500E071A5 /* libbassmix.dylib */; };
+		12218D171A708F3B0011CAFF /* libbasswv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59841A6D877500E071A5 /* libbasswv.dylib */; };
 		1239841F1A6EC37F00FC46D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239841E1A6EC37F00FC46D3 /* main.m */; };
 		123984221A6EC37F00FC46D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984211A6EC37F00FC46D3 /* AppDelegate.m */; };
 		123984251A6EC37F00FC46D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984241A6EC37F00FC46D3 /* ViewController.m */; };
@@ -21,7 +63,6 @@
 		123984541A6EC39D00FC46D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123984521A6EC39D00FC46D3 /* Main.storyboard */; };
 		123984601A6EC39E00FC46D3 /* player_sample_osxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239845F1A6EC39E00FC46D3 /* player_sample_osxTests.m */; };
 		1239847C1A6EC41A00FC46D3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1239847B1A6EC41A00FC46D3 /* main.c */; };
-		1239847D1A6EC41A00FC46D3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1239847B1A6EC41A00FC46D3 /* main.c */; };
 		1239847E1A6EC50100FC46D3 /* ssp_callbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59E81A6DC03600E071A5 /* ssp_callbacks.h */; };
 		123E59851A6D878400E071A5 /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; };
 		123E598F1A6D8AB700E071A5 /* libbass.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -74,7 +115,8 @@
 		123E59EA1A6DC1CF00E071A5 /* ssp_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 123E59E91A6DC1CF00E071A5 /* ssp_playlist.c */; };
 		123E59EB1A6DC1CF00E071A5 /* ssp_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 123E59E91A6DC1CF00E071A5 /* ssp_playlist.c */; };
 		123E59EC1A6DC1CF00E071A5 /* ssp_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 123E59E91A6DC1CF00E071A5 /* ssp_playlist.c */; };
-		123E59ED1A6DC1CF00E071A5 /* ssp_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 123E59E91A6DC1CF00E071A5 /* ssp_playlist.c */; };
+		125D82B81A702A340086412A /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 125D82B71A702A340086412A /* main.c */; };
+		125D82BD1A70329B0086412A /* libncurses.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 125D82BC1A70329B0086412A /* libncurses.dylib */; };
 		127B50C81A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
 		127B50C91A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
 		127B50CA1A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
@@ -104,6 +146,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		12218D181A70B3D90011CAFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 123E59541A6D80DC00E071A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 123E59C11A6DB3A500E071A5;
+			remoteInfo = "player-ios-library";
+		};
+		12218D1A1A70B3F10011CAFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 123E59541A6D80DC00E071A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 123E59AA1A6DB2FD00E071A5;
+			remoteInfo = "player-osx-library";
+		};
 		123984331A6EC37F00FC46D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 123E59541A6D80DC00E071A5 /* Project object */;
@@ -153,12 +209,26 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				12218CFC1A708D930011CAFF /* ssp_public.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		125D82B31A702A340086412A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12218CEA1A705BF60011CAFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		12218CEC1A705BFF0011CAFF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		12218CEE1A705C070011CAFF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
+		12218CF01A705C120011CAFF /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CoreMIDI.framework; sourceTree = DEVELOPER_DIR; };
 		1239841A1A6EC37F00FC46D3 /* player-sample-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "player-sample-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1239841D1A6EC37F00FC46D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1239841E1A6EC37F00FC46D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -225,6 +295,9 @@
 		123E59E51A6DB91100E071A5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		123E59E81A6DC03600E071A5 /* ssp_callbacks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssp_callbacks.h; sourceTree = "<group>"; };
 		123E59E91A6DC1CF00E071A5 /* ssp_playlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playlist.c; sourceTree = "<group>"; };
+		125D82B51A702A340086412A /* player-test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "player-test"; sourceTree = BUILT_PRODUCTS_DIR; };
+		125D82B71A702A340086412A /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		125D82BC1A70329B0086412A /* libncurses.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libncurses.dylib; path = usr/lib/libncurses.dylib; sourceTree = SDKROOT; };
 		127B50C61A6E0BED00B211B6 /* vector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vector.c; sourceTree = "<group>"; };
 		127B50C71A6E0BED00B211B6 /* vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
 		1C5942559E650BF63784E7CF /* ssp_convertaudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_convertaudio.c; sourceTree = "<group>"; };
@@ -233,6 +306,7 @@
 		1C5943AB7B6D4807B579BA1A /* ssp_public.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_public.c; sourceTree = "<group>"; };
 		1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_eqpreset.c; sourceTree = "<group>"; };
 		1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_convertaudio.h; sourceTree = "<group>"; };
+		1C5947D3B6411E60944106DA /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		1C59494588C7D79421B97AC1 /* ssp_playhead.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playhead.c; sourceTree = "<group>"; };
 		1C594D2B9EA3489C918EB120 /* ssp_eqpreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_eqpreset.h; sourceTree = "<group>"; };
 		1C594E89792D82E39300E9D8 /* ssp_public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_public.h; sourceTree = "<group>"; };
@@ -246,6 +320,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12218D0C1A708EC30011CAFF /* CFNetwork.framework in Frameworks */,
+				12218D0B1A708EBA0011CAFF /* CoreMIDI.framework in Frameworks */,
+				12218D0A1A708EB40011CAFF /* Accelerate.framework in Frameworks */,
+				12218D091A708EA70011CAFF /* SystemConfiguration.framework in Frameworks */,
+				12218D081A708EA10011CAFF /* AudioToolbox.framework in Frameworks */,
+				12218CFD1A708E2E0011CAFF /* libplayer-ios-library.a in Frameworks */,
+				12218CFE1A708E950011CAFF /* libbass.a in Frameworks */,
+				12218CFF1A708E950011CAFF /* libbass_ape.a in Frameworks */,
+				12218D001A708E950011CAFF /* libbass_fx.a in Frameworks */,
+				12218D011A708E950011CAFF /* libbass_mpc.a in Frameworks */,
+				12218D021A708E950011CAFF /* libbassenc.a in Frameworks */,
+				12218D031A708E950011CAFF /* libbassflac.a in Frameworks */,
+				12218D041A708E950011CAFF /* libbassmidi.a in Frameworks */,
+				12218D051A708E950011CAFF /* libbassmix.a in Frameworks */,
+				12218D061A708E950011CAFF /* libbasswv.a in Frameworks */,
+				12218D071A708E950011CAFF /* libtags.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +350,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12218D0D1A708F300011CAFF /* libplayer-osx-library.dylib in Frameworks */,
+				12218D0E1A708F3B0011CAFF /* libbass.dylib in Frameworks */,
+				12218D0F1A708F3B0011CAFF /* libbass_ape.dylib in Frameworks */,
+				12218D101A708F3B0011CAFF /* libbass_fx.dylib in Frameworks */,
+				12218D111A708F3B0011CAFF /* libbass_mpc.dylib in Frameworks */,
+				12218D121A708F3B0011CAFF /* libbass_tta.dylib in Frameworks */,
+				12218D131A708F3B0011CAFF /* libbassenc.dylib in Frameworks */,
+				12218D141A708F3B0011CAFF /* libbassflac.dylib in Frameworks */,
+				12218D151A708F3B0011CAFF /* libbassmidi.dylib in Frameworks */,
+				12218D161A708F3B0011CAFF /* libbassmix.dylib in Frameworks */,
+				12218D171A708F3B0011CAFF /* libbasswv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +375,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				125D82BD1A70329B0086412A /* libncurses.dylib in Frameworks */,
 				123E59851A6D878400E071A5 /* libbass.dylib in Frameworks */,
 				123E59901A6D8C2800E071A5 /* libbass_ape.dylib in Frameworks */,
 				123E59911A6D8C2800E071A5 /* libbass_fx.dylib in Frameworks */,
@@ -308,6 +410,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12218CF11A705C120011CAFF /* CoreMIDI.framework in Frameworks */,
+				12218CEF1A705C070011CAFF /* Accelerate.framework in Frameworks */,
+				12218CED1A705BFF0011CAFF /* CFNetwork.framework in Frameworks */,
+				12218CEB1A705BF60011CAFF /* SystemConfiguration.framework in Frameworks */,
 				123E59E61A6DB91100E071A5 /* AudioToolbox.framework in Frameworks */,
 				123E59D91A6DB3C300E071A5 /* libbass.a in Frameworks */,
 				123E59DA1A6DB3C300E071A5 /* libbass_ape.a in Frameworks */,
@@ -326,7 +432,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12218CF21A705D8F0011CAFF /* libbass.a in Frameworks */,
+				12218CF31A705D8F0011CAFF /* libbass_ape.a in Frameworks */,
+				12218CF41A705D8F0011CAFF /* libbass_fx.a in Frameworks */,
+				12218CF51A705D8F0011CAFF /* libbass_mpc.a in Frameworks */,
+				12218CF61A705D8F0011CAFF /* libbassenc.a in Frameworks */,
+				12218CF71A705D8F0011CAFF /* libbassflac.a in Frameworks */,
+				12218CF81A705D8F0011CAFF /* libbassmidi.a in Frameworks */,
+				12218CF91A705D8F0011CAFF /* libbassmix.a in Frameworks */,
+				12218CFA1A705D8F0011CAFF /* libbasswv.a in Frameworks */,
+				12218CFB1A705D8F0011CAFF /* libtags.a in Frameworks */,
 				123E59CD1A6DB3A500E071A5 /* libplayer-ios-library.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		125D82B21A702A340086412A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +548,11 @@
 		123E59531A6D80DC00E071A5 = {
 			isa = PBXGroup;
 			children = (
+				12218CF01A705C120011CAFF /* CoreMIDI.framework */,
+				12218CEE1A705C070011CAFF /* Accelerate.framework */,
+				12218CEC1A705BFF0011CAFF /* CFNetwork.framework */,
+				12218CEA1A705BF60011CAFF /* SystemConfiguration.framework */,
+				125D82BC1A70329B0086412A /* libncurses.dylib */,
 				123E59E51A6DB91100E071A5 /* AudioToolbox.framework */,
 				127B50C31A6E05A600B211B6 /* vector */,
 				123E59661A6D877500E071A5 /* bass */,
@@ -435,6 +563,8 @@
 				123984451A6EC39D00FC46D3 /* player-sample-osx */,
 				1239845C1A6EC39E00FC46D3 /* player-sample-osxTests */,
 				1239847A1A6EC41A00FC46D3 /* player-sample-console */,
+				125D82B61A702A340086412A /* player-test */,
+				1C594121672D3720F84855CC /* tests */,
 				123E595D1A6D80DC00E071A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -450,6 +580,7 @@
 				123984321A6EC37F00FC46D3 /* player-sample-iosTests.xctest */,
 				123984441A6EC39D00FC46D3 /* player-sample-osx.app */,
 				123984591A6EC39E00FC46D3 /* player-sample-osxTests.xctest */,
+				125D82B51A702A340086412A /* player-test */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -546,6 +677,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		125D82B61A702A340086412A /* player-test */ = {
+			isa = PBXGroup;
+			children = (
+				125D82B71A702A340086412A /* main.c */,
+			);
+			path = "player-test";
+			sourceTree = "<group>";
+		};
 		127B50C31A6E05A600B211B6 /* vector */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +692,14 @@
 				127B50C71A6E0BED00B211B6 /* vector.h */,
 			);
 			path = vector;
+			sourceTree = "<group>";
+		};
+		1C594121672D3720F84855CC /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				1C5947D3B6411E60944106DA /* test.h */,
+			);
+			path = tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -591,6 +738,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				12218D191A70B3D90011CAFF /* PBXTargetDependency */,
 			);
 			name = "player-sample-ios";
 			productName = "player-sample-ios";
@@ -626,6 +774,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				12218D1B1A70B3F10011CAFF /* PBXTargetDependency */,
 			);
 			name = "player-sample-osx";
 			productName = "player-sample-osx";
@@ -719,6 +868,23 @@
 			productReference = 123E59CC1A6DB3A500E071A5 /* player-ios-libraryTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		125D82B41A702A340086412A /* player-test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 125D82BB1A702A340086412A /* Build configuration list for PBXNativeTarget "player-test" */;
+			buildPhases = (
+				125D82B11A702A340086412A /* Sources */,
+				125D82B21A702A340086412A /* Frameworks */,
+				125D82B31A702A340086412A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "player-test";
+			productName = "player-test";
+			productReference = 125D82B51A702A340086412A /* player-test */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -754,6 +920,9 @@
 					123E59CB1A6DB3A500E071A5 = {
 						CreatedOnToolsVersion = 6.1;
 					};
+					125D82B41A702A340086412A = {
+						CreatedOnToolsVersion = 6.1;
+					};
 				};
 			};
 			buildConfigurationList = 123E59571A6D80DC00E071A5 /* Build configuration list for PBXProject "player" */;
@@ -777,6 +946,7 @@
 				123984311A6EC37F00FC46D3 /* player-sample-iosTests */,
 				123984431A6EC39D00FC46D3 /* player-sample-osx */,
 				123984581A6EC39E00FC46D3 /* player-sample-osxTests */,
+				125D82B41A702A340086412A /* player-test */,
 			);
 		};
 /* End PBXProject section */
@@ -911,14 +1081,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1239847D1A6EC41A00FC46D3 /* main.c in Sources */,
-				123E59ED1A6DC1CF00E071A5 /* ssp_playlist.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		125D82B11A702A340086412A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				125D82B81A702A340086412A /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		12218D191A70B3D90011CAFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 123E59C11A6DB3A500E071A5 /* player-ios-library */;
+			targetProxy = 12218D181A70B3D90011CAFF /* PBXContainerItemProxy */;
+		};
+		12218D1B1A70B3F10011CAFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 123E59AA1A6DB2FD00E071A5 /* player-osx-library */;
+			targetProxy = 12218D1A1A70B3F10011CAFF /* PBXContainerItemProxy */;
+		};
 		123984341A6EC37F00FC46D3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 123984191A6EC37F00FC46D3 /* player-sample-ios */;
@@ -976,6 +1162,10 @@
 				INFOPLIST_FILE = "player-sample-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bass/ios",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -990,6 +1180,10 @@
 				INFOPLIST_FILE = "player-sample-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bass/ios",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1048,6 +1242,10 @@
 				);
 				INFOPLIST_FILE = "player-sample-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bass/osx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1060,6 +1258,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "player-sample-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bass/osx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1247,7 +1449,10 @@
 					"$(PROJECT_DIR)/bass/ios",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1264,7 +1469,10 @@
 					"$(PROJECT_DIR)/bass/ios",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1287,7 +1495,18 @@
 				INFOPLIST_FILE = "player-ios-libraryTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bass/ios",
+				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-lstdc++",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -1304,10 +1523,39 @@
 				INFOPLIST_FILE = "player-ios-libraryTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bass/ios",
+				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-lstdc++",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		125D82B91A702A340086412A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		125D82BA1A702A340086412A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1391,6 +1639,15 @@
 			buildConfigurations = (
 				123E59D71A6DB3A500E071A5 /* Debug */,
 				123E59D81A6DB3A500E071A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		125D82BB1A702A340086412A /* Build configuration list for PBXNativeTarget "player-test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				125D82B91A702A340086412A /* Debug */,
+				125D82BA1A702A340086412A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

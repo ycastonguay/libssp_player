@@ -21,12 +21,25 @@
 #include <stdio.h>
 #import "ssp_errors.h"
 
+SSP_ERROR bass_getError(char* message);
 SSP_ERROR bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 
-int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatingPoint, STREAMPROC *streamProc);
-int bass_createDecodeStream(char* filePath, bool useFloatingPoint);
+SSP_ERROR bass_start();
+SSP_ERROR bass_stop();
+SSP_ERROR bass_pause();
+SSP_ERROR bass_play(uint32_t handle, bool restart);
 
-long bass_getPosition(uint32_t handle);
-long bass_getLength(uint32_t handle);
+int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatingPoint, STREAMPROC *streamProc, void* user);
+int bass_createDecodeStream(char* filePath, bool useFloatingPoint);
+int bass_createStreamForTimeShifting(uint32_t streamHandle, bool decode, bool useFloatingPoint);
+int bass_createMixerStream(int frequency, int numberOfChannels, bool decode, bool useFloatingPoint);
+
+SSP_ERROR bass_addChannelToMixer(uint32_t mixerHandle, uint32_t channelHandle);
+int bass_setMixerSyncProc(uint32_t handle, uint64_t position, void* syncProc);
+
+uint64_t bass_getPosition(uint32_t handle);
+uint64_t bass_getLength(uint32_t handle);
+SSP_ERROR bass_setPosition(uint32_t handle, uint64_t position);
+SSP_ERROR bass_setMixerPosition(uint32_t handle, uint64_t position);
 
 #endif /* defined(__player__ssp_bass__) */

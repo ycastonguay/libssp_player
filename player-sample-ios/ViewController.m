@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ssp_public.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    SSP_Init(-1, 44100, 1000, 100, true);
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,4 +28,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)actionOpenAudioFiles:(id)sender {
+}
+
+- (IBAction)actionClose:(id)sender {
+}
 @end
