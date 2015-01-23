@@ -1,10 +1,11 @@
 #!/bin/bash
 
 ROOT_BUILD_FOLDER="build"
-#LIB_NAME="libssp_player.a"
-LIB_NAME="libplayer-ios-library.a"
-#OUTPUT_FOLDER=RC.iOS.Binding.GoogleIMAVideoPlayer/GoogleIMAVideoPlayer
-OUTPUT_FOLDER=output
+LIB_NAME="libssp_player.a"
+OUTPUT_FOLDER=output 
+
+# Create directory if does not exist
+mkdir -p "${OUTPUT_FOLDER}"
 
 BUILD_CONFIG="Release"
 

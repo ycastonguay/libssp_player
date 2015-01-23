@@ -33,10 +33,12 @@ int main(int argc, const char * argv[]) {
     if(error != SSP_OK) {
         checkForError(error);
         return 1;
-    }
-    else {
+
+    else {}
         printf("Player initialization successful!\n");
     }
+
+    SSP_DEVICE *device = SSP_GetDevice();
 
     printf("Adding items to playlist...\n");
     SSP_Playlist_AddItem("/Users/usr/Documents/mp3/1.mp3");
@@ -48,6 +50,10 @@ int main(int argc, const char * argv[]) {
     printf("Starting playback...\n");
     error = SSP_Play();
     checkForError(error);
+
+    //SSP_SetPosition(100000);
+    //SSP_Pause();
+    //SSP_Pause();
 
     printf("Press ENTER to stop playback...\n");
     int ch = getchar();

@@ -22,10 +22,15 @@
 #include "ssp_errors.h"
 #include "ssp_playlist.h"
 #include "ssp_player.h"
+#include "ssp_structs.h"
 
 static SSP_PLAYER* sspPlayer;
 
 #pragma mark Initialization
+
+int SSP_GetVersion() {
+    return 2;
+}
 
 int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
 
@@ -41,8 +46,10 @@ int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool 
 #pragma mark Device
 
 SSP_DEVICE* SSP_GetDevice() {
-    //return sspPlayer.device;
-    return NULL;
+    SSP_DEVICE* deviceCopy = malloc(sizeof(SSP_DEVICE));
+    memcpy(deviceCopy, sspPlayer->device, sizeof(SSP_DEVICE));
+    // TODO: Do we have to copy strings too? device_copy would then be useful?
+    return deviceCopy;
 }
 
 #pragma mark Playback

@@ -18,7 +18,6 @@
 #ifndef player_ssp_player____FILEEXTENSION___
 #define player_ssp_player____FILEEXTENSION___
 
-#include <stdbool.h>
 #include "ssp_errors.h"
 #include "ssp_structs.h"
 #include "ssp_callbacks.h"
@@ -38,5 +37,7 @@ SSP_ERROR player_goTo(SSP_PLAYER* player, int index);
 
 uint64_t player_getPosition(SSP_PLAYER* player);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
+
+SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position);
 
 #endif

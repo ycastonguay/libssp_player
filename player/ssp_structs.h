@@ -25,6 +25,8 @@ typedef enum {SSP_PLAYER_REPEAT_OFF, SSP_PLAYER_REPEAT_PLAYLIST, SSP_PLAYER_REPE
 
 typedef struct {
     char* name;
+    int deviceId;
+    int test;
     bool isInitialized;
 } SSP_DEVICE;
 

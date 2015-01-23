@@ -23,6 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
+int SSP_GetVersion();
 int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 
 // Properties

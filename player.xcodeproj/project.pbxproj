@@ -22,17 +22,7 @@
 		12218CFA1A705D8F0011CAFF /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59781A6D877500E071A5 /* libbasswv.a */; };
 		12218CFB1A705D8F0011CAFF /* libtags.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59791A6D877500E071A5 /* libtags.a */; };
 		12218CFC1A708D930011CAFF /* ssp_public.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C594E89792D82E39300E9D8 /* ssp_public.h */; };
-		12218CFD1A708E2E0011CAFF /* libplayer-ios-library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59C21A6DB3A500E071A5 /* libplayer-ios-library.a */; };
-		12218CFE1A708E950011CAFF /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59701A6D877500E071A5 /* libbass.a */; };
-		12218CFF1A708E950011CAFF /* libbass_ape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59711A6D877500E071A5 /* libbass_ape.a */; };
-		12218D001A708E950011CAFF /* libbass_fx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59721A6D877500E071A5 /* libbass_fx.a */; };
-		12218D011A708E950011CAFF /* libbass_mpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59731A6D877500E071A5 /* libbass_mpc.a */; };
-		12218D021A708E950011CAFF /* libbassenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59741A6D877500E071A5 /* libbassenc.a */; };
-		12218D031A708E950011CAFF /* libbassflac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59751A6D877500E071A5 /* libbassflac.a */; };
-		12218D041A708E950011CAFF /* libbassmidi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59761A6D877500E071A5 /* libbassmidi.a */; };
-		12218D051A708E950011CAFF /* libbassmix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59771A6D877500E071A5 /* libbassmix.a */; };
-		12218D061A708E950011CAFF /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59781A6D877500E071A5 /* libbasswv.a */; };
-		12218D071A708E950011CAFF /* libtags.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59791A6D877500E071A5 /* libtags.a */; };
+		12218CFD1A708E2E0011CAFF /* libssp_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59C21A6DB3A500E071A5 /* libssp_player.a */; };
 		12218D081A708EA10011CAFF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59E51A6DB91100E071A5 /* AudioToolbox.framework */; };
 		12218D091A708EA70011CAFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEA1A705BF60011CAFF /* SystemConfiguration.framework */; };
 		12218D0A1A708EB40011CAFF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEE1A705C070011CAFF /* Accelerate.framework */; };
@@ -99,7 +89,7 @@
 		123E59BB1A6DB36300E071A5 /* libbassmidi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59821A6D877500E071A5 /* libbassmidi.dylib */; };
 		123E59BC1A6DB36300E071A5 /* libbassmix.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59831A6D877500E071A5 /* libbassmix.dylib */; };
 		123E59BD1A6DB36300E071A5 /* libbasswv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59841A6D877500E071A5 /* libbasswv.dylib */; };
-		123E59CD1A6DB3A500E071A5 /* libplayer-ios-library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59C21A6DB3A500E071A5 /* libplayer-ios-library.a */; };
+		123E59CD1A6DB3A500E071A5 /* libssp_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59C21A6DB3A500E071A5 /* libssp_player.a */; };
 		123E59D91A6DB3C300E071A5 /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59701A6D877500E071A5 /* libbass.a */; };
 		123E59DA1A6DB3C300E071A5 /* libbass_ape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59711A6D877500E071A5 /* libbass_ape.a */; };
 		123E59DB1A6DB3C300E071A5 /* libbass_fx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59721A6D877500E071A5 /* libbass_fx.a */; };
@@ -121,26 +111,48 @@
 		127B50C91A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
 		127B50CA1A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
 		127B50CB1A6E0BED00B211B6 /* vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 127B50C71A6E0BED00B211B6 /* vector.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C594051FA7463EF510355F2 /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C594069D3789BD14A7B2E25 /* ssp_bass.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594268D0858F4660A3ADA1 /* ssp_bass.c */; };
+		1C5940A784E32BEAFD1CC3A3 /* ssp_mixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944ACC57A21E53AC280EB /* ssp_mixer.c */; };
 		1C5940D06BD16E905999CFFB /* ssp_eqpreset.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594D2B9EA3489C918EB120 /* ssp_eqpreset.h */; };
 		1C59417E96BD8F18C79C743C /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C5941BB0A31DEA61DB5621A /* ssp_privatestructs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FDA7E1A8F41A5B9311D /* ssp_privatestructs.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C5941E513777376F01E7EBA /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C59420F4E27DB1574F71646 /* ssp_public.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594E89792D82E39300E9D8 /* ssp_public.h */; };
+		1C59428FC1F46270F1F166E1 /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
+		1C5942AFE52BEB544BEE4F07 /* ssp_marker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594571D09145C91AAB4083 /* ssp_marker.h */; };
 		1C5942D8985CFE4A0CC53490 /* ssp_playlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5942B52D4F6077F24E903B /* ssp_playlist.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C5942E64CD021CF65019F8E /* ssp_player_seeking.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594821C97685FE107377AE /* ssp_player_seeking.c */; };
+		1C5942F513FA88827EAA39A6 /* ssp_player_seeking.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594821C97685FE107377AE /* ssp_player_seeking.c */; };
+		1C5943094CDACB4F829286CE /* ssp_mixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944ACC57A21E53AC280EB /* ssp_mixer.c */; };
 		1C594332E4BB0AEECC3D6E12 /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
+		1C5943573D1C2FD11BBA0BF4 /* ssp_player_seeking.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594821C97685FE107377AE /* ssp_player_seeking.c */; };
 		1C5943DE3B26F6982B9B46BE /* ssp_bass.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594268D0858F4660A3ADA1 /* ssp_bass.c */; };
 		1C59444621F35BD65AFCF419 /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
+		1C5944711984F2D65F2ABA1A /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
 		1C594472F1A7933C6ADBF1E0 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
+		1C5944E6BCE2B615F038E8A3 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
+		1C594502D9C7AEA0389B7D7B /* ssp_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594566CB46E0FA1CD32751 /* ssp_mixer.h */; };
+		1C5945171B74D272D51992CE /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
 		1C5945E606E95ED5CA88C666 /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
+		1C5945F4B5B15209AB1E4E81 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C5946F2F99B0F2FDC42EC25 /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C5946FFE982BB7148142F7D /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
 		1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594F798C02977B507E8328 /* ssp_bass.h */; };
 		1C59494C1DAEA2BD4511BBA6 /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
+		1C5949E8D26D0E53A2976B0C /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C594A046986A5F919AAB7A0 /* ssp_playhead.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FE05BF7638B9077FC64 /* ssp_playhead.h */; };
+		1C594A32606D67D439FA9D2B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
+		1C594A36E4D73429B19D28BB /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C594A6A78A8A9893C384756 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
+		1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FBA64AC8F10E45C0308 /* ssp_loop.h */; };
+		1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */; };
+		1C594CC350B2AD2663A63C00 /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C594D919BC752AD1E09F108 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
 		1C594DB2C7781F018EFC5362 /* ssp_bass.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594268D0858F4660A3ADA1 /* ssp_bass.c */; };
+		1C594E33A07AB0D32DE35166 /* ssp_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594B417CD294938B1EED6E /* ssp_device.h */; };
+		1C594F16318FDFBA94A3943E /* ssp_mixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944ACC57A21E53AC280EB /* ssp_mixer.c */; };
 		1C594F821DD470BAF26A1D9E /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C594F91BCF99C48916D4A2F /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
 /* End PBXBuildFile section */
@@ -289,7 +301,7 @@
 		123E59A51A6DAFBA00E071A5 /* ssp_errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssp_errors.h; sourceTree = "<group>"; };
 		123E59A61A6DAFDB00E071A5 /* ssp_structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssp_structs.h; sourceTree = "<group>"; };
 		123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libplayer-osx-library.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
-		123E59C21A6DB3A500E071A5 /* libplayer-ios-library.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libplayer-ios-library.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		123E59C21A6DB3A500E071A5 /* libssp_player.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libssp_player.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		123E59CC1A6DB3A500E071A5 /* player-ios-libraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "player-ios-libraryTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		123E59D21A6DB3A500E071A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		123E59E51A6DB91100E071A5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -304,13 +316,23 @@
 		1C594268D0858F4660A3ADA1 /* ssp_bass.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_bass.c; sourceTree = "<group>"; };
 		1C5942B52D4F6077F24E903B /* ssp_playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_playlist.h; sourceTree = "<group>"; };
 		1C5943AB7B6D4807B579BA1A /* ssp_public.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_public.c; sourceTree = "<group>"; };
+		1C59445976180B151C054201 /* ssp_player_playback.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_playback.c; sourceTree = "<group>"; };
+		1C5944ACC57A21E53AC280EB /* ssp_mixer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_mixer.c; sourceTree = "<group>"; };
 		1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_eqpreset.c; sourceTree = "<group>"; };
+		1C594566CB46E0FA1CD32751 /* ssp_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_mixer.h; sourceTree = "<group>"; };
+		1C594571D09145C91AAB4083 /* ssp_marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_marker.h; sourceTree = "<group>"; };
 		1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_convertaudio.h; sourceTree = "<group>"; };
 		1C5947D3B6411E60944106DA /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		1C594821C97685FE107377AE /* ssp_player_seeking.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_seeking.c; sourceTree = "<group>"; };
 		1C59494588C7D79421B97AC1 /* ssp_playhead.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playhead.c; sourceTree = "<group>"; };
+		1C5949D7AA53F24EADE8A734 /* ssp_loop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_loop.c; sourceTree = "<group>"; };
+		1C594A6CA85B363632DEE303 /* ssp_device.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_device.c; sourceTree = "<group>"; };
+		1C594B417CD294938B1EED6E /* ssp_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_device.h; sourceTree = "<group>"; };
+		1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_marker.c; sourceTree = "<group>"; };
 		1C594D2B9EA3489C918EB120 /* ssp_eqpreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_eqpreset.h; sourceTree = "<group>"; };
 		1C594E89792D82E39300E9D8 /* ssp_public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_public.h; sourceTree = "<group>"; };
 		1C594F798C02977B507E8328 /* ssp_bass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_bass.h; sourceTree = "<group>"; };
+		1C594FBA64AC8F10E45C0308 /* ssp_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_loop.h; sourceTree = "<group>"; };
 		1C594FDA7E1A8F41A5B9311D /* ssp_privatestructs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_privatestructs.h; sourceTree = "<group>"; };
 		1C594FE05BF7638B9077FC64 /* ssp_playhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_playhead.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -325,17 +347,7 @@
 				12218D0A1A708EB40011CAFF /* Accelerate.framework in Frameworks */,
 				12218D091A708EA70011CAFF /* SystemConfiguration.framework in Frameworks */,
 				12218D081A708EA10011CAFF /* AudioToolbox.framework in Frameworks */,
-				12218CFD1A708E2E0011CAFF /* libplayer-ios-library.a in Frameworks */,
-				12218CFE1A708E950011CAFF /* libbass.a in Frameworks */,
-				12218CFF1A708E950011CAFF /* libbass_ape.a in Frameworks */,
-				12218D001A708E950011CAFF /* libbass_fx.a in Frameworks */,
-				12218D011A708E950011CAFF /* libbass_mpc.a in Frameworks */,
-				12218D021A708E950011CAFF /* libbassenc.a in Frameworks */,
-				12218D031A708E950011CAFF /* libbassflac.a in Frameworks */,
-				12218D041A708E950011CAFF /* libbassmidi.a in Frameworks */,
-				12218D051A708E950011CAFF /* libbassmix.a in Frameworks */,
-				12218D061A708E950011CAFF /* libbasswv.a in Frameworks */,
-				12218D071A708E950011CAFF /* libtags.a in Frameworks */,
+				12218CFD1A708E2E0011CAFF /* libssp_player.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +454,7 @@
 				12218CF91A705D8F0011CAFF /* libbassmix.a in Frameworks */,
 				12218CFA1A705D8F0011CAFF /* libbasswv.a in Frameworks */,
 				12218CFB1A705D8F0011CAFF /* libtags.a in Frameworks */,
-				123E59CD1A6DB3A500E071A5 /* libplayer-ios-library.a in Frameworks */,
+				123E59CD1A6DB3A500E071A5 /* libssp_player.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,7 +586,7 @@
 			children = (
 				123E595C1A6D80DC00E071A5 /* player */,
 				123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */,
-				123E59C21A6DB3A500E071A5 /* libplayer-ios-library.a */,
+				123E59C21A6DB3A500E071A5 /* libssp_player.a */,
 				123E59CC1A6DB3A500E071A5 /* player-ios-libraryTests.xctest */,
 				1239841A1A6EC37F00FC46D3 /* player-sample-ios.app */,
 				123984321A6EC37F00FC46D3 /* player-sample-iosTests.xctest */,
@@ -606,6 +618,16 @@
 				1C594E89792D82E39300E9D8 /* ssp_public.h */,
 				1C5942559E650BF63784E7CF /* ssp_convertaudio.c */,
 				1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */,
+				1C59445976180B151C054201 /* ssp_player_playback.c */,
+				1C594821C97685FE107377AE /* ssp_player_seeking.c */,
+				1C5944ACC57A21E53AC280EB /* ssp_mixer.c */,
+				1C594566CB46E0FA1CD32751 /* ssp_mixer.h */,
+				1C594A6CA85B363632DEE303 /* ssp_device.c */,
+				1C594B417CD294938B1EED6E /* ssp_device.h */,
+				1C5949D7AA53F24EADE8A734 /* ssp_loop.c */,
+				1C594FBA64AC8F10E45C0308 /* ssp_loop.h */,
+				1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */,
+				1C594571D09145C91AAB4083 /* ssp_marker.h */,
 			);
 			path = player;
 			sourceTree = "<group>";
@@ -721,6 +743,10 @@
 				1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */,
 				1C59420F4E27DB1574F71646 /* ssp_public.h in Headers */,
 				1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */,
+				1C594502D9C7AEA0389B7D7B /* ssp_mixer.h in Headers */,
+				1C594E33A07AB0D32DE35166 /* ssp_device.h in Headers */,
+				1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */,
+				1C5942AFE52BEB544BEE4F07 /* ssp_marker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,7 +873,7 @@
 			);
 			name = "player-ios-library";
 			productName = "player-ios-library";
-			productReference = 123E59C21A6DB3A500E071A5 /* libplayer-ios-library.a */;
+			productReference = 123E59C21A6DB3A500E071A5 /* libssp_player.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		123E59CB1A6DB3A500E071A5 /* player-ios-libraryTests */ = {
@@ -1044,6 +1070,12 @@
 				1C594069D3789BD14A7B2E25 /* ssp_bass.c in Sources */,
 				1C5946F2F99B0F2FDC42EC25 /* ssp_public.c in Sources */,
 				1C594472F1A7933C6ADBF1E0 /* ssp_convertaudio.c in Sources */,
+				1C594051FA7463EF510355F2 /* ssp_player_playback.c in Sources */,
+				1C5942F513FA88827EAA39A6 /* ssp_player_seeking.c in Sources */,
+				1C594F16318FDFBA94A3943E /* ssp_mixer.c in Sources */,
+				1C5945F4B5B15209AB1E4E81 /* ssp_device.c in Sources */,
+				1C5945171B74D272D51992CE /* ssp_loop.c in Sources */,
+				1C5941E513777376F01E7EBA /* ssp_marker.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1059,6 +1091,12 @@
 				1C5943DE3B26F6982B9B46BE /* ssp_bass.c in Sources */,
 				1C59417E96BD8F18C79C743C /* ssp_public.c in Sources */,
 				1C594D919BC752AD1E09F108 /* ssp_convertaudio.c in Sources */,
+				1C594CC350B2AD2663A63C00 /* ssp_player_playback.c in Sources */,
+				1C5942E64CD021CF65019F8E /* ssp_player_seeking.c in Sources */,
+				1C5940A784E32BEAFD1CC3A3 /* ssp_mixer.c in Sources */,
+				1C5944E6BCE2B615F038E8A3 /* ssp_device.c in Sources */,
+				1C5944711984F2D65F2ABA1A /* ssp_loop.c in Sources */,
+				1C594A32606D67D439FA9D2B /* ssp_marker.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1074,6 +1112,12 @@
 				1C594DB2C7781F018EFC5362 /* ssp_bass.c in Sources */,
 				1C594F821DD470BAF26A1D9E /* ssp_public.c in Sources */,
 				1C594A6A78A8A9893C384756 /* ssp_convertaudio.c in Sources */,
+				1C5949E8D26D0E53A2976B0C /* ssp_player_playback.c in Sources */,
+				1C5943573D1C2FD11BBA0BF4 /* ssp_player_seeking.c in Sources */,
+				1C5943094CDACB4F829286CE /* ssp_mixer.c in Sources */,
+				1C594A36E4D73429B19D28BB /* ssp_device.c in Sources */,
+				1C59428FC1F46270F1F166E1 /* ssp_loop.c in Sources */,
+				1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1166,6 +1210,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/ios",
 				);
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1183,6 +1231,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/ios",
+				);
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1246,6 +1298,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/osx",
 				);
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1261,6 +1317,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/osx",
+				);
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1453,7 +1513,7 @@
 					"-ObjC",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ssp_player;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -1473,7 +1533,7 @@
 					"-ObjC",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ssp_player;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
