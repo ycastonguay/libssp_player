@@ -16,6 +16,13 @@
 
 @implementation ViewController
 
+//static void testCallback() {
+void testCallback(void* user) {
+    printf("Test callback\n");
+    //[_lblPosition stringValue] = @"";
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -23,6 +30,8 @@
     if(error != SSP_OK) {
         NSLog(@"Error!");
     }
+
+    SSP_SetPlaylistIndexChangedCallback(testCallback, NULL); //(void *)self);
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
     // Do any additional setup after loading the view.    
@@ -30,8 +39,6 @@
 
 - (void)timerElapsed {
     uint64_t position = SSP_GetPosition();
-    NSLog(@"Player position: %lld", position);
-    
     self.lblPosition.stringValue = [NSString stringWithFormat:@"Position (bytes): %lld", position];
 }
 
