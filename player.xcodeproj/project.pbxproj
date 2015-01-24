@@ -28,7 +28,7 @@
 		12218D0A1A708EB40011CAFF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEE1A705C070011CAFF /* Accelerate.framework */; };
 		12218D0B1A708EBA0011CAFF /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CF01A705C120011CAFF /* CoreMIDI.framework */; };
 		12218D0C1A708EC30011CAFF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12218CEC1A705BFF0011CAFF /* CFNetwork.framework */; };
-		12218D0D1A708F300011CAFF /* libplayer-osx-library.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */; };
+		12218D0D1A708F300011CAFF /* libssp_player.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59AB1A6DB2FD00E071A5 /* libssp_player.dylib */; };
 		12218D0E1A708F3B0011CAFF /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; };
 		12218D0F1A708F3B0011CAFF /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597C1A6D877500E071A5 /* libbass_ape.dylib */; };
 		12218D101A708F3B0011CAFF /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597D1A6D877500E071A5 /* libbass_fx.dylib */; };
@@ -53,7 +53,7 @@
 		123984541A6EC39D00FC46D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123984521A6EC39D00FC46D3 /* Main.storyboard */; };
 		123984601A6EC39E00FC46D3 /* player_sample_osxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239845F1A6EC39E00FC46D3 /* player_sample_osxTests.m */; };
 		1239847C1A6EC41A00FC46D3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1239847B1A6EC41A00FC46D3 /* main.c */; };
-		1239847E1A6EC50100FC46D3 /* ssp_callbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59E81A6DC03600E071A5 /* ssp_callbacks.h */; };
+		1239847E1A6EC50100FC46D3 /* ssp_callbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59E81A6DC03600E071A5 /* ssp_callbacks.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		123E59851A6D878400E071A5 /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; };
 		123E598F1A6D8AB700E071A5 /* libbass.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		123E59901A6D8C2800E071A5 /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597C1A6D877500E071A5 /* libbass_ape.dylib */; };
@@ -76,9 +76,9 @@
 		123E59A11A6D8C2B00E071A5 /* libbasswv.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 123E59841A6D877500E071A5 /* libbasswv.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		123E59A41A6D8C6100E071A5 /* ssp_player.c in Sources */ = {isa = PBXBuildFile; fileRef = 123E59A21A6D8C6100E071A5 /* ssp_player.c */; };
 		123E59B01A6DB35000E071A5 /* ssp_player.c in Sources */ = {isa = PBXBuildFile; fileRef = 123E59A21A6D8C6100E071A5 /* ssp_player.c */; };
-		123E59B11A6DB35000E071A5 /* ssp_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59A31A6D8C6100E071A5 /* ssp_player.h */; };
-		123E59B21A6DB35000E071A5 /* ssp_errors.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59A51A6DAFBA00E071A5 /* ssp_errors.h */; };
-		123E59B31A6DB35000E071A5 /* ssp_structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59A61A6DAFDB00E071A5 /* ssp_structs.h */; };
+		123E59B11A6DB35000E071A5 /* ssp_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59A31A6D8C6100E071A5 /* ssp_player.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		123E59B21A6DB35000E071A5 /* ssp_errors.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59A51A6DAFBA00E071A5 /* ssp_errors.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		123E59B31A6DB35000E071A5 /* ssp_structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 123E59A61A6DAFDB00E071A5 /* ssp_structs.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		123E59B41A6DB36300E071A5 /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; };
 		123E59B51A6DB36300E071A5 /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597C1A6D877500E071A5 /* libbass_ape.dylib */; };
 		123E59B61A6DB36300E071A5 /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597D1A6D877500E071A5 /* libbass_fx.dylib */; };
@@ -114,13 +114,13 @@
 		1C594051FA7463EF510355F2 /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C594069D3789BD14A7B2E25 /* ssp_bass.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594268D0858F4660A3ADA1 /* ssp_bass.c */; };
 		1C5940A784E32BEAFD1CC3A3 /* ssp_mixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944ACC57A21E53AC280EB /* ssp_mixer.c */; };
-		1C5940D06BD16E905999CFFB /* ssp_eqpreset.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594D2B9EA3489C918EB120 /* ssp_eqpreset.h */; };
+		1C5940D06BD16E905999CFFB /* ssp_eqpreset.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594D2B9EA3489C918EB120 /* ssp_eqpreset.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C59417E96BD8F18C79C743C /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C5941BB0A31DEA61DB5621A /* ssp_privatestructs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FDA7E1A8F41A5B9311D /* ssp_privatestructs.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C5941E513777376F01E7EBA /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
-		1C59420F4E27DB1574F71646 /* ssp_public.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594E89792D82E39300E9D8 /* ssp_public.h */; };
+		1C59420F4E27DB1574F71646 /* ssp_public.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594E89792D82E39300E9D8 /* ssp_public.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1C59428FC1F46270F1F166E1 /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
-		1C5942AFE52BEB544BEE4F07 /* ssp_marker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594571D09145C91AAB4083 /* ssp_marker.h */; };
+		1C5942AFE52BEB544BEE4F07 /* ssp_marker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594571D09145C91AAB4083 /* ssp_marker.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C5942D8985CFE4A0CC53490 /* ssp_playlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5942B52D4F6077F24E903B /* ssp_playlist.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C5942E64CD021CF65019F8E /* ssp_player_seeking.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594821C97685FE107377AE /* ssp_player_seeking.c */; };
 		1C5942F513FA88827EAA39A6 /* ssp_player_seeking.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594821C97685FE107377AE /* ssp_player_seeking.c */; };
@@ -132,26 +132,26 @@
 		1C5944711984F2D65F2ABA1A /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
 		1C594472F1A7933C6ADBF1E0 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
 		1C5944E6BCE2B615F038E8A3 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
-		1C594502D9C7AEA0389B7D7B /* ssp_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594566CB46E0FA1CD32751 /* ssp_mixer.h */; };
+		1C594502D9C7AEA0389B7D7B /* ssp_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594566CB46E0FA1CD32751 /* ssp_mixer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C5945171B74D272D51992CE /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
 		1C5945E606E95ED5CA88C666 /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
 		1C5945F4B5B15209AB1E4E81 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C5946F2F99B0F2FDC42EC25 /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C5946FFE982BB7148142F7D /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
-		1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594F798C02977B507E8328 /* ssp_bass.h */; };
+		1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594F798C02977B507E8328 /* ssp_bass.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C59494C1DAEA2BD4511BBA6 /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
 		1C5949E8D26D0E53A2976B0C /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
-		1C594A046986A5F919AAB7A0 /* ssp_playhead.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FE05BF7638B9077FC64 /* ssp_playhead.h */; };
+		1C594A046986A5F919AAB7A0 /* ssp_playhead.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FE05BF7638B9077FC64 /* ssp_playhead.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C594A32606D67D439FA9D2B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C594A36E4D73429B19D28BB /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C594A6A78A8A9893C384756 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
-		1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FBA64AC8F10E45C0308 /* ssp_loop.h */; };
+		1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FBA64AC8F10E45C0308 /* ssp_loop.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
-		1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */; };
+		1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C594CC350B2AD2663A63C00 /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C594D919BC752AD1E09F108 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
 		1C594DB2C7781F018EFC5362 /* ssp_bass.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594268D0858F4660A3ADA1 /* ssp_bass.c */; };
-		1C594E33A07AB0D32DE35166 /* ssp_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594B417CD294938B1EED6E /* ssp_device.h */; };
+		1C594E33A07AB0D32DE35166 /* ssp_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594B417CD294938B1EED6E /* ssp_device.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C594F16318FDFBA94A3943E /* ssp_mixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944ACC57A21E53AC280EB /* ssp_mixer.c */; };
 		1C594F821DD470BAF26A1D9E /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C594F91BCF99C48916D4A2F /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
@@ -300,7 +300,7 @@
 		123E59A31A6D8C6100E071A5 /* ssp_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_player.h; sourceTree = "<group>"; };
 		123E59A51A6DAFBA00E071A5 /* ssp_errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssp_errors.h; sourceTree = "<group>"; };
 		123E59A61A6DAFDB00E071A5 /* ssp_structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssp_structs.h; sourceTree = "<group>"; };
-		123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libplayer-osx-library.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		123E59AB1A6DB2FD00E071A5 /* libssp_player.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libssp_player.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		123E59C21A6DB3A500E071A5 /* libssp_player.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libssp_player.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		123E59CC1A6DB3A500E071A5 /* player-ios-libraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "player-ios-libraryTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		123E59D21A6DB3A500E071A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -362,7 +362,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12218D0D1A708F300011CAFF /* libplayer-osx-library.dylib in Frameworks */,
+				12218D0D1A708F300011CAFF /* libssp_player.dylib in Frameworks */,
 				12218D0E1A708F3B0011CAFF /* libbass.dylib in Frameworks */,
 				12218D0F1A708F3B0011CAFF /* libbass_ape.dylib in Frameworks */,
 				12218D101A708F3B0011CAFF /* libbass_fx.dylib in Frameworks */,
@@ -585,7 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				123E595C1A6D80DC00E071A5 /* player */,
-				123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */,
+				123E59AB1A6DB2FD00E071A5 /* libssp_player.dylib */,
 				123E59C21A6DB3A500E071A5 /* libssp_player.a */,
 				123E59CC1A6DB3A500E071A5 /* player-ios-libraryTests.xctest */,
 				1239841A1A6EC37F00FC46D3 /* player-sample-ios.app */,
@@ -731,6 +731,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C59420F4E27DB1574F71646 /* ssp_public.h in Headers */,
 				1C5942D8985CFE4A0CC53490 /* ssp_playlist.h in Headers */,
 				1C5941BB0A31DEA61DB5621A /* ssp_privatestructs.h in Headers */,
 				127B50CB1A6E0BED00B211B6 /* vector.h in Headers */,
@@ -741,7 +742,6 @@
 				1C5940D06BD16E905999CFFB /* ssp_eqpreset.h in Headers */,
 				1C594A046986A5F919AAB7A0 /* ssp_playhead.h in Headers */,
 				1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */,
-				1C59420F4E27DB1574F71646 /* ssp_public.h in Headers */,
 				1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */,
 				1C594502D9C7AEA0389B7D7B /* ssp_mixer.h in Headers */,
 				1C594E33A07AB0D32DE35166 /* ssp_device.h in Headers */,
@@ -856,7 +856,7 @@
 			);
 			name = "player-osx-library";
 			productName = "player-osx-library";
-			productReference = 123E59AB1A6DB2FD00E071A5 /* libplayer-osx-library.dylib */;
+			productReference = 123E59AB1A6DB2FD00E071A5 /* libssp_player.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		123E59C11A6DB3A500E071A5 /* player-ios-library */ = {
@@ -1477,7 +1477,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/osx",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ssp_player;
 			};
 			name = Debug;
 		};
@@ -1491,7 +1491,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/osx",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ssp_player;
 			};
 			name = Release;
 		};

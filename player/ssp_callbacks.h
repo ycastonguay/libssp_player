@@ -18,5 +18,9 @@
 #ifndef player_callbacks_h
 #define player_callbacks_h
 
+//typedef void (CALLBACK GELLOPROC)(HSYNC handle, DWORD channel, DWORD data, void *user);
+//typedef void (CALLBACK JELLOPROC)(int hello, float world);
+
+typedef void (*player_playlistindexchanged_cb)(void *user);
 
 #endif

@@ -35,5 +35,6 @@ void device_free(SSP_DEVICE *device) {
 void device_reset(SSP_DEVICE* device) {
     device->isInitialized = false;
     device->deviceId = -1;
+    device->test = 100;
     device->name = "Default device";
 }

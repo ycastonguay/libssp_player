@@ -19,12 +19,13 @@
 #define player_structs_h
 
 #include <stdbool.h>
+#import "ssp_callbacks.h"
 
 typedef enum {SSP_PLAYER_STATE_UNKNOWN, SSP_PLAYER_STATE_INITIALIZED, SSP_PLAYER_STATE_STOPPED, SSP_PLAYER_STATE_PLAYING, SSP_PLAYER_STATE_PAUSED} ssp_player_state_t;
 typedef enum {SSP_PLAYER_REPEAT_OFF, SSP_PLAYER_REPEAT_PLAYLIST, SSP_PLAYER_REPEAT_SONG} ssp_player_repeat_t;
 
 typedef struct {
-    char* name;
+    const char* name;
     int deviceId;
     int test;
     bool isInitialized;
@@ -38,38 +39,39 @@ typedef struct {
 } SSP_MIXER;
 
 typedef struct {
-    float volume; // should be merged with mixer?
     bool isPlaying;
     bool isPlayingLoop;
     bool isPaused;
     bool isShuffleEnabled;
     bool isSettingPosition;
+    bool isEQEnabled;
     ssp_player_state_t stateType;
     ssp_player_repeat_t repeatType;
+    float volume; // should be merged with mixer?
     float timeShifting;
     int pitchShifting;
 } SSP_PLAYHEAD;
 
 typedef struct {
     float center;
-    char* label;
+    const char* label;
     float bandwidth;
     float gain;
     float q;
 } SSP_EQPRESETBAND;
 
 typedef struct {
-    char* name;
+    const char* name;
     SSP_EQPRESETBAND bands[18];
 } SSP_EQPRESET;
 
 typedef struct {
-    char* name;
+    const char* name;
     long position;
 } SSP_MARKER;
 
 typedef struct {
-    char* name;
+    const char* name;
     uint64_t startPosition;
     uint64_t endPosition;
 } SSP_LOOP;
@@ -78,7 +80,7 @@ typedef struct {
     char* filePath;
     // consider using a static array
     //char filePath[1024];
-    float sampleRate;
+    int sampleRate;
     int numberOfChannels;
 } SSP_AUDIOFILE;
 
@@ -92,9 +94,11 @@ typedef struct {
 
 typedef struct {
     void* items;
-    char* name;
+    const char* name;
     int currentIndex;
     int currentMixerIndex;
+    void* callbackPlaylistIndexChangedUser;
+    player_playlistindexchanged_cb callbackPlaylistIndexChanged;
 } SSP_PLAYLIST;
 
 #endif

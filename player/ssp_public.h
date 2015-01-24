@@ -23,11 +23,18 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
+#define SSP_VERSION 8
+
 int SSP_GetVersion();
 int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 
+// Callbacks
+void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
+void SSP_RemovePlaylistIndexChangedCallback();
+
 // Properties
 SSP_DEVICE* SSP_GetDevice();
+void SSP_GetDeviceNew(SSP_DEVICE* device);
 SSP_PLAYHEAD* SSP_GetPlayhead();
 SSP_MIXER* SSP_GetMixer();
 
@@ -61,7 +68,7 @@ int SSP_Playlist_AddItem(char* filePath);
 int SSP_Playlist_InsertItemAt(char* filePath, int index);
 int SSP_Playlist_RemoveItemAt(int index);
 int SSP_Playlist_Clear();
-//SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
+SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
 int SSP_Playlist_GetCount();
 int SSP_Playlist_GetCurrentIndex();
 

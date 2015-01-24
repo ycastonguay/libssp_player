@@ -39,5 +39,9 @@ uint64_t player_getPosition(SSP_PLAYER* player);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position);
+SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player);
+
+void player_setPlaylistIndexChangedCallback(SSP_PLAYER* player, player_playlistindexchanged_cb cb, void* user);
+void player_removePlaylistIndexChangedCallback(SSP_PLAYER* player);
 
 #endif

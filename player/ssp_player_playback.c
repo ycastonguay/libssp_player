@@ -39,7 +39,7 @@ DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, vo
     int active = BASS_ChannelIsActive(currentItem->channel);
     if(active == BASS_ACTIVE_PLAYING) {
         DWORD data = BASS_ChannelGetData(currentItem->channel, buffer, length);
-        printf("player_streamProc - length: %d - data: %d\n", length, data);
+        //printf("player_streamProc - length: %d - data: %d\n", length, data);
         return data;
     }
     else if(active == BASS_ACTIVE_STOPPED) {
@@ -60,13 +60,29 @@ SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
     return SSP_OK;
 }
 
+SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
+    return SSP_OK;
+}
+
+void player_setPlaylistIndexChangedCallback(SSP_PLAYER* player, player_playlistindexchanged_cb cb, void *user) {
+    player->playlist->callbackPlaylistIndexChanged = cb;
+}
+
+void player_removePlaylistIndexChangedCallback(SSP_PLAYER* player) {
+    if(player->playlist->callbackPlaylistIndexChanged) {
+        free(player->playlist->callbackPlaylistIndexChanged);
+        player->playlist->callbackPlaylistIndexChanged = NULL;
+    }
+}
+
 #pragma mark Playback
 
 SSP_ERROR player_pause(SSP_PLAYER* player) {
     if(player->playhead->isPaused) {
-            bass_pause();
-            player->playhead->isPaused = true;
-        } else {
+        bass_pause();
+        player->playhead->isPaused = true;
+    }
+    else {
         bass_start();
         player->playhead->isPaused = false;
 //        SetPosition(_positionAfterUnpause);
@@ -76,6 +92,36 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
 }
 
 SSP_ERROR player_stop(SSP_PLAYER* player) {
+    // reset loop here
+    player->playhead->isPlaying = false;
+    player->playhead->isPlayingLoop = false;
+
+    if(player->playhead->isEQEnabled) {
+        // call remove eq here
+    }
+
+    bool success = BASS_ChannelStop(player->channels->mixerChannel);
+    if(!success) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    success = BASS_Stop();
+    if(!success) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    SSP_ERROR error = player_removeSyncCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    success = BASS_StreamFree(player->channels->fxChannel);
+    if(!success) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    // dispose channels here (?)
+
     return SSP_OK;
 }
 
@@ -108,13 +154,9 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     for(int a = currentIndex; a < currentIndex + channelsToLoad; a++) {
         printf("player_play - Loading playlist item %d...\n", a);
         SSP_PLAYLISTITEM* item = playlist_getItemAt(player->playlist, a);
-        item->test = 666;
         playlistitem_load(item, player->mixer->useFloatingPoint);
-        SSP_PLAYLISTITEM* item2 = playlist_getItemAt(player->playlist, a);
-        int b = 0;
-        //item->/
-        //item->channel
     }
+
 
     // Default output driver (i.e. DirectSound)
     // TODO: How do we check for errors?
@@ -154,11 +196,12 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
     //uint64_t length = bass_getLength(currentItem->channel);
 
-//    error = player_setSyncCallback(player, currentItem->length);
-//    if(error != SSP_OK) {
-//        return error;
-//    }
+    error = player_setSyncCallback(player, currentItem->length);
+    if(error != SSP_OK) {
+        return error;
+    }
 
+    player->playlist->currentMixerIndex = currentIndex;
     player->playhead->isPlaying = true;
 
     error = bass_start();
@@ -171,20 +214,62 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return error;
     }
 
-    // invoke onplaylistindexchanged
-    printf("player_play - Finished playback sequence!\n");
+    if(player->playlist->callbackPlaylistIndexChanged != NULL) {
+        player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);
+    }
 
+    printf("player_play - Finished playback sequence!\n");
     return SSP_OK;
 }
 
 SSP_ERROR player_previous(SSP_PLAYER* player) {
+    SSP_ERROR error = player_stop(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    if(player->playlist->currentIndex > 0) {
+        player->playlist->currentIndex--;
+    }
+
+    error = player_play(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     return SSP_OK;
 }
 
 SSP_ERROR player_next(SSP_PLAYER* player) {
+    SSP_ERROR error = player_stop(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    if(player->playlist->currentIndex < playlist_getCount(player->playlist)) {
+        player->playlist->currentIndex++;
+    }
+
+    error = player_play(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     return SSP_OK;
 }
 
 SSP_ERROR player_goTo(SSP_PLAYER* player, int index) {
+    SSP_ERROR error = player_stop(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    player->playlist->currentIndex = index;
+
+    error = player_play(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     return SSP_OK;
 }

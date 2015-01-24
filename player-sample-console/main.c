@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <ncurses.h>
+#include <stdlib.h>
 #include "ssp_public.h"
 
 void checkForError(SSP_ERROR error) {
@@ -33,12 +34,15 @@ int main(int argc, const char * argv[]) {
     if(error != SSP_OK) {
         checkForError(error);
         return 1;
-
-    else {}
+    }
+    else {
         printf("Player initialization successful!\n");
     }
 
     SSP_DEVICE *device = SSP_GetDevice();
+    //SSP_DEVICE *device2 = NULL;
+    SSP_DEVICE *device2 = malloc(sizeof(SSP_DEVICE));
+    SSP_GetDeviceNew(device2);
 
     printf("Adding items to playlist...\n");
     SSP_Playlist_AddItem("/Users/usr/Documents/mp3/1.mp3");

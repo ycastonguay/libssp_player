@@ -29,7 +29,7 @@ static SSP_PLAYER* sspPlayer;
 #pragma mark Initialization
 
 int SSP_GetVersion() {
-    return 2;
+    return SSP_VERSION;
 }
 
 int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
@@ -43,13 +43,41 @@ int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool 
     return SSP_OK;
 }
 
+#pragma mark Callbacks
+
+void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void *user) {
+    player_setPlaylistIndexChangedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemovePlaylistIndexChangedCallback() {
+    player_removePlaylistIndexChangedCallback(sspPlayer);
+}
+
 #pragma mark Device
 
 SSP_DEVICE* SSP_GetDevice() {
-    SSP_DEVICE* deviceCopy = malloc(sizeof(SSP_DEVICE));
-    memcpy(deviceCopy, sspPlayer->device, sizeof(SSP_DEVICE));
+    //SSP_DEVICE* deviceCopy = malloc(sizeof(SSP_DEVICE));
+    //memcpy(deviceCopy, sspPlayer->device, sizeof(SSP_DEVICE));
     // TODO: Do we have to copy strings too? device_copy would then be useful?
-    return deviceCopy;
+    //printf("---> getDevice - name: %s\n", deviceCopy->name);
+    //return deviceCopy;
+
+    printf("---> getDevice - name: %s\n", sspPlayer->device->name);
+    return sspPlayer->device;
+}
+
+void SSP_GetDeviceNew(SSP_DEVICE* device) {
+    //device = sspPlayer->device;
+
+    //SSP_DEVICE* deviceCopy = malloc(sizeof(SSP_DEVICE));
+    //device = malloc(sizeof(SSP_DEVICE));
+    //memcpy(device, sspPlayer->device, sizeof(SSP_DEVICE));
+    //device->test = 200;
+
+    device->test = 15000;
+    // TODO: Do we have to copy strings too? device_copy would then be useful?
+    //printf("---> getDevice - name: %s\n", deviceCopy->name);
+    printf("---> getDevice - name: %s\n", sspPlayer->device->name);
 }
 
 #pragma mark Playback

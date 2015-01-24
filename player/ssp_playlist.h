@@ -24,6 +24,8 @@
 
 SSP_PLAYLIST* playlist_create();
 void playlist_free(SSP_PLAYLIST *playlist);
+//void playlist_disposeChannels(SSP_PLAYLIST *playlist);
+
 int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath);
 int playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index);
 int playlist_removeItemAt(SSP_PLAYLIST *playlist, int index);

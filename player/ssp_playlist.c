@@ -1,10 +1,19 @@
+// Copyright © 2011-2015 Yanick Castonguay
 //
-//  playlist.c
-//  sspPlayer
+// This file is part of Sessions, a music player for musicians.
 //
-//  Created by Yanick Castonguay on 2015-01-19.
-//  Copyright (c) 2015 Yanick Castonguay. All rights reserved.
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,6 +64,8 @@ SSP_PLAYLIST* playlist_create() {
     playlist->currentIndex = 0;
     playlist->currentMixerIndex = 0;
     playlist->name = NULL;
+    playlist->callbackPlaylistIndexChanged = NULL;
+    playlist->callbackPlaylistIndexChangedUser = NULL;
 
     return playlist;
 }
@@ -65,6 +76,15 @@ void playlist_free(SSP_PLAYLIST *playlist) {
         free(playlist->items);
         playlist->items = NULL;
     }
+    if(playlist->name) {
+        free(playlist->name);
+        playlist->name = NULL;
+    }
+    if(playlist->callbackPlaylistIndexChanged) {
+        free(playlist->callbackPlaylistIndexChanged);
+        playlist->callbackPlaylistIndexChanged = NULL;
+    }
+    playlist->callbackPlaylistIndexChangedUser = NULL;
 }
 
 int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
