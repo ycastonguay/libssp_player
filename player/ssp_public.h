@@ -23,18 +23,19 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 8
+#define SSP_VERSION 12
 
 int SSP_GetVersion();
-int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+SSP_ERROR SSP_Init();
+SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+SSP_ERROR SSP_FreeDevice();
 
 // Callbacks
 void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
 void SSP_RemovePlaylistIndexChangedCallback();
 
 // Properties
-SSP_DEVICE* SSP_GetDevice();
-void SSP_GetDeviceNew(SSP_DEVICE* device);
+void SSP_GetDevice(SSP_DEVICE* device);
 SSP_PLAYHEAD* SSP_GetPlayhead();
 SSP_MIXER* SSP_GetMixer();
 

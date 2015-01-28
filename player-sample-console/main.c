@@ -30,7 +30,13 @@ int main(int argc, const char * argv[]) {
     
     // Initialize player
     printf("Initializing player...\n");
-    SSP_ERROR error = SSP_Init(-1, 44100, 1000, 100, true);
+    SSP_ERROR error = SSP_Init();
+    if(error != SSP_OK) {
+        checkForError(error);
+        return 1;
+    }
+
+    error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
         checkForError(error);
         return 1;
@@ -39,10 +45,10 @@ int main(int argc, const char * argv[]) {
         printf("Player initialization successful!\n");
     }
 
-    SSP_DEVICE *device = SSP_GetDevice();
     //SSP_DEVICE *device2 = NULL;
-    SSP_DEVICE *device2 = malloc(sizeof(SSP_DEVICE));
-    SSP_GetDeviceNew(device2);
+    //SSP_DEVICE *device2 = malloc(sizeof(SSP_DEVICE));
+    SSP_DEVICE device2;
+    SSP_GetDevice(&device2);
 
     printf("Adding items to playlist...\n");
     SSP_Playlist_AddItem("/Users/usr/Documents/mp3/1.mp3");

@@ -32,6 +32,7 @@ int playlist_removeItemAt(SSP_PLAYLIST *playlist, int index);
 int playlist_clear(SSP_PLAYLIST *playlist);
 SSP_PLAYLISTITEM* playlist_getItemAt(SSP_PLAYLIST *playlist, int index);
 SSP_PLAYLISTITEM* playlist_getCurrentItem(SSP_PLAYLIST *playlist);
+SSP_PLAYLISTITEM* playlist_getCurrentMixerItem(SSP_PLAYLIST *playlist);
 int playlist_getCount(SSP_PLAYLIST *playlist);
 
 SSP_PLAYLISTITEM* playlistitem_create();

@@ -27,7 +27,8 @@ typedef struct {
     HCHANNEL mixerChannel;
     STREAMPROC* streamProc;
     SYNCPROC* syncProc;
-    //uint32_t syncProcHandles[100];
+    int syncProcHandles[100];
+    int syncProcCount;
 } SSP_PLAYER_CHANNELS;
 
 typedef struct {

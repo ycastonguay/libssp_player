@@ -32,15 +32,21 @@ int SSP_GetVersion() {
     return SSP_VERSION;
 }
 
-int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
-
+SSP_ERROR SSP_Init() {
     // Create player if not created yet
     if(sspPlayer == NULL) {
         sspPlayer = player_create();
     }
 
-    player_init(sspPlayer, device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
-    return SSP_OK;
+    return player_init(sspPlayer);
+}
+
+SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
+    return player_initDevice(sspPlayer, deviceId, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
+}
+
+SSP_ERROR SSP_FreeDevice() {
+    return player_freeDevice(sspPlayer);
 }
 
 #pragma mark Callbacks
@@ -55,28 +61,19 @@ void SSP_RemovePlaylistIndexChangedCallback() {
 
 #pragma mark Device
 
-SSP_DEVICE* SSP_GetDevice() {
-    //SSP_DEVICE* deviceCopy = malloc(sizeof(SSP_DEVICE));
-    //memcpy(deviceCopy, sspPlayer->device, sizeof(SSP_DEVICE));
-    // TODO: Do we have to copy strings too? device_copy would then be useful?
-    //printf("---> getDevice - name: %s\n", deviceCopy->name);
-    //return deviceCopy;
+void SSP_GetDevice(SSP_DEVICE* device) {
 
-    printf("---> getDevice - name: %s\n", sspPlayer->device->name);
-    return sspPlayer->device;
-}
+    // TODO: Find a better way to copy structs w/ strings, memcpy?
+    SSP_DEVICE *deviceToCopy = sspPlayer->device;
+    device->deviceId = deviceToCopy->deviceId;
+    device->isInitialized = deviceToCopy->isInitialized;
+    //device->name = malloc(sizeof(deviceToCopy->name)); // works in c, crashes in c# and vice versa!
 
-void SSP_GetDeviceNew(SSP_DEVICE* device) {
-    //device = sspPlayer->device;
-
-    //SSP_DEVICE* deviceCopy = malloc(sizeof(SSP_DEVICE));
-    //device = malloc(sizeof(SSP_DEVICE));
-    //memcpy(device, sspPlayer->device, sizeof(SSP_DEVICE));
-    //device->test = 200;
-
+    strcpy(device->name, deviceToCopy->name);
     device->test = 15000;
-    // TODO: Do we have to copy strings too? device_copy would then be useful?
-    //printf("---> getDevice - name: %s\n", deviceCopy->name);
+
+    // Can't get this to work in C#...
+    //memcpy(device, sspPlayer->device, sizeof(SSP_DEVICE));
     printf("---> getDevice - name: %s\n", sspPlayer->device->name);
 }
 

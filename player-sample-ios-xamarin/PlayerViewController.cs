@@ -44,25 +44,28 @@ namespace playersampleiosxamarin
             lblVersion.Text = string.Format("Version {0}", version);
             Console.WriteLine("libssp_player version: {0}", version);
 
-            int error = SSP.SSP_Init(-1, 44100, 1000, 100, true);
+            int error = SSP.SSP_Init();
             if (error != SSP.SSP_OK)
             {
                 Console.WriteLine("libssp_player init failed with error code: {0}", error);
                 return;
             }
 
-            //Marshal.StructureToPtr(this,
-            SSP.SSP_SetPlaylistIndexChangedCallback(PlaylistIndexChanged, IntPtr.Zero);
-            SSP_DEVICE device = SSP.SSP_GetDevice();
+            error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);
+            if (error != SSP.SSP_OK)
+            {
+                Console.WriteLine("libssp_player init device failed with error code: {0}", error);
+                return;
+            }
 
-            SSP_DEVICE deviceNew = new SSP_DEVICE();
-            deviceNew.name = "Test name";
-            deviceNew.deviceId = 100;
-            //SSP.SSP_GetDeviceNew(ref deviceNew);
-            SSP.SSP_GetDeviceNew(deviceNew);
+            SSP.SSP_SetPlaylistIndexChangedCallback(PlaylistIndexChanged, IntPtr.Zero);
+
+            SSP_DEVICE device = new SSP_DEVICE();
+            device.name = "Test name";
+            //device.deviceId = 100;
+            SSP.SSP_GetDevice(ref device);
 
             Console.WriteLine("libssp_player init successful!");
-
         }
 
         private void HandleTimerElapsed(object sender, ElapsedEventArgs e)

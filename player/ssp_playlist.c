@@ -143,8 +143,11 @@ SSP_PLAYLISTITEM* playlist_getItemAt(SSP_PLAYLIST *playlist, int index) {
 }
 
 SSP_PLAYLISTITEM* playlist_getCurrentItem(SSP_PLAYLIST *playlist) {
-    SSP_PLAYLISTITEM* currentItem = playlist_getItemAt(playlist, playlist->currentIndex);
-    return currentItem;
+    return playlist_getItemAt(playlist, playlist->currentIndex);
+}
+
+SSP_PLAYLISTITEM* playlist_getCurrentMixerItem(SSP_PLAYLIST *playlist) {
+    return playlist_getItemAt(playlist, playlist->currentMixerIndex);
 }
 
 int playlist_getCount(SSP_PLAYLIST *playlist) {

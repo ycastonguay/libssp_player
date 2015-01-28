@@ -39,6 +39,7 @@ typedef struct {
 } SSP_MIXER;
 
 typedef struct {
+    // get
     bool isPlaying;
     bool isPlayingLoop;
     bool isPaused;
@@ -46,6 +47,8 @@ typedef struct {
     bool isSettingPosition;
     bool isEQEnabled;
     ssp_player_state_t stateType;
+
+    // get/set
     ssp_player_repeat_t repeatType;
     float volume; // should be merged with mixer?
     float timeShifting;

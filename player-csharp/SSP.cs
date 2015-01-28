@@ -34,16 +34,19 @@ namespace org.sessionsapp.player
         public static extern int SSP_GetVersion();
 
         [DllImport (DllImportValue)]
-        public static extern int SSP_Init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+        public static extern int SSP_Init();
 
         [DllImport (DllImportValue)]
-        public static extern SSP_DEVICE SSP_GetDevice();
+        public static extern int SSP_InitDevice(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+
+        [DllImport (DllImportValue)]
+        public static extern int SSP_FreeDevice();
 
         //[DllImport (DllImportValue)]
-        [DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDeviceNew")]
-        //public static extern void SSP_GetDeviceNew(ref SSP_DEVICE device);
+        [DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
+        public static extern void SSP_GetDevice(ref SSP_DEVICE device);
         //public static extern void SSP_GetDeviceNew(SSP_DEVICE device);
-        public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
+        //public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
 
         [DllImport (DllImportValue)]
         public static extern long SSP_GetPosition();

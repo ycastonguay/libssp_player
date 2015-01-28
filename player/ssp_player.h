@@ -26,7 +26,9 @@
 SSP_PLAYER* player_create();
 void player_free(SSP_PLAYER* sspPlayer);
 
-SSP_ERROR player_init(SSP_PLAYER* player, int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+SSP_ERROR player_init(SSP_PLAYER* player);
+SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+SSP_ERROR player_freeDevice(SSP_PLAYER* player);
 
 SSP_ERROR player_pause(SSP_PLAYER* player);
 SSP_ERROR player_stop(SSP_PLAYER* player);

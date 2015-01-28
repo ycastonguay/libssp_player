@@ -22,6 +22,7 @@
 #include "ssp_eqpreset.h"
 #include "ssp_playhead.h"
 #include "ssp_bass.h"
+#include "ssp_playerchannels.h"
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
 #include "bassmix.h"
@@ -35,9 +36,9 @@ SSP_PLAYER* player_create() {
     player->playlist = playlist_create();
     player->eqPreset = eqpreset_create();
     player->playhead = playhead_create();
-    player->device = device_create(); // uses default device
+    //player->device = device_create(); // uses default device
     player->mixer = mixer_create();
-    player->channels = malloc(sizeof(SSP_PLAYER_CHANNELS));
+    player->channels = playerChannels_create();
     player->loop = NULL;
     player->marker = NULL;
     return player;
@@ -83,7 +84,34 @@ void player_free(SSP_PLAYER* player) {
     }
 }
 
-SSP_ERROR player_init(SSP_PLAYER* player, int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
+SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
+
+//#ifdef _WIN32 // Windows/CE
+//    BASS_PluginLoad("bassflac.dll", 0);
+//#elif __linux__ // Linux
+//    BASS_PluginLoad("libbassflac.so", 0);
+//#elif TARGET_OS_IPHONE // iOS
+//    extern void BASSFLACplugin;
+//    BASS_PluginLoad(&BASSFLACplugin, 0);
+//#else // OSX
+//    BASS_PluginLoad("libbassflac.dylib", 0);
+//#endif
+
+    return SSP_OK;
+}
+
+SSP_ERROR player_init(SSP_PLAYER* player) {
+    SSP_ERROR error;
+
+    error = player_loadPlugins(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    return SSP_OK;
+}
+
+SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
     // TODO: validate input
 
     // Set mixer properties
@@ -92,15 +120,32 @@ SSP_ERROR player_init(SSP_PLAYER* player, int device, int sampleRate, int buffer
     player->mixer->updatePeriod = updatePeriod;
     player->mixer->useFloatingPoint = useFloatingPoint;
 
+    // Set device properties
+    player->device = device_create();
+    player->device->deviceId = deviceId;
+
     // Reset playhead
     playhead_reset(player->playhead);
 
-    SSP_ERROR error = bass_init(device, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
+    SSP_ERROR error = bass_init(deviceId, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
     return error;
 }
 
-SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
-    //BASS_PluginLoad(<#(const char*)file#>, <#(DWORD)flags#>)
+SSP_ERROR player_freeDevice(SSP_PLAYER* player) {
+
+    // Channels should be freed already with player_stop()
+
+    // Free BASS resources
+    bool success = BASS_Free();
+    if(!success) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    // Free device
+    device_free(player->device);
+    player->device = NULL;
+
     return SSP_OK;
 }
+
 
