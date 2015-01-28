@@ -18,8 +18,8 @@
 #ifndef player_ssp_privatestructs____FILEEXTENSION___
 #define player_ssp_privatestructs____FILEEXTENSION___
 
-#import "bass.h"
-#import "ssp_structs.h"
+#include "bass.h"
+#include "ssp_structs.h"
 
 typedef struct {
     HCHANNEL streamChannel;

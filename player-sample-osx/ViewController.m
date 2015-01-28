@@ -26,9 +26,16 @@ void testCallback(void* user) {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    SSP_ERROR error = SSP_Init(-1, 44100, 1000, 100, true);
+    SSP_ERROR error = SSP_Init();
     if(error != SSP_OK) {
         NSLog(@"Error!");
+        return;
+    }
+
+    error = SSP_InitDevice(-1, 44100, 1000, 100, true);
+    if(error != SSP_OK) {
+        NSLog(@"Error!");
+        return;
     }
 
     SSP_SetPlaylistIndexChangedCallback(testCallback, NULL); //(void *)self);

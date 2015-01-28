@@ -18,9 +18,9 @@
 #ifndef player_ssp_playlist____FILEEXTENSION___
 #define player_ssp_playlist____FILEEXTENSION___
 
-#import "ssp_structs.h"
-#import "ssp_errors.h"
-#import "ssp_privatestructs.h"
+#include "ssp_structs.h"
+#include "ssp_errors.h"
+#include "ssp_privatestructs.h"
 
 SSP_PLAYLIST* playlist_create();
 void playlist_free(SSP_PLAYLIST *playlist);
