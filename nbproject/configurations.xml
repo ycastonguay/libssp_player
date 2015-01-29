@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="bass" displayName="bass" projectFiles="true">
+      <itemPath>bass/bass.h</itemPath>
+      <itemPath>bass/bass_fx.h</itemPath>
+      <itemPath>bass/bassenc.h</itemPath>
+      <itemPath>bass/bassflac.h</itemPath>
+      <itemPath>bass/bassmidi.h</itemPath>
+      <itemPath>bass/bassmix.h</itemPath>
+      <itemPath>bass/basswv.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="player" displayName="player" projectFiles="true">
+      <itemPath>player/ssp_bass.c</itemPath>
+      <itemPath>player/ssp_bass.h</itemPath>
+      <itemPath>player/ssp_callbacks.h</itemPath>
+      <itemPath>player/ssp_convertaudio.c</itemPath>
+      <itemPath>player/ssp_convertaudio.h</itemPath>
+      <itemPath>player/ssp_device.c</itemPath>
+      <itemPath>player/ssp_device.h</itemPath>
+      <itemPath>player/ssp_eqpreset.c</itemPath>
+      <itemPath>player/ssp_eqpreset.h</itemPath>
+      <itemPath>player/ssp_errors.h</itemPath>
+      <itemPath>player/ssp_loop.c</itemPath>
+      <itemPath>player/ssp_loop.h</itemPath>
+      <itemPath>player/ssp_marker.c</itemPath>
+      <itemPath>player/ssp_marker.h</itemPath>
+      <itemPath>player/ssp_mixer.c</itemPath>
+      <itemPath>player/ssp_mixer.h</itemPath>
+      <itemPath>player/ssp_player.c</itemPath>
+      <itemPath>player/ssp_player.h</itemPath>
+      <itemPath>player/ssp_player_playback.c</itemPath>
+      <itemPath>player/ssp_player_seeking.c</itemPath>
+      <itemPath>player/ssp_playerchannels.c</itemPath>
+      <itemPath>player/ssp_playerchannels.h</itemPath>
+      <itemPath>player/ssp_playerplugins.c</itemPath>
+      <itemPath>player/ssp_playerplugins.h</itemPath>
+      <itemPath>player/ssp_playhead.c</itemPath>
+      <itemPath>player/ssp_playhead.h</itemPath>
+      <itemPath>player/ssp_playlist.c</itemPath>
+      <itemPath>player/ssp_playlist.h</itemPath>
+      <itemPath>player/ssp_privatestructs.h</itemPath>
+      <itemPath>player/ssp_public.c</itemPath>
+      <itemPath>player/ssp_public.h</itemPath>
+      <itemPath>player/ssp_structs.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="vector" displayName="vector" projectFiles="true">
+      <itemPath>vector/vector.c</itemPath>
+      <itemPath>vector/vector.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>player</Elem>
+    <Elem>bass</Elem>
+    <Elem>vector</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>Cygwin_4.x_1|Cygwin_4.x</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <standard>3</standard>
+          <commandLine>-Lbass/win32 -Lbass/osx -lbass -lbassmix -lbass_fx</commandLine>
+        </cTool>
+      </compileType>
+      <item path="bass/bass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bass_fx.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassenc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassflac.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassmidi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassmix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/basswv.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_bass.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_bass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_callbacks.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_convertaudio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_convertaudio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_device.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_eqpreset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_eqpreset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_errors.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_loop.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_loop.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_marker.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_marker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_mixer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_mixer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_player.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_player_playback.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_seeking.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playerchannels.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playerchannels.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playerplugins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playerplugins.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playhead.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playhead.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playlist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_privatestructs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_public.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_public.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_structs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vector/vector.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="vector/vector.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="bass/bass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bass_fx.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassenc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassflac.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassmidi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/bassmix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="bass/basswv.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_bass.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_bass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_callbacks.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_convertaudio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_convertaudio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_device.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_eqpreset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_eqpreset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_errors.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_loop.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_loop.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_marker.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_marker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_mixer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_mixer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_player.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_player_playback.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_seeking.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playerchannels.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playerchannels.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playerplugins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playerplugins.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playhead.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playhead.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playlist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_privatestructs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_public.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_public.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_structs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vector/vector.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="vector/vector.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

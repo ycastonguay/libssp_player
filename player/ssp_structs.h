@@ -19,6 +19,7 @@
 #define player_structs_h
 
 #include <stdbool.h>
+#include <stdint.h>
 #include "ssp_callbacks.h"
 
 typedef enum {SSP_PLAYER_STATE_UNKNOWN, SSP_PLAYER_STATE_INITIALIZED, SSP_PLAYER_STATE_STOPPED, SSP_PLAYER_STATE_PLAYING, SSP_PLAYER_STATE_PAUSED} ssp_player_state_t;

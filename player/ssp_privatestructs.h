@@ -18,7 +18,7 @@
 #ifndef player_ssp_privatestructs____FILEEXTENSION___
 #define player_ssp_privatestructs____FILEEXTENSION___
 
-#include "bass.h"
+#include "../bass/bass.h"
 #include "ssp_structs.h"
 
 typedef struct {

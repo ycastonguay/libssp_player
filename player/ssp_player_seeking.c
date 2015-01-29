@@ -25,7 +25,6 @@
 #include "ssp_bass.h"
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
-#include "bassmix.h"
 
 uint64_t player_getPosition(SSP_PLAYER* player) {
     return bass_getPosition(player->channels->mixerChannel);

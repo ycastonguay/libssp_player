@@ -17,9 +17,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-//#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
-//#include "ssp_player_playback.h"
+#include "../bass/bassmix.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_eqpreset.h"
@@ -27,7 +26,6 @@
 #include "ssp_bass.h"
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
-#include "bassmix.h"
 
 #pragma mark Callbacks
 

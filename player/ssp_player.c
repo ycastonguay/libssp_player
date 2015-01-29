@@ -25,7 +25,6 @@
 #include "ssp_playerchannels.h"
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
-#include "bassmix.h"
 #include "ssp_mixer.h"
 #include "ssp_device.h"
 #include "ssp_playerplugins.h"

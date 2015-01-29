@@ -19,9 +19,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "ssp_player.h"
-#include "bass.h"
-#include "bass_fx.h"
-#include "bassmix.h"
+#include "../bass/bass_fx.h"
+#include "../bass/bassmix.h"
 
 SSP_ERROR bass_getError(char* message) {
     int error = BASS_ErrorGetCode();

@@ -18,10 +18,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../vector/vector.h"
 #include "ssp_errors.h"
 #include "ssp_structs.h"
 #include "ssp_playlist.h"
-#include "vector.h"
 #include "ssp_bass.h"
 
 #pragma mark Playlist Items

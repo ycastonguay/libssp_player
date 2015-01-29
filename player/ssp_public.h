@@ -25,54 +25,64 @@
 
 #define SSP_VERSION 12
 
-int SSP_GetVersion();
-SSP_ERROR SSP_Init();
-SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
-SSP_ERROR SSP_FreeDevice();
-SSP_ERROR SSP_Free();
+#ifdef _WIN32
+#    ifdef LIBRARY_EXPORTS
+#        define LIBRARY_API __declspec(dllexport)
+#    else
+#        define LIBRARY_API __declspec(dllimport)
+#    endif
+#else
+#    define LIBRARY_API
+#endif
+
+LIBRARY_API int SSP_GetVersion();
+LIBRARY_API SSP_ERROR SSP_Init();
+LIBRARY_API SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+LIBRARY_API SSP_ERROR SSP_FreeDevice();
+LIBRARY_API SSP_ERROR SSP_Free();
 
 // Callbacks
-void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
-void SSP_RemovePlaylistIndexChangedCallback();
+LIBRARY_API void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
+LIBRARY_API void SSP_RemovePlaylistIndexChangedCallback();
 
 // Properties
-void SSP_GetDevice(SSP_DEVICE* device);
-SSP_PLAYHEAD* SSP_GetPlayhead();
-SSP_MIXER* SSP_GetMixer();
+LIBRARY_API void SSP_GetDevice(SSP_DEVICE* device);
+LIBRARY_API SSP_PLAYHEAD* SSP_GetPlayhead();
+LIBRARY_API SSP_MIXER* SSP_GetMixer();
 
 // EQ
-SSP_EQPRESET* SSP_GetEQPreset();
-void SSP_SetEQPreset(SSP_EQPRESET* preset);
+LIBRARY_API SSP_EQPRESET* SSP_GetEQPreset();
+LIBRARY_API void SSP_SetEQPreset(SSP_EQPRESET* preset);
 
-bool SSP_GetEQBypassed();
-void SSP_SetEQBypassed(bool bypassed);
+LIBRARY_API bool SSP_GetEQBypassed();
+LIBRARY_API void SSP_SetEQBypassed(bool bypassed);
 
 // Loops
-SSP_LOOP* SSP_GetLoop();
-void SSP_SetLoop(SSP_LOOP* loop);
+LIBRARY_API SSP_LOOP* SSP_GetLoop();
+LIBRARY_API void SSP_SetLoop(SSP_LOOP* loop);
 
 // Playback
-SSP_ERROR SSP_Play();
-SSP_ERROR SSP_Pause();
-SSP_ERROR SSP_Stop();
-SSP_ERROR SSP_Previous();
-SSP_ERROR SSP_Next();
-SSP_ERROR SSP_GoTo(int index);
+LIBRARY_API SSP_ERROR SSP_Play();
+LIBRARY_API SSP_ERROR SSP_Pause();
+LIBRARY_API SSP_ERROR SSP_Stop();
+LIBRARY_API SSP_ERROR SSP_Previous();
+LIBRARY_API SSP_ERROR SSP_Next();
+LIBRARY_API SSP_ERROR SSP_GoTo(int index);
 //void SSP_GoTo(int playlistItemId); // how do we manage ids?
 
-void SSP_Seek();
-uint64_t SSP_GetPosition();
-SSP_ERROR SSP_SetPosition(uint64_t position);
+LIBRARY_API void SSP_Seek();
+LIBRARY_API uint64_t SSP_GetPosition();
+LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
 //void SSP_SetPosition(double positionPercentage);
 
 // Playlist
-int SSP_Playlist_AddItem(char* filePath);
-int SSP_Playlist_InsertItemAt(char* filePath, int index);
-int SSP_Playlist_RemoveItemAt(int index);
-int SSP_Playlist_Clear();
-SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
-int SSP_Playlist_GetCount();
-int SSP_Playlist_GetCurrentIndex();
+LIBRARY_API int SSP_Playlist_AddItem(char* filePath);
+LIBRARY_API int SSP_Playlist_InsertItemAt(char* filePath, int index);
+LIBRARY_API int SSP_Playlist_RemoveItemAt(int index);
+LIBRARY_API int SSP_Playlist_Clear();
+LIBRARY_API SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
+LIBRARY_API int SSP_Playlist_GetCount();
+LIBRARY_API int SSP_Playlist_GetCurrentIndex();
 
 // C# class:
 
