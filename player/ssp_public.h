@@ -29,6 +29,7 @@ int SSP_GetVersion();
 SSP_ERROR SSP_Init();
 SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 SSP_ERROR SSP_FreeDevice();
+SSP_ERROR SSP_Free();
 
 // Callbacks
 void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);

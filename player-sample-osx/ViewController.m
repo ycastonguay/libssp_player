@@ -20,28 +20,29 @@
 void testCallback(void* user) {
     printf("Test callback\n");
     //[_lblPosition stringValue] = @"";
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initializePlayer];
+}
 
+- (void)initializePlayer {
     SSP_ERROR error = SSP_Init();
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
     }
-
+    
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
     }
-
+    
     SSP_SetPlaylistIndexChangedCallback(testCallback, NULL); //(void *)self);
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
-    // Do any additional setup after loading the view.    
 }
 
 - (void)timerElapsed {
@@ -78,6 +79,7 @@ void testCallback(void* user) {
 }
 
 - (IBAction)actionClose:(id)sender {
+    SSP_Free();
     [NSApp terminate:self];
 }
 

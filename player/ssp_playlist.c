@@ -81,7 +81,7 @@ void playlist_free(SSP_PLAYLIST *playlist) {
         playlist->name = NULL;
     }
     if(playlist->callbackPlaylistIndexChanged) {
-        free(playlist->callbackPlaylistIndexChanged);
+        //free(playlist->callbackPlaylistIndexChanged);
         playlist->callbackPlaylistIndexChanged = NULL;
     }
     playlist->callbackPlaylistIndexChangedUser = NULL;

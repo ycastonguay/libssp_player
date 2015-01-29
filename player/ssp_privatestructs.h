@@ -22,6 +22,14 @@
 #include "ssp_structs.h"
 
 typedef struct {
+    HPLUGIN flac;
+    HPLUGIN ape;
+    HPLUGIN mpc;
+    HPLUGIN tta;
+    HPLUGIN wv;
+} SSP_PLAYER_PLUGINS;
+
+typedef struct {
     HCHANNEL streamChannel;
     HCHANNEL fxChannel;
     HCHANNEL mixerChannel;
@@ -34,6 +42,7 @@ typedef struct {
 typedef struct {
     // private
     SSP_PLAYER_CHANNELS* channels;
+    SSP_PLAYER_PLUGINS* plugins;
 
     // getters
     // what happens if someone goes getDevice() and changes the properties?

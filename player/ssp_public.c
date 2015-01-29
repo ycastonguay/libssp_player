@@ -49,6 +49,10 @@ SSP_ERROR SSP_FreeDevice() {
     return player_freeDevice(sspPlayer);
 }
 
+SSP_ERROR SSP_Free() {
+    return player_free(sspPlayer);
+}
+
 #pragma mark Callbacks
 
 void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void *user) {

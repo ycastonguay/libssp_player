@@ -9,23 +9,45 @@
 #import "ViewController.h"
 #import "ssp_public.h"
 
-@interface ViewController ()
-
+@interface ViewController () {
+    NSTimer *timer;
+}
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    
-    SSP_Init(-1, 44100, 1000, 100, true);
-    
+//static void testCallback() {
+void testCallback(void* user) {
+    printf("Test callback\n");
+    //[_lblPosition stringValue] = @"";
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self initializePlayer];
+}
+
+- (void)initializePlayer {
+    SSP_ERROR error = SSP_Init();
+    if(error != SSP_OK) {
+        NSLog(@"Error!");
+        return;
+    }
+    
+    error = SSP_InitDevice(-1, 44100, 1000, 100, true);
+    if(error != SSP_OK) {
+        NSLog(@"Error!");
+        return;
+    }
+    
+    SSP_SetPlaylistIndexChangedCallback(testCallback, NULL); //(void *)self);
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
+}
+
+- (void)timerElapsed {
+    uint64_t position = SSP_GetPosition();
+//    self.lblPosition.stringValue = [NSString stringWithFormat:@"Position (bytes): %lld", position];
 }
 
 - (IBAction)actionOpenAudioFiles:(id)sender {

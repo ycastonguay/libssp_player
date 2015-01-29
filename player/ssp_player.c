@@ -28,6 +28,7 @@
 #include "bassmix.h"
 #include "ssp_mixer.h"
 #include "ssp_device.h"
+#include "ssp_playerplugins.h"
 
 #pragma mark Initialization
 
@@ -39,12 +40,18 @@ SSP_PLAYER* player_create() {
     //player->device = device_create(); // uses default device
     player->mixer = mixer_create();
     player->channels = playerChannels_create();
+    player->plugins = playerPlugins_create();
     player->loop = NULL;
     player->marker = NULL;
     return player;
 }
 
-void player_free(SSP_PLAYER* player) {
+SSP_ERROR player_free(SSP_PLAYER* player) {
+    SSP_ERROR error = player_freePlugins(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     if(player->playlist) {
         playlist_free(player->playlist);
         free(player->playlist);
@@ -71,8 +78,14 @@ void player_free(SSP_PLAYER* player) {
         player->mixer = NULL;
     }
     if(player->channels) {
+        playerChannels_free(player->channels);
         free(player->channels);
         player->channels = NULL;
+    }
+    if(player->plugins) {
+        playerPlugins_free(player->plugins);
+        free(player->plugins);
+        player->plugins = NULL;
     }
     if(player->loop) {
         free(player->loop);
@@ -82,20 +95,93 @@ void player_free(SSP_PLAYER* player) {
         free(player->marker);
         player->marker = NULL;
     }
+
+    return SSP_OK;
 }
 
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
+    
+    #ifdef _WIN32 // Windows/CE
+        BASS_PluginLoad("bassflac.dll", 0);
+    #elif __linux__ // Linux
+        BASS_PluginLoad("libbassflac.so", 0);
+    #elif TARGET_IOS // iOS
+        extern void BASS_APEplugin, BASSFLACplugin, BASS_MPCplugin, BASSWVplugin;
+        player->plugins->ape = BASS_PluginLoad(&BASS_APEplugin, 0);
+        if(player->plugins->ape == 0) {
+            return bass_getError("player_loadPlugins (APE)");
+        }
+        player->plugins->flac = BASS_PluginLoad(&BASSFLACplugin, 0);
+        if(player->plugins->flac == 0) {
+            return bass_getError("player_loadPlugins (FLAC)");
+        }
+        player->plugins->mpc = BASS_PluginLoad(&BASS_MPCplugin, 0);
+        if(player->plugins->mpc == 0) {
+            return bass_getError("player_loadPlugins (MPC)");
+        }
+        player->plugins->wv = BASS_PluginLoad(&BASSWVplugin, 0);
+        if(player->plugins->wv == 0) {
+            return bass_getError("player_loadPlugins (WV)");
+        }
+    #elif TARGET_OSX
+        player->plugins->ape = BASS_PluginLoad("libbass_ape.dylib", 0);
+        if(player->plugins->ape == 0) {
+            return bass_getError("player_loadPlugins (APE)");
+            // TODO: shall we return SSP_ERROR_PLUGIN instead?
+        }
+        player->plugins->flac = BASS_PluginLoad("libbassflac.dylib", 0);
+        if(player->plugins->flac == 0) {
+            return bass_getError("player_loadPlugins (FLAC)");
+        }
+        player->plugins->mpc = BASS_PluginLoad("libbass_mpc.dylib", 0);
+        if(player->plugins->mpc == 0) {
+            return bass_getError("player_loadPlugins (MPC)");
+        }
+        player->plugins->tta = BASS_PluginLoad("libbass_tta.dylib", 0);
+        if(player->plugins->tta == 0) {
+            return bass_getError("player_loadPlugins (TTA)");
+        }
+        player->plugins->wv = BASS_PluginLoad("libbasswv.dylib", 0);
+        if(player->plugins->wv == 0) {
+            return bass_getError("player_loadPlugins (WV)");
+        }
+    #endif
 
-//#ifdef _WIN32 // Windows/CE
-//    BASS_PluginLoad("bassflac.dll", 0);
-//#elif __linux__ // Linux
-//    BASS_PluginLoad("libbassflac.so", 0);
-//#elif TARGET_OS_IPHONE // iOS
-//    extern void BASSFLACplugin;
-//    BASS_PluginLoad(&BASSFLACplugin, 0);
-//#else // OSX
-//    BASS_PluginLoad("libbassflac.dylib", 0);
-//#endif
+    return SSP_OK;
+}
+
+SSP_ERROR player_freePlugins(SSP_PLAYER* player) {
+    bool success = false;
+    if(player->plugins->ape > 0) {
+        success = BASS_PluginFree(player->plugins->ape);
+        if(!success) {
+            return bass_getError("player_freePlugins (APE)");
+        }
+    }
+    if(player->plugins->flac > 0) {
+        success = BASS_PluginFree(player->plugins->flac);
+        if(!success) {
+            return bass_getError("player_freePlugins (FLAC)");
+        }
+    }
+    if(player->plugins->mpc > 0) {
+        success = BASS_PluginFree(player->plugins->mpc);
+        if(!success) {
+            return bass_getError("player_freePlugins (MPC)");
+        }
+    }
+    if(player->plugins->tta > 0) {
+        success = BASS_PluginFree(player->plugins->tta);
+        if(!success) {
+            return bass_getError("player_freePlugins (TTA)");
+        }
+    }
+    if(player->plugins->wv > 0) {
+        success = BASS_PluginFree(player->plugins->wv);
+        if(!success) {
+            return bass_getError("player_freePlugins (WV)");
+        }
+    }
 
     return SSP_OK;
 }

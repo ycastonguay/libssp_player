@@ -25,6 +25,13 @@ typedef enum {SSP_PLAYER_STATE_UNKNOWN, SSP_PLAYER_STATE_INITIALIZED, SSP_PLAYER
 typedef enum {SSP_PLAYER_REPEAT_OFF, SSP_PLAYER_REPEAT_PLAYLIST, SSP_PLAYER_REPEAT_SONG} ssp_player_repeat_t;
 
 typedef struct {
+    const char* str;
+    uint64_t bytes;
+    uint64_t ms;
+    uint64_t samples;
+} SSP_POSITION;
+
+typedef struct {
     const char* name;
     int deviceId;
     int test;
@@ -80,9 +87,8 @@ typedef struct {
 } SSP_LOOP;
 
 typedef struct {
-    char* filePath;
-    // consider using a static array
-    //char filePath[1024];
+    const char* filePath;
+    //char filePath[1024]; // consider using a static array
     int sampleRate;
     int numberOfChannels;
 } SSP_AUDIOFILE;

@@ -131,6 +131,8 @@
 		1C59444621F35BD65AFCF419 /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
 		1C5944711984F2D65F2ABA1A /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
 		1C594472F1A7933C6ADBF1E0 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
+		1C594484024B780ED5DA388A /* ssp_playerplugins.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594EF46E73104C11BEF7B4 /* ssp_playerplugins.c */; };
+		1C5944A33BE016981CC2B353 /* ssp_playerplugins.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594C5C2BC92629B194D9CB /* ssp_playerplugins.h */; };
 		1C5944E6BCE2B615F038E8A3 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C594502D9C7AEA0389B7D7B /* ssp_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594566CB46E0FA1CD32751 /* ssp_mixer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C5945171B74D272D51992CE /* ssp_loop.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5949D7AA53F24EADE8A734 /* ssp_loop.c */; };
@@ -139,6 +141,7 @@
 		1C5945F4B5B15209AB1E4E81 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C5946F2F99B0F2FDC42EC25 /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C5946FFE982BB7148142F7D /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
+		1C5948A758CF8B9F936B7B6A /* ssp_playerplugins.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594EF46E73104C11BEF7B4 /* ssp_playerplugins.c */; };
 		1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594F798C02977B507E8328 /* ssp_bass.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C59494C1DAEA2BD4511BBA6 /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
 		1C5949E8D26D0E53A2976B0C /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
@@ -148,6 +151,7 @@
 		1C594A36E4D73429B19D28BB /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C594A5ACF9DDCB9C5492CB1 /* ssp_playerchannels.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594B4882BDA7CE27C25CC9 /* ssp_playerchannels.c */; };
 		1C594A6A78A8A9893C384756 /* ssp_convertaudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5942559E650BF63784E7CF /* ssp_convertaudio.c */; };
+		1C594A6FA306005AA5FA95E4 /* ssp_playerplugins.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594EF46E73104C11BEF7B4 /* ssp_playerplugins.c */; };
 		1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FBA64AC8F10E45C0308 /* ssp_loop.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -334,9 +338,11 @@
 		1C594A6CA85B363632DEE303 /* ssp_device.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_device.c; sourceTree = "<group>"; };
 		1C594B417CD294938B1EED6E /* ssp_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_device.h; sourceTree = "<group>"; };
 		1C594B4882BDA7CE27C25CC9 /* ssp_playerchannels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playerchannels.c; sourceTree = "<group>"; };
+		1C594C5C2BC92629B194D9CB /* ssp_playerplugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_playerplugins.h; sourceTree = "<group>"; };
 		1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_marker.c; sourceTree = "<group>"; };
 		1C594D2B9EA3489C918EB120 /* ssp_eqpreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_eqpreset.h; sourceTree = "<group>"; };
 		1C594E89792D82E39300E9D8 /* ssp_public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_public.h; sourceTree = "<group>"; };
+		1C594EF46E73104C11BEF7B4 /* ssp_playerplugins.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playerplugins.c; sourceTree = "<group>"; };
 		1C594F798C02977B507E8328 /* ssp_bass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_bass.h; sourceTree = "<group>"; };
 		1C594FBA64AC8F10E45C0308 /* ssp_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_loop.h; sourceTree = "<group>"; };
 		1C594FDA7E1A8F41A5B9311D /* ssp_privatestructs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_privatestructs.h; sourceTree = "<group>"; };
@@ -636,6 +642,8 @@
 				1C594571D09145C91AAB4083 /* ssp_marker.h */,
 				1C594B4882BDA7CE27C25CC9 /* ssp_playerchannels.c */,
 				1C5943B90558531DDB80C177 /* ssp_playerchannels.h */,
+				1C594EF46E73104C11BEF7B4 /* ssp_playerplugins.c */,
+				1C594C5C2BC92629B194D9CB /* ssp_playerplugins.h */,
 			);
 			path = player;
 			sourceTree = "<group>";
@@ -756,6 +764,7 @@
 				1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */,
 				1C5942AFE52BEB544BEE4F07 /* ssp_marker.h in Headers */,
 				1C594DAFE9EA3906E9ABD360 /* ssp_playerchannels.h in Headers */,
+				1C5944A33BE016981CC2B353 /* ssp_playerplugins.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1086,6 +1095,7 @@
 				1C5945171B74D272D51992CE /* ssp_loop.c in Sources */,
 				1C5941E513777376F01E7EBA /* ssp_marker.c in Sources */,
 				1C594A5ACF9DDCB9C5492CB1 /* ssp_playerchannels.c in Sources */,
+				1C594A6FA306005AA5FA95E4 /* ssp_playerplugins.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1108,6 +1118,7 @@
 				1C5944711984F2D65F2ABA1A /* ssp_loop.c in Sources */,
 				1C594A32606D67D439FA9D2B /* ssp_marker.c in Sources */,
 				1C5945D2F387A224B3A42B52 /* ssp_playerchannels.c in Sources */,
+				1C594484024B780ED5DA388A /* ssp_playerplugins.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1130,6 +1141,7 @@
 				1C59428FC1F46270F1F166E1 /* ssp_loop.c in Sources */,
 				1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */,
 				1C5949FB02488ECFC63E2E35 /* ssp_playerchannels.c in Sources */,
+				1C5948A758CF8B9F936B7B6A /* ssp_playerplugins.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1211,10 +1223,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1 $(inherited) TARGET_IOS=1";
 				INFOPLIST_FILE = "player-sample-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1237,6 +1246,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_IOS=1";
 				INFOPLIST_FILE = "player-sample-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1259,6 +1269,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1280,6 +1291,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1300,10 +1312,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1 $(inherited) TARGET_OSX=1";
 				INFOPLIST_FILE = "player-sample-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1324,6 +1333,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_OSX=1";
 				INFOPLIST_FILE = "player-sample-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1484,6 +1494,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"TARGET_OSX=1",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1499,6 +1510,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_OSX=1";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bass/osx",
@@ -1513,7 +1525,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					"DEBUG=1",
+					"TARGET_IOS=1",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -1535,6 +1548,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_IOS=1";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

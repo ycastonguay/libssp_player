@@ -15,13 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef player_errors_h
-#define player_errors_h
+#ifndef __player__ssp_playerplugins__
+#define __player__ssp_playerplugins__
 
-#define SSP_OK                  0
-#define SSP_ERROR_UNKNOWN		1
-#define SSP_ERROR_PLUGIN		2
+#include <stdio.h>
+#include "ssp_privatestructs.h"
 
-#define SSP_ERROR int
+SSP_PLAYER_PLUGINS* playerPlugins_create();
+void playerPlugins_free(SSP_PLAYER_PLUGINS *plugins);
+void playerPlugins_reset(SSP_PLAYER_PLUGINS *plugins);
 
-#endif
+#endif /* defined(__player__ssp_playerplugins__) */

@@ -27,7 +27,9 @@ SSP_DEVICE* device_create() {
 
 void device_free(SSP_DEVICE *device) {
     if(device->name != NULL) {
-        free(device->name);
+        //free(device->name); // crashes on osx
+        //free((char *)device->name); // crashes on osx
+        //free((void *)device->name); // crashes on osx
         device->name = NULL;
     }
 }
