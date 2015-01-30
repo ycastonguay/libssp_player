@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 12
+#define SSP_VERSION 14
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS

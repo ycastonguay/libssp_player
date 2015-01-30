@@ -27,7 +27,7 @@ SSP_EQPRESET* eqpreset_create() {
 
 void eqpreset_free(SSP_EQPRESET *preset) {
     if(preset->name) {
-        free(preset->name);
+        //free(preset->name);
         preset->name = NULL;
     }
 }

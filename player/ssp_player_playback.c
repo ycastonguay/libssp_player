@@ -187,7 +187,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
     }
     else
     {
-        nextPlaylistIndex = player->playlist->currentIndex++;
+        nextPlaylistIndex = player->playlist->currentIndex + 1;
     }
 
     printf("player_playerSyncProc - playbackStopped: %d playlistBackToStart: %d nextPlaylistIndex: %d\n", playbackStopped, playlistBackToStart, nextPlaylistIndex);
@@ -199,6 +199,9 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 //            offset = (long)((float)offset * 1.5f);
 //
 //        // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
+//        float sampleRate;
+//        BASS_ChannelGetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
+//
 //        if (!playbackStopped && _mixerChannel.SampleRate != Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate)
 //            _mixerChannel.SetSampleRate(Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate);
 //

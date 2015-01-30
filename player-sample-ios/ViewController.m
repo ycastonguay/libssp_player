@@ -17,7 +17,7 @@
 @implementation ViewController
 
 //static void testCallback() {
-void testCallback(void* user) {
+void playlistIndexChangedCallback(void *user) {
     printf("Test callback\n");
     //[_lblPosition stringValue] = @"";
 }
@@ -39,8 +39,8 @@ void testCallback(void* user) {
         NSLog(@"Error!");
         return;
     }
-    
-    SSP_SetPlaylistIndexChangedCallback(testCallback, NULL); //(void *)self);
+
+    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL); //(void *)self);
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
 }
