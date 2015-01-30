@@ -33,21 +33,18 @@ include $(PREBUILT_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_CFLAGS += -std=c99
 LOCAL_MODULE    := libssp_player
-LOCAL_SRC_FILES := ../player/ssp_bass.c
-LOCAL_SRC_FILES := ../player/ssp_convertaudio.c
-LOCAL_SRC_FILES := ../player/ssp_device.c
-LOCAL_SRC_FILES := ../player/ssp_eqpreset.c
-LOCAL_SRC_FILES := ../player/ssp_loop.c
-LOCAL_SRC_FILES := ../player/ssp_marker.c
-LOCAL_SRC_FILES := ../player/ssp_mixer.c
-LOCAL_SRC_FILES := ../player/ssp_player_playback.c
-LOCAL_SRC_FILES := ../player/ssp_player_seeking.c
-LOCAL_SRC_FILES := ../player/ssp_player.c
-LOCAL_SRC_FILES := ../player/ssp_playerchannels.c
-LOCAL_SRC_FILES := ../player/ssp_playerplugins.c
-LOCAL_SRC_FILES := ../player/ssp_playhead.c
-LOCAL_SRC_FILES := ../player/ssp_playlist.c
-LOCAL_SRC_FILES := ../player/ssp_public.c
-LOCAL_SRC_FILES := ../vector/vector.c
-LOCAL_SHARED_LIBRARIES := bass, bass_fx, bassmix
+
+VECTOR_FILES  := $(wildcard $(LOCAL_PATH)/../vector/*.c)
+VECTOR_FILES  := $(VECTOR_FILES:$(LOCAL_PATH)/%=%)
+
+PLAYER_FILES  := $(wildcard $(LOCAL_PATH)/../player/*.c)
+PLAYER_FILES  := $(PLAYER_FILES:$(LOCAL_PATH)/%=%)
+
+LOCAL_SRC_FILES := $(VECTOR_FILES)
+LOCAL_SRC_FILES += $(PLAYER_FILES)
+
+LOCAL_SHARED_LIBRARIES := bass
+LOCAL_SHARED_LIBRARIES += bass_fx
+LOCAL_SHARED_LIBRARIES += bassmix
+
 include $(BUILD_SHARED_LIBRARY)
