@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=Cygwin_4.x_1-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin_4.x_1-Windows
-CND_ARTIFACT_NAME_Debug=liblibssp_player.dll
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin_4.x_1-Windows/liblibssp_player.dll
-CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin_4.x_1-Windows/package
-CND_PACKAGE_NAME_Debug=liblibsspplayer.dll.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin_4.x_1-Windows/package/liblibsspplayer.dll.tar
+CND_PLATFORM_Debug=GNU-Linux-x86
+CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
+CND_ARTIFACT_NAME_Debug=liblibssp_player.so
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/liblibssp_player.so
+CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
+CND_PACKAGE_NAME_Debug=liblibsspplayer.so.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/liblibsspplayer.so.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin_4.x-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin_4.x-Windows

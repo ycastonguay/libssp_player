@@ -81,14 +81,17 @@
   <confs>
     <conf name="Debug" type="2">
       <toolsSet>
-        <compilerSet>Cygwin_4.x_1|Cygwin_4.x</compilerSet>
+        <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
           <standard>3</standard>
-          <commandLine>-Lbass/win32 -Lbass/osx -lbass -lbassmix -lbass_fx</commandLine>
+          <commandLine>-Lbass/win32 -Lbass/osx -Lbass/linux -Lbass/linux/x64 -lbass -lbassmix -lbass_fx</commandLine>
+          <preprocessorList>
+            <Elem>LINUX</Elem>
+          </preprocessorList>
         </cTool>
       </compileType>
       <item path="bass/bass.h" ex="false" tool="3" flavor2="0">

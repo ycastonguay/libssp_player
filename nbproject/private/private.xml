@@ -6,16 +6,6 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Sources/libssp_player/player/ssp_privatestructs.h</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_bass.c</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_player.c</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_structs.h</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_player_playback.c</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_player_seeking.c</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_playlist.c</file>
-            <file>file:/C:/Sources/libssp_player/player/ssp_marker.c</file>
-            <file>file:/C:/Sources/libssp_player/bass/bass.h</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
