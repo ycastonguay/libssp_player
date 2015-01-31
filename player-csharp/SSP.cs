@@ -24,7 +24,7 @@ namespace org.sessionsapp.player
     {
 #if IOS
         public const string DllImportValue = "__Internal";
-#elif ANDROID
+#elif ANDROID || LINUX
         public const string DllImportValue = "libssp_player.so";
 #elif OSX
         public const string DllImportValue = "libssp_player.dylib";
