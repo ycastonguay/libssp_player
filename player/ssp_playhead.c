@@ -40,4 +40,6 @@ void playhead_reset(SSP_PLAYHEAD* playhead) {
     playhead->volume = 1;
     playhead->repeatType = SSP_PLAYER_REPEAT_OFF;
     playhead->stateType = SSP_PLAYER_STATE_UNKNOWN;
+    playhead->positionOffset = 0;
+    playhead->positionAfterUnpause = 0;
 }

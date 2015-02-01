@@ -45,6 +45,9 @@ LIBRARY_API SSP_ERROR SSP_Free();
 LIBRARY_API void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
 LIBRARY_API void SSP_RemovePlaylistIndexChangedCallback();
 
+LIBRARY_API void SSP_SetLogCallback(player_log_cb cb, void* user);
+LIBRARY_API void SSP_RemoveLogCallback();
+
 // Properties
 LIBRARY_API void SSP_GetDevice(SSP_DEVICE* device);
 LIBRARY_API SSP_PLAYHEAD* SSP_GetPlayhead();
@@ -83,78 +86,5 @@ LIBRARY_API int SSP_Playlist_Clear();
 LIBRARY_API SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
 LIBRARY_API int SSP_Playlist_GetCount();
 LIBRARY_API int SSP_Playlist_GetCurrentIndex();
-
-// C# class:
-
-//int BufferSize { get; set; }
-//EQPreset EQPreset { get; set; }
-//Loop Loop { get; }
-//Device Device { get; }
-//bool IsSettingPosition { get; }
-//bool IsDeviceInitialized { get; }
-//bool IsEQBypassed { get; }
-//bool IsEQEnabled { get; }
-//bool IsPaused { get; }
-//bool IsPlaying { get; }
-//bool IsPlayingLoop { get; }
-//bool IsShuffleEnabled { get; set; }
-//bool UseFloatingPoint { get; }
-//int MixerSampleRate { get; }
-//int CurrentSegmentIndex { get; }
-//ShufflePlaylist Playlist { get; }
-//RepeatType RepeatType { get; set; }
-//float TimeShifting { get; set; }
-//int PitchShifting { get; set; }
-//int UpdatePeriod { get; set; }
-//int UpdateThreads { get; set; }
-//float Volume { get; set; }
-//
-//event LoopPlaybackStarted OnLoopPlaybackStarted;
-//event LoopPlaybackStopped OnLoopPlaybackStopped;
-//event PlaylistEnded OnPlaylistEnded;
-//event PlaylistIndexChanged OnPlaylistIndexChanged;
-//event AudioInterrupted OnAudioInterrupted;
-//event BPMDetected OnBPMDetected;
-//event SegmentIndexChanged OnSegmentIndexChanged;
-//
-//void InitializeDevice();
-//void InitializeDevice(Device device, int mixerSampleRate);
-//void Dispose();
-//void FreeDevice();
-//void FreePlugins();
-//
-//void Play();
-//void Play(double initialPosition, bool startPaused);
-//void PlayFiles(List<AudioFile> audioFiles);
-//void PlayFiles(List<string> filePaths);
-//void Pause();
-//void Stop();
-//void Previous();
-//void Next();
-//void GoTo(int index);
-//void GoTo(Guid playlistItemId);
-//
-//void StartEncode(Player.EncoderType encoderType);
-//void StopEncode();
-//void StartCast(CastServerParams serverParams);
-//void StopCast();
-//
-//int GetDataAvailable();
-//long Seconds2Bytes(double value);
-//int GetMixerData(int length, float[] sampleData);
-//int GetMixerData(int length, int[] sampleData);
-//long GetPosition();
-//void SetPosition(double percentage);
-//void SetPosition(long bytes);
-//
-//void ApplyEQPreset(EQPreset preset);
-//void BypassEQ();
-//void ResetEQ();
-//void UpdateEQBand(int band, float gain, bool setCurrentEQPresetValue);
-//
-//void GoToMarker(Marker marker);
-//void StartLoop(Loop loop);
-//void UpdateLoop(Loop loop);
-//void StopLoop();
 
 #endif /* defined(__player__ssp_public__) */

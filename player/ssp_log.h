@@ -15,20 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef player_callbacks_h
-#define player_callbacks_h
+#ifndef __player__ssp_log__
+#define __player__ssp_log__
 
-//typedef void (CALLBACK GELLOPROC)(HSYNC handle, DWORD channel, DWORD data, void *user);
-//typedef void (CALLBACK JELLOPROC)(int hello, float world);
-//event LoopPlaybackStarted OnLoopPlaybackStarted;
-//event LoopPlaybackStopped OnLoopPlaybackStopped;
-//event PlaylistEnded OnPlaylistEnded;
-//event PlaylistIndexChanged OnPlaylistIndexChanged;
-//event AudioInterrupted OnAudioInterrupted;
-//event BPMDetected OnBPMDetected;
-//event SegmentIndexChanged OnSegmentIndexChanged;
+#include <stdio.h>
+#include "ssp_callbacks.h"
 
-typedef void (*player_log_cb)(void *user, const char* str);
-typedef void (*player_playlistindexchanged_cb)(void *user);
+void log_setCallback(player_log_cb cb, void* user);
+void log_removeCallback();
+void log_text(const char* str);
+void log_textf(const char* format, ...);
 
-#endif
+#endif /* defined(__player__ssp_log__) */
+

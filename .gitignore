@@ -19,6 +19,14 @@ DerivedData
 
 # Custom
 output/
+obj/
+libs/
+dist/
+.idea/
+**/.DS_Store
+**/bin
+**/obj
+**/*.userprefs
 
 # CocoaPods
 #

@@ -23,6 +23,7 @@
 #include "ssp_playlist.h"
 #include "ssp_player.h"
 #include "ssp_structs.h"
+#include "ssp_log.h"
 
 static SSP_PLAYER* sspPlayer;
 
@@ -54,6 +55,14 @@ SSP_ERROR SSP_Free() {
 }
 
 #pragma mark Callbacks
+
+void SSP_SetLogCallback(player_log_cb cb, void* user) {
+    log_setCallback(cb, user);
+}
+
+void SSP_RemoveLogCallback() {
+    log_removeCallback();
+}
 
 void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void *user) {
     player_setPlaylistIndexChangedCallback(sspPlayer, cb, user);

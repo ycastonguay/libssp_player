@@ -15,20 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef player_callbacks_h
-#define player_callbacks_h
+#include <string.h>
+#include <stdlib.h>
+#include <inttypes.h>
+#include "../bass/bassmix.h"
+#include "ssp_player.h"
+#include "ssp_playlist.h"
+#include "ssp_eqpreset.h"
+#include "ssp_playhead.h"
+#include "ssp_bass.h"
+#include "ssp_structs.h"
+#include "ssp_privatestructs.h"
 
-//typedef void (CALLBACK GELLOPROC)(HSYNC handle, DWORD channel, DWORD data, void *user);
-//typedef void (CALLBACK JELLOPROC)(int hello, float world);
-//event LoopPlaybackStarted OnLoopPlaybackStarted;
-//event LoopPlaybackStopped OnLoopPlaybackStopped;
-//event PlaylistEnded OnPlaylistEnded;
-//event PlaylistIndexChanged OnPlaylistIndexChanged;
-//event AudioInterrupted OnAudioInterrupted;
-//event BPMDetected OnBPMDetected;
-//event SegmentIndexChanged OnSegmentIndexChanged;
+// TODO: Review methods
 
-typedef void (*player_log_cb)(void *user, const char* str);
-typedef void (*player_playlistindexchanged_cb)(void *user);
+SSP_ERROR player_startLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
+    return SSP_OK;
+}
 
-#endif
+SSP_ERROR player_updateLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
+    return SSP_OK;
+}
+
+SSP_ERROR player_stopLoop(SSP_PLAYER* player) {
+    return SSP_OK;
+}

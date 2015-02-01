@@ -26,6 +26,7 @@
 #include "ssp_bass.h"
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
+#include "ssp_log.h"
 
 #pragma mark Callbacks
 
@@ -148,7 +149,7 @@ DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, vo
 
 void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, void *user)
 {
-    printf("player_playerSyncProc\n");
+    log_text("player_playerSyncProc\n");
     SSP_PLAYER *player = (SSP_PLAYER*)user;
 
     bool playbackStopped = false;
@@ -198,16 +199,18 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 //        if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate > 44100)
 //            offset = (long)((float)offset * 1.5f);
 //
-//        // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
-//        float sampleRate;
-//        BASS_ChannelGetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
-//
+
+        // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
+        //float sampleRate;
+        //BASS_ChannelGetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
+
+        //BASS_ChannelSetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ)
+
 //        if (!playbackStopped && _mixerChannel.SampleRate != Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate)
 //            _mixerChannel.SetSampleRate(Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate);
 //
-//        // Set position offset
-//        _positionOffset = offset;
 
+        player->playhead->positionOffset = offset;
     }
 
     success = BASS_ChannelLock(player->channels->mixerChannel, false);
@@ -219,6 +222,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
     //player_removeSyncCallbacks(<#(SSP_PLAYER*)player#>)
 
 //    RemoveSyncCallback(handle);
+    // We may not have to call this because of BASS_SYNC_ONETIME
 
     // Is this the last song?
     if(player->playlist->currentIndex == playlist_getCount(player->playlist) - 1) {
@@ -248,7 +252,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);
     }
 
-    printf("player_playerSyncProc (END)\n");
+    log_text("player_playerSyncProc (END)\n");
 
 //        // Create data
 //        PlayerPlaylistIndexChangedData eventData = new PlayerPlaylistIndexChangedData();
@@ -295,7 +299,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 }
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
-    printf("player_setSyncCallback - position: %"PRIu64"\n", position);
+    log_textf("player_setSyncCallback - position: %"PRIu64"\n", position);
     HSYNC sync = BASS_Mixer_ChannelSetSync(player->channels->fxChannel, BASS_SYNC_POS, position, player_playerSyncProc, player);
     if(sync == 0) {
         return bass_getError("player_setSyncCallback");
@@ -344,7 +348,7 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
     else {
         bass_start();
         player->playhead->isPaused = false;
-//        SetPosition(_positionAfterUnpause);
+        player_setPosition(player, player->playhead->positionAfterUnpause);
     }
 
     return SSP_OK;
@@ -388,7 +392,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
 
     SSP_ERROR error;
 
-    printf("player_play\n");
+    log_text("player_play\n");
     if(player->playhead->isPlaying) {
         if(player->playhead->isPlayingLoop) {
             // TODO: stop loop
@@ -397,7 +401,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         player_stop(player);
     }
 
-    printf("player_play - Getting current index and count...\n");
+    log_text("player_play - Getting current index and count...\n");
     int currentIndex = player->playlist->currentIndex;
     int count = playlist_getCount(player->playlist);
 
@@ -406,19 +410,19 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         channelsToLoad = 2;
 
     if(channelsToLoad == 0) {
-        printf("player_play - ERROR: There are no channels to load!\n");
+        log_text("player_play - ERROR: There are no channels to load!\n");
         return SSP_ERROR_UNKNOWN;
     }
 
     for(int a = currentIndex; a < currentIndex + channelsToLoad; a++) {
-        printf("player_play - Loading playlist item %d...\n", a);
+        log_textf("player_play - Loading playlist item %d...\n", a);
         SSP_PLAYLISTITEM* item = playlist_getItemAt(player->playlist, a);
         playlistitem_load(item, player->mixer->useFloatingPoint);
     }
 
     // Default output driver (i.e. DirectSound)
     // TODO: How do we check for errors?
-    printf("player_play - Setting stream channel and proc...\n");
+    log_text("player_play - Setting stream channel and proc...\n");
     player->channels->streamProc = (STREAMPROC*)player_streamProc;
 
     // Prepare stream channel
@@ -476,7 +480,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);
     }
 
-    printf("player_play - Finished playback sequence!\n");
+    log_text("player_play - Finished playback sequence!\n");
     return SSP_OK;
 }
 

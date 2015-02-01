@@ -61,6 +61,13 @@ typedef struct {
     float volume; // should be merged with mixer?
     float timeShifting;
     int pitchShifting;
+
+    // temp (TODO: should this be part of playhead?)
+    uint64_t positionAfterUnpause;
+
+    // should be private
+    // used for calculating the position offset when a song changes
+    uint64_t positionOffset;
 } SSP_PLAYHEAD;
 
 typedef struct {

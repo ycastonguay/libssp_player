@@ -15,20 +15,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef player_callbacks_h
-#define player_callbacks_h
+#include <stdlib.h>
+#include <stdarg.h>
+#include "ssp_log.h"
 
-//typedef void (CALLBACK GELLOPROC)(HSYNC handle, DWORD channel, DWORD data, void *user);
-//typedef void (CALLBACK JELLOPROC)(int hello, float world);
-//event LoopPlaybackStarted OnLoopPlaybackStarted;
-//event LoopPlaybackStopped OnLoopPlaybackStopped;
-//event PlaylistEnded OnPlaylistEnded;
-//event PlaylistIndexChanged OnPlaylistIndexChanged;
-//event AudioInterrupted OnAudioInterrupted;
-//event BPMDetected OnBPMDetected;
-//event SegmentIndexChanged OnSegmentIndexChanged;
+static player_log_cb log_cb = NULL;
+static void* log_cb_user = NULL;
 
-typedef void (*player_log_cb)(void *user, const char* str);
-typedef void (*player_playlistindexchanged_cb)(void *user);
+void log_setCallback(player_log_cb cb, void* user) {
+    log_cb = cb;
+    log_cb_user = user;
+}
 
-#endif
+void log_removeCallback() {
+    log_cb = NULL;
+    log_cb_user = NULL;
+}
+
+void log_text(const char* str) {
+    printf("libssp_player - %s", str);
+
+    if(log_cb != NULL) {
+        log_cb(log_cb_user, str);
+    }
+}
+
+void log_textf(const char* format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    char result[256];
+    vsprintf(&result, format, ap);
+
+    if(log_cb != NULL) {
+        log_cb(log_cb_user, result);
+    }
+
+    va_end(ap);
+}

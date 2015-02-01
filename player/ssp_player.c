@@ -28,10 +28,12 @@
 #include "ssp_mixer.h"
 #include "ssp_device.h"
 #include "ssp_playerplugins.h"
+#include "ssp_log.h"
 
 #pragma mark Initialization
 
 SSP_PLAYER* player_create() {
+    log_text("player_create\n");
     SSP_PLAYER* player = malloc(sizeof(SSP_PLAYER));
     player->playlist = playlist_create();
     player->eqPreset = eqpreset_create();
@@ -42,6 +44,7 @@ SSP_PLAYER* player_create() {
     player->plugins = playerPlugins_create();
     player->loop = NULL;
     player->marker = NULL;
+    log_text("player_create (end)\n");
     return player;
 }
 
@@ -101,9 +104,9 @@ SSP_ERROR player_free(SSP_PLAYER* player) {
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
     
     #ifdef _WIN32 // Windows/CE
-        BASS_PluginLoad("bassflac.dll", 0);
+        //BASS_PluginLoad("bassflac.dll", 0);
     #elif __linux__ // Linux
-        BASS_PluginLoad("libbassflac.so", 0);
+        //BASS_PluginLoad("libbassflac.so", 0);
     #elif TARGET_IOS // iOS
         extern void BASS_APEplugin, BASSFLACplugin, BASS_MPCplugin, BASSWVplugin;
         player->plugins->ape = BASS_PluginLoad(&BASS_APEplugin, 0);

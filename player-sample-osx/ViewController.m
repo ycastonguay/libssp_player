@@ -16,7 +16,10 @@
 
 @implementation ViewController
 
-//static void testCallback() {
+void logCallback(void *user, const char* str) {
+    printf("hello world log: %s", str);
+}
+
 void playlistIndexChangedCallback(void *user) {
     printf("Test callback\n");
     int currentIndex = SSP_Playlist_GetCurrentIndex();
@@ -31,20 +34,32 @@ void playlistIndexChangedCallback(void *user) {
 }
 
 - (void)initializePlayer {
+
+    // Get version
+    int version = SSP_GetVersion();
+    NSLog(@"libssp_player version: %d", version);
+
+    // Set callback for logging
+    SSP_SetLogCallback(logCallback, NULL);
+
+    // Init player
     SSP_ERROR error = SSP_Init();
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
     }
-    
+
+    // Init device
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
     }
 
+    // Set player callbacks
     SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL); //(void *)self);
-    
+
+    // Setup timer for refreshing position
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
 }
 
