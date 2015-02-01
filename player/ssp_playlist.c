@@ -23,6 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
+#include "ssp_log.h"
 
 #pragma mark Playlist Items
 
@@ -45,11 +46,11 @@ void playlistitem_free(SSP_PLAYLISTITEM *item) {
 void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     // refresh audiofile metadata (?)
     // check if channel exists, if true, then dispose (?)
-    printf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
+    log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
     item->channel = bass_createDecodeStream(item->audioFile->filePath, useFloatingPoint);
-    printf("playlistitem_load -- Getting length...\n");
+    log_text("playlistitem_load -- Getting length...\n");
     item->length = bass_getLength(item->channel);
-    printf("playlistitem_load -- Setting flags...\n");
+    log_text("playlistitem_load -- Setting flags...\n");
     item->isLoaded = true;
     item->test = 777;
 }

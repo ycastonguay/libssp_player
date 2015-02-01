@@ -87,7 +87,7 @@ void SSP_GetDevice(SSP_DEVICE* device) {
 
     // Can't get this to work in C#...
     //memcpy(device, sspPlayer->device, sizeof(SSP_DEVICE));
-    printf("---> getDevice - name: %s\n", sspPlayer->device->name);
+    log_textf("---> getDevice - name: %s\n", sspPlayer->device->name);
 }
 
 #pragma mark Playback

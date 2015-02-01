@@ -21,6 +21,7 @@
 #include "ssp_player.h"
 #include "../bass/bass_fx.h"
 #include "../bass/bassmix.h"
+#include "ssp_log.h"
 
 SSP_ERROR bass_getError(char* message) {
     int error = BASS_ErrorGetCode();
@@ -29,7 +30,7 @@ SSP_ERROR bass_getError(char* message) {
     }
 
     // TODO: Convert errors here
-    printf("ssp_bass: %s - bass error code: %d\n", message, error);
+    log_textf("ssp_bass: %s - bass error code: %d\n", message, error);
     return SSP_ERROR_UNKNOWN;
 }
 

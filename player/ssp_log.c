@@ -33,8 +33,6 @@ void log_removeCallback() {
 }
 
 void log_text(const char* str) {
-    printf("libssp_player - %s", str);
-
     if(log_cb != NULL) {
         log_cb(log_cb_user, str);
     }

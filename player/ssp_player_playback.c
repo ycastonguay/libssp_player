@@ -31,7 +31,7 @@
 #pragma mark Callbacks
 
 SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
-    printf("player_setSyncCallbackAfterChangingPlaylistItem\n");
+    log_text("player_setSyncCallbackAfterChangingPlaylistItem\n");
 
     bool success = BASS_ChannelLock(player->channels->mixerChannel, true);
     if(!success) {
@@ -65,10 +65,10 @@ SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
 
 void player_tryToLoadNextPlaylistItem(SSP_PLAYER* player) {
     int nextMixPlaylistIndex = player->playlist->currentMixerIndex + 1;
-    printf("player_tryToLoadNextPlaylistItem - nextMixPlaylistIndex: %d\n", nextMixPlaylistIndex);
+    log_textf("player_tryToLoadNextPlaylistItem - nextMixPlaylistIndex: %d\n", nextMixPlaylistIndex);
 
     if(player->playlist->currentMixerIndex < playlist_getCount(player->playlist) - 1) {
-        printf("player_tryToLoadNextPlaylistItem - Loading next playlist item...");
+        log_text("player_tryToLoadNextPlaylistItem - Loading next playlist item...");
         SSP_PLAYLISTITEM *item = playlist_getItemAt(player->playlist, nextMixPlaylistIndex);
         playlistitem_load(item, player->mixer->useFloatingPoint);
     }
@@ -77,7 +77,7 @@ void player_tryToLoadNextPlaylistItem(SSP_PLAYER* player) {
 bool player_skipToNextPlaylistItemAndDetermineIfPlaybackMustContinue(SSP_PLAYER* player) {
     player->loop = NULL;
 
-    printf("player_skipToNextPlaylistItemAndDetermineIfPlaybackMustContinue\n");
+    log_text("player_skipToNextPlaylistItemAndDetermineIfPlaybackMustContinue\n");
     // lock (_lockerplaylist) -- is this necessary?
 
     if(player->playlist->currentIndex == playlist_getCount(player->playlist) - 1) {
@@ -143,7 +143,7 @@ DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, vo
         }
     }
 
-    printf("player_streamProc - BASS_STREAMPROC_END");
+    log_text("player_streamProc - BASS_STREAMPROC_END");
     return BASS_STREAMPROC_END;
 }
 
@@ -191,7 +191,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         nextPlaylistIndex = player->playlist->currentIndex + 1;
     }
 
-    printf("player_playerSyncProc - playbackStopped: %d playlistBackToStart: %d nextPlaylistIndex: %d\n", playbackStopped, playlistBackToStart, nextPlaylistIndex);
+    log_textf("player_playerSyncProc - playbackStopped: %d playlistBackToStart: %d nextPlaylistIndex: %d\n", playbackStopped, playlistBackToStart, nextPlaylistIndex);
 
     uint64_t offset = 0 - (position / 2);
     if(!playbackStopped) {
@@ -248,7 +248,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
 
     if(player->playlist->callbackPlaylistIndexChanged != NULL) {
-        printf("player_playerSyncProc - Calling callbackPlaylistIndexChanged...\n");
+        log_text("player_playerSyncProc - Calling callbackPlaylistIndexChanged...\n");
         player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);
     }
 
