@@ -21,12 +21,9 @@
 #include "../bass/bassmix.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
-#include "ssp_eqpreset.h"
-#include "ssp_playhead.h"
 #include "ssp_bass.h"
-#include "ssp_structs.h"
-#include "ssp_privatestructs.h"
 #include "ssp_log.h"
+#include "ssp_structs.h"
 
 #pragma mark Callbacks
 
@@ -68,7 +65,7 @@ void player_tryToLoadNextPlaylistItem(SSP_PLAYER* player) {
     log_textf("player_tryToLoadNextPlaylistItem - nextMixPlaylistIndex: %d\n", nextMixPlaylistIndex);
 
     if(player->playlist->currentMixerIndex < playlist_getCount(player->playlist) - 1) {
-        log_text("player_tryToLoadNextPlaylistItem - Loading next playlist item...");
+        log_text("player_tryToLoadNextPlaylistItem - Loading next playlist item...\n");
         SSP_PLAYLISTITEM *item = playlist_getItemAt(player->playlist, nextMixPlaylistIndex);
         playlistitem_load(item, player->mixer->useFloatingPoint);
     }
@@ -329,6 +326,7 @@ SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
 
 void player_setPlaylistIndexChangedCallback(SSP_PLAYER* player, player_playlistindexchanged_cb cb, void *user) {
     player->playlist->callbackPlaylistIndexChanged = cb;
+    player->playlist->callbackPlaylistIndexChangedUser = user;
 }
 
 void player_removePlaylistIndexChangedCallback(SSP_PLAYER* player) {
@@ -336,6 +334,7 @@ void player_removePlaylistIndexChangedCallback(SSP_PLAYER* player) {
         free(player->playlist->callbackPlaylistIndexChanged);
         player->playlist->callbackPlaylistIndexChanged = NULL;
     }
+    player->playlist->callbackPlaylistIndexChangedUser = NULL;
 }
 
 #pragma mark Playback
@@ -457,7 +456,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     // set flags for repeat
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
     //uint64_t length = bass_getLength(currentItem->channel);
-
+    //log_textf("player_play - length: %"PRIu64" - currentItem->length: %"PRIu64"\n", length, currentItem->length);
     error = player_setSyncCallback(player, currentItem->length);
     if(error != SSP_OK) {
         return error;

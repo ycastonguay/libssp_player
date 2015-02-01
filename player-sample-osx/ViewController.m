@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ssp_public.h"
+#import "ssp_structs.h"
 
 @interface ViewController () {
     NSTimer *timer;
@@ -17,15 +18,18 @@
 @implementation ViewController
 
 void logCallback(void *user, const char* str) {
-    printf("hello world log: %s", str);
+    printf("libssp_player :: %s", str);
 }
 
 void playlistIndexChangedCallback(void *user) {
-    printf("Test callback\n");
+    ViewController* refObj = (__bridge_transfer id) user;
+
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
-    NSLog(@"playlistIndexChangedCallback - index: %d / count: %d", currentIndex, count);
-    //[_lblPosition stringValue] = @"";
+    SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
+
+    refObj.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
+    refObj.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->audioFile->filePath];
 }
 
 - (void)viewDidLoad {
@@ -57,7 +61,8 @@ void playlistIndexChangedCallback(void *user) {
     }
 
     // Set player callbacks
-    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL); //(void *)self);
+    void* test = (__bridge_retained void *)self;
+    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, test);
 
     // Setup timer for refreshing position
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
@@ -93,12 +98,47 @@ void playlistIndexChangedCallback(void *user) {
         }
     }
     
-    SSP_Play();
+    //SSP_Play();
 }
 
 - (IBAction)actionClose:(id)sender {
     SSP_Free();
     [NSApp terminate:self];
+}
+
+- (IBAction)actionPlay:(id)sender {
+    SSP_ERROR error = SSP_Play();
+    if(error != SSP_OK) {
+        NSLog(@"libssp_player error: %d", error);
+    }
+}
+
+- (IBAction)actionPause:(id)sender {
+    SSP_ERROR error = SSP_Pause();
+    if(error != SSP_OK) {
+        NSLog(@"libssp_player error: %d", error);
+    }
+}
+
+- (IBAction)actionStop:(id)sender {
+    SSP_ERROR error = SSP_Stop();
+    if(error != SSP_OK) {
+        NSLog(@"libssp_player error: %d", error);
+    }
+}
+
+- (IBAction)actionPrevious:(id)sender {
+    SSP_ERROR error = SSP_Previous();
+    if(error != SSP_OK) {
+        NSLog(@"libssp_player error: %d", error);
+    }
+}
+
+- (IBAction)actionNext:(id)sender {
+    SSP_ERROR error = SSP_Next();
+    if(error != SSP_OK) {
+        NSLog(@"libssp_player error: %d", error);
+    }
 }
 
 @end

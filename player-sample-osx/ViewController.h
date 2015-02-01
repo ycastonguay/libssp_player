@@ -15,6 +15,11 @@
 @property (weak) IBOutlet NSTextField *lblPlaylist;
 - (IBAction)actionOpenAudioFiles:(id)sender;
 - (IBAction)actionClose:(id)sender;
+- (IBAction)actionPlay:(id)sender;
+- (IBAction)actionPause:(id)sender;
+- (IBAction)actionStop:(id)sender;
+- (IBAction)actionPrevious:(id)sender;
+- (IBAction)actionNext:(id)sender;
 
 @end
 

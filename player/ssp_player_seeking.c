@@ -19,13 +19,10 @@
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
-#include "ssp_privatestructs.h"
-#include "ssp_structs.h"
-#include "bassmix.h"
+#include "../bass/bassmix.h"
 
 uint64_t player_getPosition(SSP_PLAYER* player) {
-
-    if(player->playhead->isSettingPosition) {
+    if(player->playhead->isSettingPosition || player->channels->fxChannel == 0) {
         return 0;
     }
 
@@ -70,7 +67,6 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     }
 
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
-    //u_int64_t length = bass_getLength(<#(uint32_t)handle#>)
 
 //    // Get as much data available before locking channel
     player_removeSyncCallbacks(player);
