@@ -382,7 +382,10 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return SSP_ERROR_UNKNOWN;
     }
 
-    // dispose other channels here (?)
+    error = playlist_disposeChannels(player->playlist);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     return SSP_OK;
 }

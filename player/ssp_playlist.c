@@ -29,10 +29,7 @@
 
 SSP_PLAYLISTITEM* playlistitem_create() {
     SSP_PLAYLISTITEM* item = malloc(sizeof(SSP_PLAYLISTITEM));
-    item->audioFile = malloc(sizeof(SSP_AUDIOFILE));
-    item->channel = 0;
-    item->isLoaded = false;
-    item->length = 0;
+    playlistitem_reset(item);
     return item;
 }
 
@@ -41,6 +38,13 @@ void playlistitem_free(SSP_PLAYLISTITEM *item) {
         free(item->audioFile);
         item->audioFile = NULL;
     }
+}
+
+void playlistitem_reset(SSP_PLAYLISTITEM *item) {
+    item->audioFile = malloc(sizeof(SSP_AUDIOFILE));
+    item->channel = 0;
+    item->isLoaded = false;
+    item->length = 0;
 }
 
 void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
@@ -53,6 +57,20 @@ void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     log_text("playlistitem_load -- Setting flags...\n");
     item->isLoaded = true;
     item->test = 777;
+}
+
+SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist) {
+    SSP_ERROR error;
+    if(playlist->items != NULL) {
+        for(int a = 0; a < playlist_getCount(playlist); a++) {
+            error = playlistitem_disposeChannel(playlist_getItemAt(playlist, a));
+            if(error != SSP_OK) {
+                return error;
+            }
+        }
+    }
+
+    return SSP_OK;
 }
 
 #pragma mark Playlist
@@ -86,6 +104,22 @@ void playlist_free(SSP_PLAYLIST *playlist) {
         playlist->callbackPlaylistIndexChanged = NULL;
     }
     playlist->callbackPlaylistIndexChangedUser = NULL;
+}
+
+SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
+    bool success = BASS_ChannelStop(item->channel);
+    if(!success) {
+        return bass_getError("playlistitem_disposeChannel");
+    }
+
+    success = BASS_StreamFree(item->channel);
+    if(!success) {
+        return bass_getError("playlistitem_disposeChannel");
+    }
+
+    playlistitem_reset(item);
+
+    return SSP_OK;
 }
 
 int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {

@@ -20,8 +20,15 @@
 
 #include <stdio.h>
 
-//int convertaudio_toMilliseconds(char* position);
-//int convertaudio_toBytes(char* position);
-// (...)/
+__uint64_t convertAudio_toSamples(__uint64_t milliseconds, int sampleRate);
+__uint64_t convertAudio_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount);
+__uint64_t convertAudio_toMS(__uint64_t samples, int sampleRate);
+__uint64_t convertAudio_toBytes(__uint64_t samples, int bitRate, int channelCount);
+float convertAudio_msToTempo(float milliseconds);
+float convertAudio_tempoToMS(float tempo);
+float convertAudio_levelToDB(float level, float maxLevel);
+char* convertAudio_toStringFromMS(__uint64_t milliseconds);
+__uint64_t convertAudio_toMSFromString(const char* string);
+char* convertAudio_toString(__uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
 
 #endif /* defined(__player__ssp_convertaudio__) */

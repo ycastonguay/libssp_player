@@ -24,7 +24,7 @@
 
 SSP_PLAYLIST* playlist_create();
 void playlist_free(SSP_PLAYLIST *playlist);
-//void playlist_disposeChannels(SSP_PLAYLIST *playlist);
+SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist);
 
 int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath);
 int playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index);
@@ -37,6 +37,8 @@ int playlist_getCount(SSP_PLAYLIST *playlist);
 
 SSP_PLAYLISTITEM* playlistitem_create();
 void playlistitem_free(SSP_PLAYLISTITEM *item);
+void playlistitem_reset(SSP_PLAYLISTITEM *item);
 void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint);
+SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item);
 
 #endif

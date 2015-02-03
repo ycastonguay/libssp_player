@@ -17,7 +17,6 @@
 
 #include <stdio.h>
 #include <ncurses.h>
-#include <stdlib.h>
 #include "ssp_public.h"
 
 void checkForError(SSP_ERROR error) {
@@ -26,9 +25,20 @@ void checkForError(SSP_ERROR error) {
     }
 }
 
-int main(int argc, const char * argv[]) {
-    
-    // Initialize player
+void logCallback(void *user, const char* str) {
+    printf("libssp_player :: %s", str);
+}
+
+void playlistIndexChangedCallback(void *user) {
+    int currentIndex = SSP_Playlist_GetCurrentIndex();
+    int count = SSP_Playlist_GetCount();
+    SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
+
+    printf("Playlist index changed: [%d/%d]\n", currentIndex+1, count);
+    printf("Playlist item file path: %s\n", item->audioFile->filePath);
+}
+
+int initializePlayer() {
     printf("Initializing player...\n");
     SSP_ERROR error = SSP_Init();
     if(error != SSP_OK) {
@@ -36,13 +46,13 @@ int main(int argc, const char * argv[]) {
         return 1;
     }
 
+    SSP_SetLogCallback(logCallback, NULL);
+    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL);
+
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
         checkForError(error);
         return 1;
-    }
-    else {
-        printf("Player initialization successful!\n");
     }
 
     //SSP_DEVICE *device2 = NULL;
@@ -61,15 +71,30 @@ int main(int argc, const char * argv[]) {
     error = SSP_Play();
     checkForError(error);
 
-    //SSP_SetPosition(100000);
-    //SSP_Pause();
-    //SSP_Pause();
+    printf("Player initialization successful!\n");
+    return 0;
+}
+
+void destroyPlayer() {
+    printf("Destroying player...\n");
+    SSP_Stop();
+    SSP_FreeDevice();
+    SSP_Free();
+    printf("Player destruction successful!\n");
+}
+
+int main(int argc, const char * argv[]) {
+    int error = initializePlayer();
+    if(error != 0) {
+        return error;
+    }
 
     printf("Press ENTER to stop playback...\n");
     int ch = getchar();
 
-    //delay_output(0);
+    destroyPlayer();
 
+    //delay_output(0);
     //getch();
 
 //    printf("--1\n");
