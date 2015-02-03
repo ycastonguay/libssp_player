@@ -138,24 +138,30 @@ SSP_ERROR SSP_GoTo(int index) {
 
 #pragma mark Playlist
 
-int SSP_Playlist_AddItem(char* filePath) {
+SSP_ERROR SSP_Playlist_AddItem(char* filePath) {
     return playlist_addItem(sspPlayer->playlist, filePath);
 }
 
-int SSP_Playlist_InsertItemAt(char* filePath, int index) {
+SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index) {
     return playlist_insertItemAt(sspPlayer->playlist, filePath, index);
 }
 
-int SSP_Playlist_RemoveItemAt(int index) {
+SSP_ERROR SSP_Playlist_RemoveItemAt(int index) {
     return playlist_removeItemAt(sspPlayer->playlist, index);
 }
 
-int SSP_Playlist_Clear() {
+SSP_ERROR SSP_Playlist_Clear() {
     return playlist_clear(sspPlayer->playlist);
 }
 
 SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index) {
+    // TODO: Make a copy of the item, do not give away that pointer, the app might crash
     return playlist_getItemAt(sspPlayer->playlist, index);
+}
+
+void SSP_Playlist_GetItemAtNew(int index, SSP_PLAYLISTITEM* item) {
+    SSP_PLAYLISTITEM* localItem = playlist_getItemAt(sspPlayer->playlist, index);
+    playlistitem_copy(localItem, item);
 }
 
 int SSP_Playlist_GetCount() {

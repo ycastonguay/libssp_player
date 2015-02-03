@@ -34,27 +34,35 @@ SSP_PLAYLISTITEM* playlistitem_create() {
 }
 
 void playlistitem_free(SSP_PLAYLISTITEM *item) {
-    if(item->audioFile) {
-        free(item->audioFile);
-        item->audioFile = NULL;
-    }
 }
 
 void playlistitem_reset(SSP_PLAYLISTITEM *item) {
-    item->audioFile = malloc(sizeof(SSP_AUDIOFILE));
-    item->channel = 0;
     item->isLoaded = false;
+    item->channel = 0;
     item->length = 0;
+    item->numberOfChannels = 0;
+    item->sampleRate = 0;
+    item->test = 0;
+    item->filePath = NULL;
+}
+
+void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
+    // TODO: Is there a better way? memcpy?
+    itemDest->channel = itemSrc->channel;
+    itemDest->test = itemSrc->test;
+    itemDest->sampleRate = itemSrc->sampleRate;
+    itemDest->isLoaded = itemSrc->isLoaded;
+    itemDest->length = itemSrc->length;
+    itemDest->numberOfChannels = itemSrc->numberOfChannels;
+    strncpy(itemDest->filePath, itemSrc->filePath, sizeof(itemSrc->filePath));
 }
 
 void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     // refresh audiofile metadata (?)
     // check if channel exists, if true, then dispose (?)
-    log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
-    item->channel = bass_createDecodeStream(item->audioFile->filePath, useFloatingPoint);
-    log_text("playlistitem_load -- Getting length...\n");
+    //log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
+    item->channel = bass_createDecodeStream(item->filePath, useFloatingPoint);
     item->length = bass_getLength(item->channel);
-    log_text("playlistitem_load -- Setting flags...\n");
     item->isLoaded = true;
     item->test = 777;
 }
@@ -63,9 +71,12 @@ SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist) {
     SSP_ERROR error;
     if(playlist->items != NULL) {
         for(int a = 0; a < playlist_getCount(playlist); a++) {
-            error = playlistitem_disposeChannel(playlist_getItemAt(playlist, a));
-            if(error != SSP_OK) {
-                return error;
+            SSP_PLAYLISTITEM *item = playlist_getItemAt(playlist, a);
+            if(item->isLoaded) {
+                error = playlistitem_disposeChannel(item);
+                if (error != SSP_OK) {
+                    return error;
+                }
             }
         }
     }
@@ -118,19 +129,21 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
         return bass_getError("playlistitem_disposeChannel");
     }
 
-    playlistitem_reset(item);
+    //playlistitem_reset(item); // is this really what we want? we don't necessary want to remove the file path, just reset the loaded status
+    item->isLoaded = false;
+    item->channel = 0;
+    item->length = 0;
+    item->numberOfChannels = 0;
+    item->sampleRate = 0;
 
     return SSP_OK;
 }
 
-int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
-    SSP_AUDIOFILE *audioFile = malloc(sizeof(SSP_AUDIOFILE));
-    audioFile->filePath = malloc(strlen(filePath));
-    strcpy(audioFile->filePath, filePath);
-
+SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
     SSP_PLAYLISTITEM *item = playlistitem_create();
+    item->filePath = malloc(strlen(filePath));
+    strcpy(item->filePath, filePath);
     vector_add(playlist->items, item);
-    item->audioFile = audioFile;
 
     // test
     int total = vector_total(playlist->items);
@@ -142,19 +155,19 @@ int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
     return SSP_OK;
 }
 
-int playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index) {
+SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index) {
     // TODO: we need to copy items... unless we do a struct with a pointer to the next item
     return SSP_OK;
 }
 
-int playlist_removeItemAt(SSP_PLAYLIST *playlist, int index) {
+SSP_ERROR playlist_removeItemAt(SSP_PLAYLIST *playlist, int index) {
     SSP_PLAYLISTITEM* item = vector_get(playlist->items, index);
     playlistitem_free(item);
     vector_delete(playlist->items, index); // this reorders the whole array
     return SSP_OK;
 }
 
-int playlist_clear(SSP_PLAYLIST *playlist) {
+SSP_ERROR playlist_clear(SSP_PLAYLIST *playlist) {
     if(playlist->items != NULL) {
         // Clear all items
         for(int a = 0; a < playlist_getCount(playlist); a++) {

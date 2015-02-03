@@ -86,11 +86,12 @@ LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
 //void SSP_SetPosition(double positionPercentage);
 
 // Playlist
-LIBRARY_API int SSP_Playlist_AddItem(char* filePath);
-LIBRARY_API int SSP_Playlist_InsertItemAt(char* filePath, int index);
-LIBRARY_API int SSP_Playlist_RemoveItemAt(int index);
-LIBRARY_API int SSP_Playlist_Clear();
+LIBRARY_API SSP_ERROR SSP_Playlist_AddItem(char* filePath);
+LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index);
+LIBRARY_API SSP_ERROR SSP_Playlist_RemoveItemAt(int index);
+LIBRARY_API SSP_ERROR SSP_Playlist_Clear();
 LIBRARY_API SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
+LIBRARY_API void SSP_Playlist_GetItemAtNew(int index, SSP_PLAYLISTITEM* item);
 LIBRARY_API int SSP_Playlist_GetCount();
 LIBRARY_API int SSP_Playlist_GetCurrentIndex();
 

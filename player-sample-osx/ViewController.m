@@ -17,6 +17,18 @@
 
 @implementation ViewController
 
+void runOnMainQueueWithoutDeadlocking(void (^block)(void))
+{
+    if ([NSThread isMainThread])
+    {
+        block();
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
+}
+
 void logCallback(void *user, const char* str) {
     printf("libssp_player :: %s", str);
 }
@@ -27,19 +39,31 @@ void playlistIndexChangedCallback(void *user) {
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
     SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
+    //SSP_PLAYLISTITEM item;
+    //SSP_Playlist_GetItemAtNew(currentIndex, &item);
 
-    vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
-    vc.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->audioFile->filePath];
+    runOnMainQueueWithoutDeadlocking(^{
+        vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
+        vc.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->filePath];
+        //vc.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item.filePath];
+    });
 }
 
 void playlistEndedCallback(void *user) {
     ViewController* vc = (__bridge_transfer id) user;
-    vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist ended"];
+
+    runOnMainQueueWithoutDeadlocking(^{
+        vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist ended"];
+    });
 }
 
 void stateChangedCallback(void *user, ssp_player_state_t state) {
     ViewController* vc = (__bridge_transfer id) user;
-    vc.lblState.stringValue = [NSString stringWithFormat:@"Player state: %d", state];
+
+    runOnMainQueueWithoutDeadlocking(^{
+        //vc.lblState.stringValue = [NSString stringWithFormat:@"Player state: %d", state];
+        vc.lblState.stringValue = @"Hello world!";
+    });
 }
 
 - (void)viewDidLoad {

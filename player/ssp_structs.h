@@ -90,18 +90,14 @@ typedef struct {
 } SSP_LOOP;
 
 typedef struct {
-    const char* filePath;
     //char filePath[1024]; // consider using a static array
+    bool isLoaded;
+    const char* filePath;
     int sampleRate;
     int numberOfChannels;
-} SSP_AUDIOFILE;
-
-typedef struct {
-    SSP_AUDIOFILE* audioFile;
     uint32_t channel;
     uint64_t length;
     uint64_t test;
-    bool isLoaded;
 } SSP_PLAYLISTITEM;
 
 typedef struct {

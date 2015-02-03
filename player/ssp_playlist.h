@@ -26,18 +26,20 @@ SSP_PLAYLIST* playlist_create();
 void playlist_free(SSP_PLAYLIST *playlist);
 SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist);
 
-int playlist_addItem(SSP_PLAYLIST *playlist, char *filePath);
-int playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index);
-int playlist_removeItemAt(SSP_PLAYLIST *playlist, int index);
-int playlist_clear(SSP_PLAYLIST *playlist);
+SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath);
+SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index);
+SSP_ERROR playlist_removeItemAt(SSP_PLAYLIST *playlist, int index);
+SSP_ERROR playlist_clear(SSP_PLAYLIST *playlist);
 SSP_PLAYLISTITEM* playlist_getItemAt(SSP_PLAYLIST *playlist, int index);
 SSP_PLAYLISTITEM* playlist_getCurrentItem(SSP_PLAYLIST *playlist);
 SSP_PLAYLISTITEM* playlist_getCurrentMixerItem(SSP_PLAYLIST *playlist);
 int playlist_getCount(SSP_PLAYLIST *playlist);
 
+// TODO: Split into ssp_playlistitem.h
 SSP_PLAYLISTITEM* playlistitem_create();
 void playlistitem_free(SSP_PLAYLISTITEM *item);
 void playlistitem_reset(SSP_PLAYLISTITEM *item);
+void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest);
 void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint);
 SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item);
 
