@@ -102,7 +102,7 @@ void SSP_GetDevice(SSP_DEVICE* device) {
     device->isInitialized = deviceToCopy->isInitialized;
     //device->name = malloc(sizeof(deviceToCopy->name)); // works in c, crashes in c# and vice versa!
 
-    strcpy(device->name, deviceToCopy->name);
+    //strcpy(device->name, deviceToCopy->name);
     device->test = 15000;
 
     // Can't get this to work in C#...
@@ -184,6 +184,10 @@ SSP_EQPRESET* SSP_GetEQPreset() {
 
 uint64_t SSP_GetPosition() {
     return player_getPosition(sspPlayer);
+}
+
+void SSP_GetPositionNew(SSP_POSITION* position) {
+    player_getPositionNew(sspPlayer, position);
 }
 
 SSP_ERROR SSP_SetPosition(uint64_t position) {

@@ -80,8 +80,8 @@ LIBRARY_API SSP_ERROR SSP_Next();
 LIBRARY_API SSP_ERROR SSP_GoTo(int index);
 //void SSP_GoTo(int playlistItemId); // how do we manage ids?
 
-LIBRARY_API void SSP_Seek();
 LIBRARY_API uint64_t SSP_GetPosition();
+LIBRARY_API void SSP_GetPositionNew(SSP_POSITION* position);
 LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
 //void SSP_SetPosition(double positionPercentage);
 

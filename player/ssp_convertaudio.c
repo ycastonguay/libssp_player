@@ -52,7 +52,8 @@ char* convertAudio_toStringFromMS(__uint64_t milliseconds) {
     int minutes = 0;
     int seconds = 0;
     __uint64_t ms = 0;
-    char* timeString = "";
+    //char* timeString = "";
+    char timeString[32];
 
     if (pos >= 3600000)
     {

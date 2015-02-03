@@ -10,6 +10,9 @@
 #import "ssp_public.h"
 #import "ssp_structs.h"
 
+// Evil way to make the view controller available to C callback methods, not trying to do anything fancy here
+static ViewController* mainViewController = nil;
+
 @interface ViewController () {
     NSTimer *timerRefreshPosition;
 }
@@ -34,40 +37,33 @@ void logCallback(void *user, const char* str) {
 }
 
 void playlistIndexChangedCallback(void *user) {
-    ViewController* vc = (__bridge_transfer id) user;
-
+    //ViewController* vc = (__bridge_transfer id) user; // this crashes the app eventually
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
     SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
     //SSP_PLAYLISTITEM item;
     //SSP_Playlist_GetItemAtNew(currentIndex, &item);
-
     runOnMainQueueWithoutDeadlocking(^{
-        vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
-        vc.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->filePath];
-        //vc.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item.filePath];
+        mainViewController.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
+        mainViewController.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->filePath];
     });
 }
 
 void playlistEndedCallback(void *user) {
-    ViewController* vc = (__bridge_transfer id) user;
-
     runOnMainQueueWithoutDeadlocking(^{
-        vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist ended"];
+        mainViewController.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist ended"];
     });
 }
 
 void stateChangedCallback(void *user, ssp_player_state_t state) {
-    ViewController* vc = (__bridge_transfer id) user;
-
     runOnMainQueueWithoutDeadlocking(^{
-        //vc.lblState.stringValue = [NSString stringWithFormat:@"Player state: %d", state];
-        vc.lblState.stringValue = @"Hello world!";
+        mainViewController.lblState.stringValue = [NSString stringWithFormat:@"Player state: %d", state];
     });
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    mainViewController = self;
     [self initializePlayer];
 }
 
@@ -82,9 +78,10 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     }
     
     SSP_SetLogCallback(logCallback, NULL);
-    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, (__bridge_retained void *)self);
-    SSP_SetPlaylistEndedCallback(playlistEndedCallback, (__bridge_retained void *)self);
-    SSP_SetStateChangedCallback(stateChangedCallback, (__bridge_retained void *)self);
+    //SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, (__bridge_retained void *)self); // eventually crashes the app
+    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL);
+    SSP_SetPlaylistEndedCallback(playlistEndedCallback, NULL);
+    SSP_SetStateChangedCallback(stateChangedCallback, NULL);
 
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
@@ -97,6 +94,13 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 
 - (void)timerRefreshPositionElapsed {
     uint64_t position = SSP_GetPosition();
+
+    // Can't find the right way to do this in Obj-C
+//    SSP_POSITION pos;
+//    SSP_GetPositionNew(&pos);
+    //SSP_POSITION* pos = malloc(sizeof(SSP_POSITION));
+    //SSP_GetPositionNew(pos);
+
     self.lblPosition.stringValue = [NSString stringWithFormat:@"Position (bytes): %lld", position];
 }
 

@@ -19,11 +19,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../vector/vector.h"
+#include "../bass/bass.h"
 #include "ssp_errors.h"
 #include "ssp_structs.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
-#include "ssp_log.h"
 
 #pragma mark Playlist Items
 
@@ -41,30 +41,41 @@ void playlistitem_reset(SSP_PLAYLISTITEM *item) {
     item->channel = 0;
     item->length = 0;
     item->numberOfChannels = 0;
+    item->bitsPerSample = 0;
     item->sampleRate = 0;
-    item->test = 0;
     item->filePath = NULL;
 }
 
 void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
     // TODO: Is there a better way? memcpy?
-    itemDest->channel = itemSrc->channel;
-    itemDest->test = itemSrc->test;
-    itemDest->sampleRate = itemSrc->sampleRate;
     itemDest->isLoaded = itemSrc->isLoaded;
+    itemDest->channel = itemSrc->channel;
     itemDest->length = itemSrc->length;
     itemDest->numberOfChannels = itemSrc->numberOfChannels;
+    itemDest->bitsPerSample = itemSrc->bitsPerSample;
+    itemDest->sampleRate = itemSrc->sampleRate;
     strncpy(itemDest->filePath, itemSrc->filePath, sizeof(itemSrc->filePath));
 }
 
-void playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
+SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     // refresh audiofile metadata (?)
     // check if channel exists, if true, then dispose (?)
     //log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
     item->channel = bass_createDecodeStream(item->filePath, useFloatingPoint);
+    if(item->channel == 0) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    BASS_CHANNELINFO info;
+    BASS_ChannelGetInfo(item->channel, &info);
+
+    item->sampleRate = info.freq;
+    item->numberOfChannels = info.chans;
+    item->bitsPerSample = 16; // TODO: Fill this correctly, I can't find a method in BASS for this...
     item->length = bass_getLength(item->channel);
     item->isLoaded = true;
-    item->test = 777;
+
+    return SSP_OK;
 }
 
 SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist) {

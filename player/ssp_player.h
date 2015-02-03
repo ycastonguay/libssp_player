@@ -42,6 +42,7 @@ SSP_ERROR player_next(SSP_PLAYER* player);
 SSP_ERROR player_goTo(SSP_PLAYER* player, int index);
 
 uint64_t player_getPosition(SSP_PLAYER* player);
+void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position);

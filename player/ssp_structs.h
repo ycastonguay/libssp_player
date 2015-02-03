@@ -95,9 +95,9 @@ typedef struct {
     const char* filePath;
     int sampleRate;
     int numberOfChannels;
+    int bitsPerSample;
     uint32_t channel;
     uint64_t length;
-    uint64_t test;
 } SSP_PLAYLISTITEM;
 
 typedef struct {

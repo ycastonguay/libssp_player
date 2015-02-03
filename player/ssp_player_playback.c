@@ -24,6 +24,7 @@
 #include "ssp_bass.h"
 #include "ssp_log.h"
 #include "ssp_structs.h"
+#include "ssp_privatestructs.h"
 
 #pragma mark Callbacks
 
@@ -198,14 +199,21 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 //
 
         // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
-        //float sampleRate;
-        //BASS_ChannelGetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
+        float sampleRate;
+        bool success = BASS_ChannelGetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
+        if(!success) {
+            int bassError = BASS_ErrorGetCode();
+            if(bassError != BASS_OK) {
+                log_textf("player_playerSyncProc - Error getting channel attributes: %d", bassError);
+                return;
+            }
+        }
 
-        //BASS_ChannelSetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ)
-
-//        if (!playbackStopped && _mixerChannel.SampleRate != Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate)
-//            _mixerChannel.SetSampleRate(Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate);
-//
+        SSP_PLAYLISTITEM* nextItem = playlist_getItemAt(player->playlist, nextPlaylistIndex);
+        if(nextItem != NULL && sampleRate != nextItem->sampleRate) {
+            log_textf("player_playerSyncProc - Switching mixer sample rate to %d", nextItem->sampleRate);
+            BASS_ChannelSetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, nextItem->sampleRate);
+        }
 
         player->playhead->positionOffset = offset;
     }
@@ -430,6 +438,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return SSP_ERROR_UNKNOWN;
     }
 
+    SSP_PLAYLISTITEM* firstItem = playlist_getItemAt(player->playlist, 0);
     for(int a = currentIndex; a < currentIndex + channelsToLoad; a++) {
         log_textf("player_play - Loading playlist item %d...\n", a);
         SSP_PLAYLISTITEM* item = playlist_getItemAt(player->playlist, a);
@@ -437,12 +446,11 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     }
 
     // Default output driver (i.e. DirectSound)
-    // TODO: How do we check for errors?
     log_text("player_play - Setting stream channel and proc...\n");
     player->channels->streamProc = (STREAMPROC*)player_streamProc;
 
     // Prepare stream channel
-    player->channels->streamChannel = bass_createMemoryStream(player->mixer->sampleRate, 2, player->mixer->useFloatingPoint, player->channels->streamProc, player);
+    player->channels->streamChannel = bass_createMemoryStream(firstItem->sampleRate, 2, player->mixer->useFloatingPoint, player->channels->streamProc, player);
     if(player->channels->streamChannel == 0) {
         return SSP_ERROR_UNKNOWN;
     }
@@ -465,15 +473,16 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return error;
     }
 
-    // TODO: Add BPM callbacks here
+    // Add BPM callbacks here
+    // Set initial volume
+    // Add eq
+    // If eq is bypassed, then reset it
 
-    // set initial volume
-    // add eq
-    // if eq is bypassed, then reset it
-    // set flags for repeat
+    if(player->playhead->repeatType == SSP_PLAYER_REPEAT_SONG) {
+        BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
+    }
+
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
-    //uint64_t length = bass_getLength(currentItem->channel);
-    //log_textf("player_play - length: %"PRIu64" - currentItem->length: %"PRIu64"\n", length, currentItem->length);
     error = player_setSyncCallback(player, currentItem->length);
     if(error != SSP_OK) {
         return error;
