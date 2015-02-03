@@ -20,6 +20,7 @@
 - (IBAction)actionStop:(id)sender;
 - (IBAction)actionPrevious:(id)sender;
 - (IBAction)actionNext:(id)sender;
+@property (weak) IBOutlet NSTextField *lblState;
 
 @end
 

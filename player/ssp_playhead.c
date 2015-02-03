@@ -29,9 +29,7 @@ void playhead_free(SSP_PLAYHEAD *playhead) {
 }
 
 void playhead_reset(SSP_PLAYHEAD* playhead) {
-    playhead->isPlaying = false;
     playhead->isPlayingLoop = false;
-    playhead->isPaused = false;
     playhead->isSettingPosition = false;
     playhead->isShuffleEnabled = false;
     playhead->isEQEnabled = false;
@@ -39,7 +37,7 @@ void playhead_reset(SSP_PLAYHEAD* playhead) {
     playhead->timeShifting = 1;
     playhead->volume = 1;
     playhead->repeatType = SSP_PLAYER_REPEAT_OFF;
-    playhead->stateType = SSP_PLAYER_STATE_UNKNOWN;
+    playhead->state = SSP_PLAYER_STATE_UNKNOWN;
     playhead->positionOffset = 0;
     playhead->positionAfterUnpause = 0;
 }

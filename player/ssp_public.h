@@ -40,10 +40,17 @@ LIBRARY_API SSP_ERROR SSP_Init();
 LIBRARY_API SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 LIBRARY_API SSP_ERROR SSP_FreeDevice();
 LIBRARY_API SSP_ERROR SSP_Free();
+LIBRARY_API ssp_player_state_t SSP_GetState();
 
 // Callbacks
 LIBRARY_API void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
 LIBRARY_API void SSP_RemovePlaylistIndexChangedCallback();
+
+LIBRARY_API void SSP_SetPlaylistEndedCallback(player_playlistended_cb cb, void* user);
+LIBRARY_API void SSP_RemovePlaylistEndedCallback();
+
+LIBRARY_API void SSP_SetStateChangedCallback(player_statechanged_cb cb, void* user);
+LIBRARY_API void SSP_RemoveStateChangedCallback();
 
 LIBRARY_API void SSP_SetLogCallback(player_log_cb cb, void* user);
 LIBRARY_API void SSP_RemoveLogCallback();

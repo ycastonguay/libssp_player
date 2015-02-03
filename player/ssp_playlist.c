@@ -85,6 +85,8 @@ SSP_PLAYLIST* playlist_create() {
     playlist->name = NULL;
     playlist->callbackPlaylistIndexChanged = NULL;
     playlist->callbackPlaylistIndexChangedUser = NULL;
+    playlist->callbackPlaylistEnded = NULL;
+    playlist->callbackPlaylistEndedUser = NULL;
 
     return playlist;
 }
@@ -99,11 +101,10 @@ void playlist_free(SSP_PLAYLIST *playlist) {
         free(playlist->name);
         playlist->name = NULL;
     }
-    if(playlist->callbackPlaylistIndexChanged) {
-        //free(playlist->callbackPlaylistIndexChanged);
-        playlist->callbackPlaylistIndexChanged = NULL;
-    }
+    playlist->callbackPlaylistIndexChanged = NULL;
     playlist->callbackPlaylistIndexChangedUser = NULL;
+    playlist->callbackPlaylistEnded = NULL;
+    playlist->callbackPlaylistEndedUser = NULL;
 }
 
 SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {

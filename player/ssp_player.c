@@ -33,7 +33,6 @@
 #pragma mark Initialization
 
 SSP_PLAYER* player_create() {
-    log_text("player_create\n");
     SSP_PLAYER* player = malloc(sizeof(SSP_PLAYER));
     player->playlist = playlist_create();
     player->eqPreset = eqpreset_create();
@@ -44,7 +43,8 @@ SSP_PLAYER* player_create() {
     player->plugins = playerPlugins_create();
     player->loop = NULL;
     player->marker = NULL;
-    log_text("player_create (end)\n");
+    player->callbackStateChanged = NULL;
+    player->callbackStateChangedUser = NULL;
     return player;
 }
 
@@ -189,9 +189,7 @@ SSP_ERROR player_freePlugins(SSP_PLAYER* player) {
 }
 
 SSP_ERROR player_init(SSP_PLAYER* player) {
-    SSP_ERROR error;
-
-    error = player_loadPlugins(player);
+    SSP_ERROR error = player_loadPlugins(player);
     if(error != SSP_OK) {
         return error;
     }
@@ -202,38 +200,43 @@ SSP_ERROR player_init(SSP_PLAYER* player) {
 SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
     // TODO: validate input
 
-    // Set mixer properties
     player->mixer->sampleRate = sampleRate;
     player->mixer->bufferSize = bufferSize;
     player->mixer->updatePeriod = updatePeriod;
     player->mixer->useFloatingPoint = useFloatingPoint;
 
-    // Set device properties
     player->device = device_create();
     player->device->deviceId = deviceId;
 
-    // Reset playhead
     playhead_reset(player->playhead);
 
     SSP_ERROR error = bass_init(deviceId, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
-    return error;
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    player_updateState(player, SSP_PLAYER_STATE_INITIALIZED);
+
+    return SSP_OK;
 }
 
 SSP_ERROR player_freeDevice(SSP_PLAYER* player) {
-
     // Channels should be freed already with player_stop()
-
-    // Free BASS resources
     bool success = BASS_Free();
     if(!success) {
         return SSP_ERROR_UNKNOWN;
     }
 
-    // Free device
     device_free(player->device);
     player->device = NULL;
 
     return SSP_OK;
 }
 
+void player_updateState(SSP_PLAYER* player, ssp_player_state_t state) {
+    player->playhead->state = state;
 
+    if(player->callbackStateChanged != NULL) {
+        player->callbackStateChanged(player->callbackStateChangedUser, state);
+    }
+}

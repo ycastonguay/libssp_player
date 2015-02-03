@@ -32,6 +32,8 @@ SSP_ERROR player_freeDevice(SSP_PLAYER* player);
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player);
 SSP_ERROR player_freePlugins(SSP_PLAYER* player);
 
+void player_updateState(SSP_PLAYER* player, ssp_player_state_t state);
+
 SSP_ERROR player_pause(SSP_PLAYER* player);
 SSP_ERROR player_stop(SSP_PLAYER* player);
 SSP_ERROR player_play(SSP_PLAYER* player);
@@ -47,5 +49,11 @@ SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player);
 
 void player_setPlaylistIndexChangedCallback(SSP_PLAYER* player, player_playlistindexchanged_cb cb, void* user);
 void player_removePlaylistIndexChangedCallback(SSP_PLAYER* player);
+
+void player_setPlaylistEndedCallback(SSP_PLAYER* player, player_playlistended_cb cb, void* user);
+void player_removePlaylistEndedCallback(SSP_PLAYER* player);
+
+void player_setStateChangedCallback(SSP_PLAYER* player, player_statechanged_cb cb, void* user);
+void player_removeStateChangedCallback(SSP_PLAYER* player);
 
 #endif

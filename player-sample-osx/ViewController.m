@@ -11,7 +11,7 @@
 #import "ssp_structs.h"
 
 @interface ViewController () {
-    NSTimer *timer;
+    NSTimer *timerRefreshPosition;
 }
 @end
 
@@ -22,14 +22,24 @@ void logCallback(void *user, const char* str) {
 }
 
 void playlistIndexChangedCallback(void *user) {
-    ViewController* refObj = (__bridge_transfer id) user;
+    ViewController* vc = (__bridge_transfer id) user;
 
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
     SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
 
-    refObj.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
-    refObj.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->audioFile->filePath];
+    vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
+    vc.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->audioFile->filePath];
+}
+
+void playlistEndedCallback(void *user) {
+    ViewController* vc = (__bridge_transfer id) user;
+    vc.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist ended"];
+}
+
+void stateChangedCallback(void *user, ssp_player_state_t state) {
+    ViewController* vc = (__bridge_transfer id) user;
+    vc.lblState.stringValue = [NSString stringWithFormat:@"Player state: %d", state];
 }
 
 - (void)viewDidLoad {
@@ -38,37 +48,30 @@ void playlistIndexChangedCallback(void *user) {
 }
 
 - (void)initializePlayer {
-
-    // Get version
     int version = SSP_GetVersion();
     NSLog(@"libssp_player version: %d", version);
 
-    // Set callback for logging
-    SSP_SetLogCallback(logCallback, NULL);
-
-    // Init player
     SSP_ERROR error = SSP_Init();
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
     }
+    
+    SSP_SetLogCallback(logCallback, NULL);
+    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, (__bridge_retained void *)self);
+    SSP_SetPlaylistEndedCallback(playlistEndedCallback, (__bridge_retained void *)self);
+    SSP_SetStateChangedCallback(stateChangedCallback, (__bridge_retained void *)self);
 
-    // Init device
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
     }
 
-    // Set player callbacks
-    void* test = (__bridge_retained void *)self;
-    SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, test);
-
-    // Setup timer for refreshing position
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerElapsed) userInfo:nil repeats:YES];
+    timerRefreshPosition = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerRefreshPositionElapsed) userInfo:nil repeats:YES];
 }
 
-- (void)timerElapsed {
+- (void)timerRefreshPositionElapsed {
     uint64_t position = SSP_GetPosition();
     self.lblPosition.stringValue = [NSString stringWithFormat:@"Position (bytes): %lld", position];
 }

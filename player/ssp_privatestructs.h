@@ -44,6 +44,9 @@ typedef struct {
     SSP_PLAYER_CHANNELS* channels;
     SSP_PLAYER_PLUGINS* plugins;
 
+    player_statechanged_cb callbackStateChanged;
+    void* callbackStateChangedUser;
+
     // getters
     // what happens if someone goes getDevice() and changes the properties?
     // we can't allow that, so do we need to copy the object?

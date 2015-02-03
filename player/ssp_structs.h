@@ -22,9 +22,6 @@
 #include <stdint.h>
 #include "ssp_callbacks.h"
 
-typedef enum {SSP_PLAYER_STATE_UNKNOWN, SSP_PLAYER_STATE_INITIALIZED, SSP_PLAYER_STATE_STOPPED, SSP_PLAYER_STATE_PLAYING, SSP_PLAYER_STATE_PAUSED} ssp_player_state_t;
-typedef enum {SSP_PLAYER_REPEAT_OFF, SSP_PLAYER_REPEAT_PLAYLIST, SSP_PLAYER_REPEAT_SONG} ssp_player_repeat_t;
-
 typedef struct {
     const char* str;
     uint64_t bytes;
@@ -48,13 +45,11 @@ typedef struct {
 
 typedef struct {
     // get
-    bool isPlaying;
     bool isPlayingLoop;
-    bool isPaused;
     bool isShuffleEnabled;
     bool isSettingPosition;
     bool isEQEnabled;
-    ssp_player_state_t stateType;
+    ssp_player_state_t state;
 
     // get/set
     ssp_player_repeat_t repeatType;
@@ -114,8 +109,12 @@ typedef struct {
     const char* name;
     int currentIndex;
     int currentMixerIndex;
+
     void* callbackPlaylistIndexChangedUser;
     player_playlistindexchanged_cb callbackPlaylistIndexChanged;
+
+    void* callbackPlaylistEndedUser;
+    player_playlistended_cb callbackPlaylistEnded;
 } SSP_PLAYLIST;
 
 #endif

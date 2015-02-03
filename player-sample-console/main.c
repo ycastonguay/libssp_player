@@ -29,6 +29,10 @@ void logCallback(void *user, const char* str) {
     printf("libssp_player :: %s", str);
 }
 
+void stateChangedCallback(void *user, ssp_player_state_t state) {
+    printf("Player state changed - state: %d\n", state);
+}
+
 void playlistIndexChangedCallback(void *user) {
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
@@ -36,6 +40,10 @@ void playlistIndexChangedCallback(void *user) {
 
     printf("Playlist index changed: [%d/%d]\n", currentIndex+1, count);
     printf("Playlist item file path: %s\n", item->audioFile->filePath);
+}
+
+void playlistEndedCallback(void *user) {
+    printf("Playlist ended!");
 }
 
 int initializePlayer() {
@@ -47,7 +55,9 @@ int initializePlayer() {
     }
 
     SSP_SetLogCallback(logCallback, NULL);
+    SSP_SetStateChangedCallback(stateChangedCallback, NULL);
     SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL);
+    SSP_SetPlaylistEndedCallback(playlistEndedCallback, NULL);
 
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     if(error != SSP_OK) {
@@ -55,8 +65,6 @@ int initializePlayer() {
         return 1;
     }
 
-    //SSP_DEVICE *device2 = NULL;
-    //SSP_DEVICE *device2 = malloc(sizeof(SSP_DEVICE));
     SSP_DEVICE device2;
     SSP_GetDevice(&device2);
 

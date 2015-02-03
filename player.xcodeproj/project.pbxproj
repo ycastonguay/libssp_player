@@ -145,6 +145,7 @@
 		1C5945E606E95ED5CA88C666 /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
 		1C5945F4B5B15209AB1E4E81 /* ssp_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6CA85B363632DEE303 /* ssp_device.c */; };
 		1C594609491C54CB6F4B58E2 /* ssp_player_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594E8FF5CA8DAD10A02C4F /* ssp_player_marker.c */; };
+		1C594671B685D88BC5566AE1 /* ssp_enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5943A51ADD33A3B6191B29 /* ssp_enums.h */; };
 		1C594696D2478857A629EF98 /* ssp_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6B0695F438D9AB6640 /* ssp_log.c */; };
 		1C5946F2F99B0F2FDC42EC25 /* ssp_public.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5943AB7B6D4807B579BA1A /* ssp_public.c */; };
 		1C5946FFE982BB7148142F7D /* ssp_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59494588C7D79421B97AC1 /* ssp_playhead.c */; };
@@ -337,6 +338,7 @@
 		1C5942559E650BF63784E7CF /* ssp_convertaudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_convertaudio.c; sourceTree = "<group>"; };
 		1C594268D0858F4660A3ADA1 /* ssp_bass.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_bass.c; sourceTree = "<group>"; };
 		1C5942B52D4F6077F24E903B /* ssp_playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_playlist.h; sourceTree = "<group>"; };
+		1C5943A51ADD33A3B6191B29 /* ssp_enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_enums.h; sourceTree = "<group>"; };
 		1C5943AB7B6D4807B579BA1A /* ssp_public.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_public.c; sourceTree = "<group>"; };
 		1C5943B90558531DDB80C177 /* ssp_playerchannels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_playerchannels.h; sourceTree = "<group>"; };
 		1C59445976180B151C054201 /* ssp_player_playback.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_playback.c; sourceTree = "<group>"; };
@@ -667,6 +669,7 @@
 				1C594E8FF5CA8DAD10A02C4F /* ssp_player_marker.c */,
 				1C594A6B0695F438D9AB6640 /* ssp_log.c */,
 				1C59498135E3F083F91571F0 /* ssp_log.h */,
+				1C5943A51ADD33A3B6191B29 /* ssp_enums.h */,
 			);
 			path = player;
 			sourceTree = "<group>";
@@ -789,6 +792,7 @@
 				1C594DAFE9EA3906E9ABD360 /* ssp_playerchannels.h in Headers */,
 				1C5944A33BE016981CC2B353 /* ssp_playerplugins.h in Headers */,
 				1C594B76F20C1BC8C731F74B /* ssp_log.h in Headers */,
+				1C594671B685D88BC5566AE1 /* ssp_enums.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

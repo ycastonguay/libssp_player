@@ -16,6 +16,7 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdlib.h>
+#include "ssp_enums.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
@@ -51,7 +52,7 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     SSP_ERROR error;
     bool success;
 
-    if(player->playhead->isPaused) {
+    if(player->playhead->state == SSP_PLAYER_STATE_PAUSED) {
         player->playhead->positionAfterUnpause = position;
         return SSP_OK;
     }
@@ -116,7 +117,7 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
 
     player_setSyncCallback(player, currentItem->length - bytesPosition);
 
-    if(!player->playhead->isPaused) {
+    if(player->playhead->state != SSP_PLAYER_STATE_PAUSED) {
         success = BASS_ChannelPlay(player->channels->mixerChannel, false);
         if(!success) {
             return bass_getError("BASS_ChannelPlay");

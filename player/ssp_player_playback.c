@@ -217,7 +217,6 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
     }
 
     //player_removeSyncCallbacks(<#(SSP_PLAYER*)player#>)
-
 //    RemoveSyncCallback(handle);
     // We may not have to call this because of BASS_SYNC_ONETIME
 
@@ -236,13 +235,10 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         //            // Check if EQ is enabled
 //            if (IsEQEnabled)
 //                RemoveEQ();
-//
-//            // Dispose channels
-//            Playlist.DisposeChannels();
 
-        player->playhead->isPlaying = false;
+        playlist_disposeChannels(player->playlist);
+        player_updateState(player, SSP_PLAYER_STATE_STOPPED);
     }
-
 
     if(player->playlist->callbackPlaylistIndexChanged != NULL) {
         log_text("player_playerSyncProc - Calling callbackPlaylistIndexChanged...\n");
@@ -324,30 +320,49 @@ SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
     return SSP_OK;
 }
 
+#pragma mark Callbacks
+
 void player_setPlaylistIndexChangedCallback(SSP_PLAYER* player, player_playlistindexchanged_cb cb, void *user) {
     player->playlist->callbackPlaylistIndexChanged = cb;
     player->playlist->callbackPlaylistIndexChangedUser = user;
 }
 
 void player_removePlaylistIndexChangedCallback(SSP_PLAYER* player) {
-    if(player->playlist->callbackPlaylistIndexChanged) {
-        free(player->playlist->callbackPlaylistIndexChanged);
-        player->playlist->callbackPlaylistIndexChanged = NULL;
-    }
+    player->playlist->callbackPlaylistIndexChanged = NULL;
     player->playlist->callbackPlaylistIndexChangedUser = NULL;
+}
+
+void player_setPlaylistEndedCallback(SSP_PLAYER* player, player_playlistended_cb cb, void* user) {
+    player->playlist->callbackPlaylistEnded = cb;
+    player->playlist->callbackPlaylistEndedUser = user;
+}
+
+void player_removePlaylistEndedCallback(SSP_PLAYER* player) {
+    player->playlist->callbackPlaylistEnded = NULL;
+    player->playlist->callbackPlaylistEndedUser = NULL;
+}
+
+void player_setStateChangedCallback(SSP_PLAYER* player, player_statechanged_cb cb, void* user) {
+    player->callbackStateChanged = cb;
+    player->callbackStateChangedUser = user;
+}
+
+void player_removeStateChangedCallback(SSP_PLAYER* player) {
+    player->callbackStateChanged = NULL;
+    player->callbackStateChangedUser = NULL;
 }
 
 #pragma mark Playback
 
 SSP_ERROR player_pause(SSP_PLAYER* player) {
-    if(player->playhead->isPaused) {
+    if(player->playhead->state == SSP_PLAYER_STATE_PLAYING) {
         bass_pause();
-        player->playhead->isPaused = true;
+        player_updateState(player, SSP_PLAYER_STATE_PAUSED);
     }
     else {
         bass_start();
-        player->playhead->isPaused = false;
         player_setPosition(player, player->playhead->positionAfterUnpause);
+        player_updateState(player, SSP_PLAYER_STATE_PLAYING);
     }
 
     return SSP_OK;
@@ -355,9 +370,6 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
 
 SSP_ERROR player_stop(SSP_PLAYER* player) {
     // reset loop here
-    player->playhead->isPlaying = false;
-    player->playhead->isPlayingLoop = false;
-
     if(player->playhead->isEQEnabled) {
         // call remove eq here
     }
@@ -387,15 +399,17 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return error;
     }
 
+    player->playhead->isPlayingLoop = false;
+    player_updateState(player, SSP_PLAYER_STATE_STOPPED);
+
     return SSP_OK;
 }
 
 SSP_ERROR player_play(SSP_PLAYER* player) {
-
     SSP_ERROR error;
 
     log_text("player_play\n");
-    if(player->playhead->isPlaying) {
+    if(player->playhead->state == SSP_PLAYER_STATE_PLAYING) {
         if(player->playhead->isPlayingLoop) {
             // TODO: stop loop
         }
@@ -466,7 +480,6 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     }
 
     player->playlist->currentMixerIndex = currentIndex;
-    player->playhead->isPlaying = true;
 
     error = bass_start();
     if(error != SSP_OK) {
@@ -477,6 +490,8 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     if(error != SSP_OK) {
         return error;
     }
+
+    player_updateState(player, SSP_PLAYER_STATE_PLAYING);
 
     if(player->playlist->callbackPlaylistIndexChanged != NULL) {
         player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);

@@ -19,11 +19,11 @@
 #include <stdlib.h>
 #include "ssp_public.h"
 #include "ssp_privatestructs.h"
-#include "ssp_errors.h"
 #include "ssp_playlist.h"
 #include "ssp_player.h"
-#include "ssp_structs.h"
 #include "ssp_log.h"
+#include "ssp_convertaudio.h"
+#include "ssp_structs.h"
 
 static SSP_PLAYER* sspPlayer;
 
@@ -54,6 +54,10 @@ SSP_ERROR SSP_Free() {
     return player_free(sspPlayer);
 }
 
+LIBRARY_API ssp_player_state_t SSP_GetState() {
+    return sspPlayer->playhead->state;
+}
+
 #pragma mark Callbacks
 
 void SSP_SetLogCallback(player_log_cb cb, void* user) {
@@ -70,6 +74,22 @@ void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void
 
 void SSP_RemovePlaylistIndexChangedCallback() {
     player_removePlaylistIndexChangedCallback(sspPlayer);
+}
+
+void SSP_SetPlaylistEndedCallback(player_playlistended_cb cb, void* user) {
+    player_setPlaylistEndedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemovePlaylistEndedCallback() {
+    player_removePlaylistEndedCallback(sspPlayer);
+}
+
+void SSP_SetStateChangedCallback(player_statechanged_cb cb, void* user) {
+    player_setStateChangedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemoveStateChangedCallback() {
+    player_removeStateChangedCallback(sspPlayer);
 }
 
 #pragma mark Device

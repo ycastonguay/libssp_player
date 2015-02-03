@@ -15,20 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef player_callbacks_h
-#define player_callbacks_h
+#ifndef __player__ssp_enums__
+#define __player__ssp_enums__
 
-#include "ssp_enums.h"
+typedef enum {SSP_PLAYER_STATE_UNKNOWN, SSP_PLAYER_STATE_INITIALIZED, SSP_PLAYER_STATE_STOPPED, SSP_PLAYER_STATE_PLAYING, SSP_PLAYER_STATE_PAUSED} ssp_player_state_t;
+typedef enum {SSP_PLAYER_REPEAT_OFF, SSP_PLAYER_REPEAT_PLAYLIST, SSP_PLAYER_REPEAT_SONG} ssp_player_repeat_t;
 
-//event LoopPlaybackStarted OnLoopPlaybackStarted;
-//event LoopPlaybackStopped OnLoopPlaybackStopped;
-//event AudioInterrupted OnAudioInterrupted;
-//event BPMDetected OnBPMDetected;
-//event SegmentIndexChanged OnSegmentIndexChanged;
-
-typedef void (*player_log_cb)(void *user, const char* str);
-typedef void (*player_statechanged_cb)(void *user, ssp_player_state_t state);
-typedef void (*player_playlistindexchanged_cb)(void *user);
-typedef void (*player_playlistended_cb)(void *user);
-
-#endif
+#endif /* defined(__player__ssp_enums__) */
