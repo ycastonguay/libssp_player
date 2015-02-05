@@ -46,14 +46,12 @@ float convertAudio_levelToDB(float level, float maxLevel) {
     return 20.0f * log10f(level / maxLevel);
 }
 
-char* convertAudio_toStringFromMS(__uint64_t milliseconds) {
+void convertAudio_toStringFromMS(__uint64_t milliseconds, char* str) {
     __uint64_t pos = milliseconds;
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
     __uint64_t ms = 0;
-    //char* timeString = "";
-    char timeString[32];
 
     if (pos >= 3600000)
     {
@@ -73,24 +71,15 @@ char* convertAudio_toStringFromMS(__uint64_t milliseconds) {
     ms = pos;
 
     if(hours > 0) {
-        sprintf(timeString, "%01d:%02d:%02d.%03d", hours, minutes, seconds, ms);
+        sprintf(str, "%01d:%02d:%02d.%03d", hours, minutes, seconds, ms);
     }
     else {
-        sprintf(timeString, "%02d:%02d.%03d", minutes, seconds, ms);
+        sprintf(str, "%02d:%02d.%03d", minutes, seconds, ms);
     }
-
-    return timeString;
 }
 
-//
-///// <summary>
-///// Converts to the milliseconds format.
-///// </summary>
-///// <param name="position">Position in string (format: 0:00.000)</param>
-///// <returns>Milliseconds</returns>
-//public static int ToMS(string position)
-//{
-//    string strHours = String.Empty;
+__uint64_t convertAudio_toMSFromString(const char* string) {
+    //    string strHours = String.Empty;
 //    string strMinutes = String.Empty;
 //    string strSeconds = String.Empty;
 //    string strMilliseconds = String.Empty;
@@ -128,16 +117,12 @@ char* convertAudio_toStringFromMS(__uint64_t milliseconds) {
 //    Int32.TryParse(strMilliseconds, out milliseconds);
 //
 //    return milliseconds + (seconds * 1000) + (minutes * 1000 * 60) + (hours * 1000 * 60 * 60);
-//}
-
-__uint64_t convertAudio_toMSFromString(const char* string) {
     return 0;
 }
 
-char* convertAudio_toString(__uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate) {
+void convertAudio_toString(char* str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate) {
     __uint64_t samples = convertAudio_toSamplesFromBytes(bytes, bitsPerSample, channelCount);
     __uint64_t milliseconds = convertAudio_toMS(samples, sampleRate);
-//    return ToTimeString(positionMS);
-    return NULL;
+    convertAudio_toStringFromMS(milliseconds, str);
 }
 

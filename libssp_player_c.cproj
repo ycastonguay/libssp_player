@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8193812F-43FC-4391-8998-FCF4F8A10EE5}</ProjectGuid>
+    <Compiler>
+      <Compiler ctype="GccCompiler" />
+    </Compiler>
+    <Language>C</Language>
+    <Target>Bin</Target>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <OutputName>libssp_player_c</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <DefineSymbols>DEBUG MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <ExtraLinkerArguments>-v -v -v -L/Users/usr/Sources/libssp_player/bass/osx -lbass -lbassmix -lbass_fx</ExtraLinkerArguments>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <OutputName>libssp_player_c</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <DefineSymbols>MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="vector\" />
+    <Folder Include="player\" />
+    <Folder Include="player-sample-console\" />
+    <Folder Include="bass\" />
+    <Folder Include="tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="vector\vector.c" />
+    <Compile Include="player-sample-console\main.c" />
+    <Compile Include="player\ssp_bass.c" />
+    <Compile Include="player\ssp_convertaudio.c" />
+    <Compile Include="player\ssp_device.c" />
+    <Compile Include="player\ssp_eqpreset.c" />
+    <Compile Include="player\ssp_log.c" />
+    <Compile Include="player\ssp_loop.c" />
+    <Compile Include="player\ssp_marker.c" />
+    <Compile Include="player\ssp_mixer.c" />
+    <Compile Include="player\ssp_player.c" />
+    <Compile Include="player\ssp_player_eq.c" />
+    <Compile Include="player\ssp_player_loop.c" />
+    <Compile Include="player\ssp_player_marker.c" />
+    <Compile Include="player\ssp_player_playback.c" />
+    <Compile Include="player\ssp_player_seeking.c" />
+    <Compile Include="player\ssp_playerchannels.c" />
+    <Compile Include="player\ssp_playerplugins.c" />
+    <Compile Include="player\ssp_playhead.c" />
+    <Compile Include="player\ssp_playlist.c" />
+    <Compile Include="player\ssp_public.c" />
+    <Compile Include="tests\test.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vector\vector.h" />
+    <None Include="player\ssp_bass.h" />
+    <None Include="player\ssp_callbacks.h" />
+    <None Include="player\ssp_convertaudio.h" />
+    <None Include="player\ssp_device.h" />
+    <None Include="player\ssp_enums.h" />
+    <None Include="player\ssp_eqpreset.h" />
+    <None Include="player\ssp_errors.h" />
+    <None Include="player\ssp_log.h" />
+    <None Include="player\ssp_loop.h" />
+    <None Include="player\ssp_marker.h" />
+    <None Include="player\ssp_mixer.h" />
+    <None Include="player\ssp_player.h" />
+    <None Include="player\ssp_playerchannels.h" />
+    <None Include="player\ssp_playerplugins.h" />
+    <None Include="player\ssp_playhead.h" />
+    <None Include="player\ssp_playlist.h" />
+    <None Include="player\ssp_privatestructs.h" />
+    <None Include="player\ssp_public.h" />
+    <None Include="player\ssp_structs.h" />
+    <None Include="bass\bass.h" />
+    <None Include="bass\bass_fx.h" />
+    <None Include="bass\bassenc.h" />
+    <None Include="bass\bassflac.h" />
+    <None Include="bass\bassmidi.h" />
+    <None Include="bass\bassmix.h" />
+    <None Include="bass\basswv.h" />
+    <None Include="tests\test.h" />
+  </ItemGroup>
+</Project>

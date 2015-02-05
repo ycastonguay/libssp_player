@@ -41,14 +41,14 @@
 		12218D171A708F3B0011CAFF /* libbasswv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59841A6D877500E071A5 /* libbasswv.dylib */; };
 		1239841F1A6EC37F00FC46D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239841E1A6EC37F00FC46D3 /* main.m */; };
 		123984221A6EC37F00FC46D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984211A6EC37F00FC46D3 /* AppDelegate.m */; };
-		123984251A6EC37F00FC46D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984241A6EC37F00FC46D3 /* ViewController.m */; };
+		123984251A6EC37F00FC46D3 /* PhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984241A6EC37F00FC46D3 /* PhoneViewController.m */; };
 		123984281A6EC37F00FC46D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123984261A6EC37F00FC46D3 /* Main.storyboard */; };
 		1239842A1A6EC37F00FC46D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 123984291A6EC37F00FC46D3 /* Images.xcassets */; };
 		1239842D1A6EC37F00FC46D3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1239842B1A6EC37F00FC46D3 /* LaunchScreen.xib */; };
 		123984391A6EC37F00FC46D3 /* player_sample_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984381A6EC37F00FC46D3 /* player_sample_iosTests.m */; };
 		1239844A1A6EC39D00FC46D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 123984491A6EC39D00FC46D3 /* AppDelegate.m */; };
 		1239844C1A6EC39D00FC46D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239844B1A6EC39D00FC46D3 /* main.m */; };
-		1239844F1A6EC39D00FC46D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239844E1A6EC39D00FC46D3 /* ViewController.m */; };
+		1239844F1A6EC39D00FC46D3 /* DesktopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239844E1A6EC39D00FC46D3 /* DesktopViewController.m */; };
 		123984511A6EC39D00FC46D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 123984501A6EC39D00FC46D3 /* Images.xcassets */; };
 		123984541A6EC39D00FC46D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 123984521A6EC39D00FC46D3 /* Main.storyboard */; };
 		123984601A6EC39E00FC46D3 /* player_sample_osxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1239845F1A6EC39E00FC46D3 /* player_sample_osxTests.m */; };
@@ -268,8 +268,8 @@
 		1239841E1A6EC37F00FC46D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		123984201A6EC37F00FC46D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		123984211A6EC37F00FC46D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		123984231A6EC37F00FC46D3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		123984241A6EC37F00FC46D3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		123984231A6EC37F00FC46D3 /* PhoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneViewController.h; sourceTree = "<group>"; };
+		123984241A6EC37F00FC46D3 /* PhoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneViewController.m; sourceTree = "<group>"; };
 		123984271A6EC37F00FC46D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		123984291A6EC37F00FC46D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1239842C1A6EC37F00FC46D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -281,8 +281,8 @@
 		123984481A6EC39D00FC46D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		123984491A6EC39D00FC46D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1239844B1A6EC39D00FC46D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1239844D1A6EC39D00FC46D3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1239844E1A6EC39D00FC46D3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1239844D1A6EC39D00FC46D3 /* DesktopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopViewController.h; sourceTree = "<group>"; };
+		1239844E1A6EC39D00FC46D3 /* DesktopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DesktopViewController.m; sourceTree = "<group>"; };
 		123984501A6EC39D00FC46D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		123984531A6EC39D00FC46D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		123984591A6EC39E00FC46D3 /* player-sample-osxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "player-sample-osxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -505,8 +505,8 @@
 			children = (
 				123984201A6EC37F00FC46D3 /* AppDelegate.h */,
 				123984211A6EC37F00FC46D3 /* AppDelegate.m */,
-				123984231A6EC37F00FC46D3 /* ViewController.h */,
-				123984241A6EC37F00FC46D3 /* ViewController.m */,
+				123984231A6EC37F00FC46D3 /* PhoneViewController.h */,
+				123984241A6EC37F00FC46D3 /* PhoneViewController.m */,
 				123984261A6EC37F00FC46D3 /* Main.storyboard */,
 				123984291A6EC37F00FC46D3 /* Images.xcassets */,
 				1239842B1A6EC37F00FC46D3 /* LaunchScreen.xib */,
@@ -546,8 +546,8 @@
 			children = (
 				123984481A6EC39D00FC46D3 /* AppDelegate.h */,
 				123984491A6EC39D00FC46D3 /* AppDelegate.m */,
-				1239844D1A6EC39D00FC46D3 /* ViewController.h */,
-				1239844E1A6EC39D00FC46D3 /* ViewController.m */,
+				1239844D1A6EC39D00FC46D3 /* DesktopViewController.h */,
+				1239844E1A6EC39D00FC46D3 /* DesktopViewController.m */,
 				123984501A6EC39D00FC46D3 /* Images.xcassets */,
 				123984521A6EC39D00FC46D3 /* Main.storyboard */,
 				123984461A6EC39D00FC46D3 /* Supporting Files */,
@@ -1071,7 +1071,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				123984251A6EC37F00FC46D3 /* ViewController.m in Sources */,
+				123984251A6EC37F00FC46D3 /* PhoneViewController.m in Sources */,
 				123984221A6EC37F00FC46D3 /* AppDelegate.m in Sources */,
 				1239841F1A6EC37F00FC46D3 /* main.m in Sources */,
 			);
@@ -1089,7 +1089,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1239844F1A6EC39D00FC46D3 /* ViewController.m in Sources */,
+				1239844F1A6EC39D00FC46D3 /* DesktopViewController.m in Sources */,
 				1239844C1A6EC39D00FC46D3 /* main.m in Sources */,
 				1239844A1A6EC39D00FC46D3 /* AppDelegate.m in Sources */,
 			);
@@ -1263,7 +1263,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1 $(inherited) TARGET_IOS=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"TARGET_IOS=1",
+				);
 				INFOPLIST_FILE = "player-sample-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1352,7 +1356,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1 $(inherited) TARGET_OSX=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"TARGET_OSX=1",
+				);
 				INFOPLIST_FILE = "player-sample-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (

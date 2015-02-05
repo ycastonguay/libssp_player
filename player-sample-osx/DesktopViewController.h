@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  DesktopViewController.h
 //  player-sample-osx
 //
 //  Created by Yanick Castonguay on 2015-01-20.
@@ -8,19 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ViewController : NSViewController
+@interface DesktopViewController : NSViewController
 
 @property (weak) IBOutlet NSTextField *lblFilePath;
 @property (weak) IBOutlet NSTextField *lblPosition;
 @property (weak) IBOutlet NSTextField *lblPlaylist;
+@property (weak) IBOutlet NSTextField *lblState;
 - (IBAction)actionOpenAudioFiles:(id)sender;
 - (IBAction)actionClose:(id)sender;
 - (IBAction)actionPlay:(id)sender;
-- (IBAction)actionPause:(id)sender;
 - (IBAction)actionStop:(id)sender;
-- (IBAction)actionPrevious:(id)sender;
+- (IBAction)actionPause:(id)sender;
 - (IBAction)actionNext:(id)sender;
-@property (weak) IBOutlet NSTextField *lblState;
+- (IBAction)actionPrevious:(id)sender;
 
 @end
 

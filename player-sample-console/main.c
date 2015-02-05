@@ -17,7 +17,9 @@
 
 #include <stdio.h>
 #include <ncurses.h>
-#include "ssp_public.h"
+#include <inttypes.h>
+#include "../player/ssp_public.h"
+#include "../player/ssp_structs.h"
 
 void checkForError(SSP_ERROR error) {
     if(error != SSP_OK) {
@@ -39,7 +41,7 @@ void playlistIndexChangedCallback(void *user) {
     SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
 
     printf("Playlist index changed: [%d/%d]\n", currentIndex+1, count);
-    printf("Playlist item file path: %s\n", item->audioFile->filePath);
+    printf("Playlist item file path: %s\n", item->filePath);
 }
 
 void playlistEndedCallback(void *user) {
@@ -97,8 +99,42 @@ int main(int argc, const char * argv[]) {
         return error;
     }
 
-    printf("Press ENTER to stop playback...\n");
-    int ch = getchar();
+    printf("\n");
+    printf("List of commands:\n");
+    printf("[X] Exit app   [P] Play/pause   [<] Previous song   [>] Next song  [.] Print position\n");
+    printf("Type a command and press ENTER...\n");
+    while(true)
+    {
+        int ch = getchar();
+        if(ch == 'x' || ch == 'X') {
+            printf("Exiting application...\n");
+            break;
+        }
+        if(ch == '.') {
+            printf("Getting position...\n");
+
+            uint64_t bytes = SSP_GetPosition();
+            printf("Position (bytes): %"PRIu64"\n", bytes);
+
+            SSP_POSITION position;
+            SSP_GetPositionNew(&position);
+            printf("Position (samples): %"PRIu64"\n", position.samples);
+            printf("Position (milliseconds): %"PRIu64"\n", position.ms);
+            printf("Position (string): %s\n", position.str);
+        }
+        if(ch == 'p' || ch == 'P') {
+            printf("Pausing playback...\n");
+            SSP_Pause();
+        }
+        else if(ch == '<') {
+            printf("Skipping to previous song...\n");
+            SSP_Previous();
+        }
+        else if(ch == '>') {
+            printf("Skipping to next song...\n");
+            SSP_Next();
+        }
+    }
 
     destroyPlayer();
 

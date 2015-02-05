@@ -27,8 +27,8 @@ __uint64_t convertAudio_toBytes(__uint64_t samples, int bitRate, int channelCoun
 float convertAudio_msToTempo(float milliseconds);
 float convertAudio_tempoToMS(float tempo);
 float convertAudio_levelToDB(float level, float maxLevel);
-char* convertAudio_toStringFromMS(__uint64_t milliseconds);
+void convertAudio_toStringFromMS(__uint64_t milliseconds, char* str);
 __uint64_t convertAudio_toMSFromString(const char* string);
-char* convertAudio_toString(__uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
+void convertAudio_toString(char* str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
 
 #endif /* defined(__player__ssp_convertaudio__) */

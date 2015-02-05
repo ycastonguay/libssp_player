@@ -61,7 +61,8 @@ void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position) {
     position->bytes = bytes;
     position->samples = convertAudio_toSamplesFromBytes(bytes, item->bitsPerSample, item->numberOfChannels);
     position->ms = convertAudio_toMS(position->samples, item->sampleRate);
-    position->str = convertAudio_toStringFromMS(position->ms);
+    //position->str = convertAudio_toStringFromMS(position->ms);
+    convertAudio_toStringFromMS(position->ms, position->str);
     //    entity.PositionPercentage = ((float)positionBytes / (float)lengthBytes) * 100;
 }
 
