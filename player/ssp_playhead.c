@@ -17,7 +17,6 @@
 
 #include <stdlib.h>
 #include "ssp_playhead.h"
-#include "ssp_structs.h"
 
 SSP_PLAYHEAD* playhead_create() {
     SSP_PLAYHEAD* playhead = malloc(sizeof(SSP_PLAYHEAD));

@@ -193,3 +193,45 @@ void SSP_GetPositionNew(SSP_POSITION* position) {
 SSP_ERROR SSP_SetPosition(uint64_t position) {
     return player_setPosition(sspPlayer, position);
 }
+
+#pragma mark Playhead
+
+bool SSP_GetIsShuffle() {
+    return player_getIsShuffle(sspPlayer);
+}
+
+void SSP_SetIsShuffle(bool shuffle) {
+    player_setIsShuffle(sspPlayer, shuffle);
+}
+
+ssp_player_repeat_t SSP_GetRepeatType() {
+    return player_getRepeatType(sspPlayer);
+}
+
+void SSP_SetRepeatType(ssp_player_repeat_t repeat) {
+    player_setRepeatType(sspPlayer, repeat);
+}
+
+float SSP_GetVolume() {
+    return player_getVolume(sspPlayer);
+}
+
+void SSP_SetVolume(float volume) {
+    player_setVolume(sspPlayer, volume);
+}
+
+float SSP_GetTimeShifting() {
+    return player_getTimeShifting(sspPlayer);
+}
+
+void SSP_SetTimeShifting(float timeShifting) {
+    player_setTimeShifting(sspPlayer, timeShifting);
+}
+
+int SSP_GetPitchShifting() {
+    return player_getPitchShifting(sspPlayer);
+}
+
+void SSP_SetPitchShifting(int pitchShifting) {
+    player_setPitchShifting(sspPlayer, pitchShifting);
+}

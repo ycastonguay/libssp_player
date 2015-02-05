@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 14
+#define SSP_VERSION 15
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -57,8 +57,7 @@ LIBRARY_API void SSP_RemoveLogCallback();
 
 // Properties
 LIBRARY_API void SSP_GetDevice(SSP_DEVICE* device);
-LIBRARY_API SSP_PLAYHEAD* SSP_GetPlayhead();
-LIBRARY_API SSP_MIXER* SSP_GetMixer();
+LIBRARY_API void SSP_GetMixer(SSP_MIXER* mixer);
 
 // EQ
 LIBRARY_API SSP_EQPRESET* SSP_GetEQPreset();
@@ -80,6 +79,23 @@ LIBRARY_API SSP_ERROR SSP_Next();
 LIBRARY_API SSP_ERROR SSP_GoTo(int index);
 //void SSP_GoTo(int playlistItemId); // how do we manage ids?
 
+// Playhead
+LIBRARY_API bool SSP_GetIsShuffle();
+LIBRARY_API void SSP_SetIsShuffle(bool shuffle);
+
+LIBRARY_API ssp_player_repeat_t SSP_GetRepeatType();
+LIBRARY_API void SSP_SetRepeatType(ssp_player_repeat_t repeat);
+
+LIBRARY_API float SSP_GetVolume();
+LIBRARY_API void SSP_SetVolume(float volume);
+
+LIBRARY_API float SSP_GetTimeShifting();
+LIBRARY_API void SSP_SetTimeShifting(float timeShifting);
+
+LIBRARY_API int SSP_GetPitchShifting();
+LIBRARY_API void SSP_SetPitchShifting(int pitchShifting);
+
+// Position
 LIBRARY_API uint64_t SSP_GetPosition();
 LIBRARY_API void SSP_GetPositionNew(SSP_POSITION* position);
 LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);

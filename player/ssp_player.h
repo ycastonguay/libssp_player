@@ -34,6 +34,7 @@ SSP_ERROR player_freePlugins(SSP_PLAYER* player);
 
 void player_updateState(SSP_PLAYER* player, ssp_player_state_t state);
 
+// Playback
 SSP_ERROR player_pause(SSP_PLAYER* player);
 SSP_ERROR player_stop(SSP_PLAYER* player);
 SSP_ERROR player_play(SSP_PLAYER* player);
@@ -41,10 +42,28 @@ SSP_ERROR player_previous(SSP_PLAYER* player);
 SSP_ERROR player_next(SSP_PLAYER* player);
 SSP_ERROR player_goTo(SSP_PLAYER* player, int index);
 
+// Playhead
+bool player_getIsShuffle(SSP_PLAYER* player);
+void player_setIsShuffle(SSP_PLAYER* player, bool shuffle);
+
+ssp_player_repeat_t player_getRepeatType(SSP_PLAYER* player);
+void player_setRepeatType(SSP_PLAYER* player, ssp_player_repeat_t repeat);
+
+float player_getVolume(SSP_PLAYER* player);
+void player_setVolume(SSP_PLAYER* player, float volume);
+
+float player_getTimeShifting(SSP_PLAYER* player);
+void player_setTimeShifting(SSP_PLAYER* player, float timeShifting);
+
+int player_getPitchShifting(SSP_PLAYER* player);
+void player_setPitchShifting(SSP_PLAYER* player, int pitchShifting);
+
+// Position
 uint64_t player_getPosition(SSP_PLAYER* player);
 void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
 
+// Callbacks
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position);
 SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player);
 

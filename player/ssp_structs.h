@@ -46,28 +46,6 @@ typedef struct {
 } SSP_MIXER;
 
 typedef struct {
-    // get
-    bool isPlayingLoop;
-    bool isShuffleEnabled;
-    bool isSettingPosition;
-    bool isEQEnabled;
-    ssp_player_state_t state;
-
-    // get/set
-    ssp_player_repeat_t repeatType;
-    float volume; // should be merged with mixer?
-    float timeShifting;
-    int pitchShifting;
-
-    // temp (TODO: should this be part of playhead?)
-    uint64_t positionAfterUnpause;
-
-    // should be private
-    // used for calculating the position offset when a song changes
-    uint64_t positionOffset;
-} SSP_PLAYHEAD;
-
-typedef struct {
     float center;
     const char* label;
     float bandwidth;
@@ -101,18 +79,5 @@ typedef struct {
     uint32_t channel;
     uint64_t length;
 } SSP_PLAYLISTITEM;
-
-typedef struct {
-    void* items;
-    const char* name;
-    int currentIndex;
-    int currentMixerIndex;
-
-    void* callbackPlaylistIndexChangedUser;
-    player_playlistindexchanged_cb callbackPlaylistIndexChanged;
-
-    void* callbackPlaylistEndedUser;
-    player_playlistended_cb callbackPlaylistEnded;
-} SSP_PLAYLIST;
 
 #endif

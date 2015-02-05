@@ -19,7 +19,7 @@
 #define __player__ssp_playhead__
 
 #include <stdio.h>
-#include "ssp_structs.h"
+#include "ssp_privatestructs.h"
 
 SSP_PLAYHEAD* playhead_create();
 void playhead_free(SSP_PLAYHEAD *playhead);

@@ -40,25 +40,55 @@ typedef struct {
 } SSP_PLAYER_CHANNELS;
 
 typedef struct {
+    void* items;
+    const char* name;
+    int currentIndex;
+    int currentMixerIndex;
+
+    void* callbackPlaylistIndexChangedUser;
+    player_playlistindexchanged_cb callbackPlaylistIndexChanged;
+
+    void* callbackPlaylistEndedUser;
+    player_playlistended_cb callbackPlaylistEnded;
+} SSP_PLAYLIST;
+
+typedef struct {
+    // get
+    bool isPlayingLoop;
+    ssp_player_state_t state;
+
+    // get/set
+    bool isEQEnabled;
+    bool isShuffleEnabled;
+    ssp_player_repeat_t repeatType;
+    float volume;
+    float timeShifting;
+    int pitchShifting;
+
     // private
-    SSP_PLAYER_CHANNELS* channels;
-    SSP_PLAYER_PLUGINS* plugins;
+    bool isSettingPosition;
+    uint64_t positionAfterUnpause;
+    uint64_t positionOffset; // used for calculating the position offset when a song changes
+} SSP_PLAYHEAD;
 
-    player_statechanged_cb callbackStateChanged;
-    void* callbackStateChangedUser;
-
-    // getters
-    // what happens if someone goes getDevice() and changes the properties?
-    // we can't allow that, so do we need to copy the object?
+typedef struct {
+    // get
     SSP_DEVICE* device;
-    SSP_PLAYLIST* playlist;
     SSP_MIXER* mixer;
-    SSP_PLAYHEAD* playhead;
 
-    // getters/setters
+    // get/set
     SSP_EQPRESET* eqPreset;
     SSP_LOOP* loop;
     SSP_MARKER* marker;
+
+    // private
+    SSP_PLAYER_CHANNELS* channels;
+    SSP_PLAYER_PLUGINS* plugins;
+    SSP_PLAYLIST* playlist;
+    SSP_PLAYHEAD* playhead;
+
+    player_statechanged_cb callbackStateChanged;
+    void* callbackStateChangedUser;
 } SSP_PLAYER;
 
 #endif
