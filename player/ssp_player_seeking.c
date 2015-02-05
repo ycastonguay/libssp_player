@@ -54,6 +54,10 @@ uint64_t player_getPosition(SSP_PLAYER* player) {
 void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position) {
     SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
     if(item == NULL || !item->isLoaded) {
+        position->bytes = 0;
+        position->samples = 0;
+        position->ms = 0;
+        position->str[0] = '\0';
         return;
     }
 
@@ -61,9 +65,7 @@ void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position) {
     position->bytes = bytes;
     position->samples = convertAudio_toSamplesFromBytes(bytes, item->bitsPerSample, item->numberOfChannels);
     position->ms = convertAudio_toMS(position->samples, item->sampleRate);
-    //position->str = convertAudio_toStringFromMS(position->ms);
     convertAudio_toStringFromMS(position->ms, position->str);
-    //    entity.PositionPercentage = ((float)positionBytes / (float)lengthBytes) * 100;
 }
 
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {

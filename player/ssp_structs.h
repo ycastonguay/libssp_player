@@ -23,14 +23,16 @@
 #include "ssp_callbacks.h"
 
 typedef struct {
-    const char* str;
+    //const char* str;
+    char str[32];
     uint64_t bytes;
     uint64_t ms;
     uint64_t samples;
 } SSP_POSITION;
 
 typedef struct {
-    const char* name;
+    //const char* name;
+    char name[128];
     int deviceId;
     int test;
     bool isInitialized;

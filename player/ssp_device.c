@@ -16,6 +16,7 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdlib.h>
+#include <string.h>
 #include "ssp_device.h"
 #include "ssp_structs.h"
 
@@ -26,17 +27,18 @@ SSP_DEVICE* device_create() {
 }
 
 void device_free(SSP_DEVICE *device) {
-    if(device->name != NULL) {
-        //free(device->name); // crashes on osx
-        //free((char *)device->name); // crashes on osx
-        //free((void *)device->name); // crashes on osx
-        device->name = NULL;
-    }
+//    if(device->name != NULL) {
+//        //free(device->name); // crashes on osx
+//        //free((char *)device->name); // crashes on osx
+//        //free((void *)device->name); // crashes on osx
+//        //device->name = NULL;
+//    }
 }
 
 void device_reset(SSP_DEVICE* device) {
     device->isInitialized = false;
     device->deviceId = -1;
     device->test = 100;
-    device->name = "Default device";
+    //device->name = "Default device";
+    strcpy(device->name, "Default device");
 }

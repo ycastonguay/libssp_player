@@ -117,7 +117,8 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     //SSP_GetPositionNew(pos);
 
     //self.lblPosition.text = [NSString stringWithFormat:@"Position (bytes): %lld", position];
-    self.lblPosition.text = [NSString stringWithFormat:@"Position (bytes): %lld", pos.bytes];
+    //self.lblPosition.text = [NSString stringWithFormat:@"Position (bytes): %lld", pos.bytes];
+    self.lblPosition.text = [NSString stringWithFormat:@"Position: %s", pos.str];
 }
 
 - (IBAction)actionPlay:(id)sender {

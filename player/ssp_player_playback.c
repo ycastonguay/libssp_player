@@ -407,6 +407,8 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return error;
     }
 
+    player->playhead->positionAfterUnpause = 0;
+    player->playhead->positionOffset = 0;
     player->playhead->isPlayingLoop = false;
     player_updateState(player, SSP_PLAYER_STATE_STOPPED);
 
@@ -438,7 +440,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return SSP_ERROR_UNKNOWN;
     }
 
-    SSP_PLAYLISTITEM* firstItem = playlist_getItemAt(player->playlist, 0);
+    SSP_PLAYLISTITEM* firstItem = playlist_getItemAt(player->playlist, currentIndex);
     for(int a = currentIndex; a < currentIndex + channelsToLoad; a++) {
         log_textf("player_play - Loading playlist item %d...\n", a);
         SSP_PLAYLISTITEM* item = playlist_getItemAt(player->playlist, a);
@@ -534,7 +536,7 @@ SSP_ERROR player_next(SSP_PLAYER* player) {
         return error;
     }
 
-    if(player->playlist->currentIndex < playlist_getCount(player->playlist)) {
+    if(player->playlist->currentIndex < playlist_getCount(player->playlist) - 1) {
         player->playlist->currentIndex++;
     }
 
