@@ -16,37 +16,37 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <math.h>
-#include "ssp_convertaudio.h"
+#include "ssp_convert.h"
 
-__uint64_t convertAudio_toSamples(__uint64_t milliseconds, int sampleRate) {
+__uint64_t convert_toSamples(__uint64_t milliseconds, int sampleRate) {
     return milliseconds * (sampleRate / 1000);
 }
 
-__uint64_t convertAudio_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount) {
+__uint64_t convert_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount) {
     return bytes * 8 / bitsPerSample / channelCount;
 }
 
-__uint64_t convertAudio_toMS(__uint64_t samples, int sampleRate) {
+__uint64_t convert_toMS(__uint64_t samples, int sampleRate) {
     return samples * 1000 / sampleRate;
 }
 
-__uint64_t convertAudio_toBytes(__uint64_t samples, int bitRate, int channelCount) {
+__uint64_t convert_toBytes(__uint64_t samples, int bitRate, int channelCount) {
     return samples * bitRate * channelCount / 8;
 }
 
-float convertAudio_msToTempo(float milliseconds) {
+float convert_msToTempo(float milliseconds) {
     return (60.0f / milliseconds) * 1000;
 }
 
-float convertAudio_tempoToMS(float tempo) {
+float convert_tempoToMS(float tempo) {
     return 60000.0f / tempo;
 }
 
-float convertAudio_levelToDB(float level, float maxLevel) {
+float convert_levelToDB(float level, float maxLevel) {
     return 20.0f * log10f(level / maxLevel);
 }
 
-void convertAudio_toStringFromMS(__uint64_t milliseconds, char* str) {
+void convert_toStringFromMS(__uint64_t milliseconds, char *str) {
     __uint64_t pos = milliseconds;
     int hours = 0;
     int minutes = 0;
@@ -78,7 +78,7 @@ void convertAudio_toStringFromMS(__uint64_t milliseconds, char* str) {
     }
 }
 
-__uint64_t convertAudio_toMSFromString(const char* string) {
+__uint64_t convert_toMSFromString(const char *string) {
     //    string strHours = String.Empty;
 //    string strMinutes = String.Empty;
 //    string strSeconds = String.Empty;
@@ -120,9 +120,9 @@ __uint64_t convertAudio_toMSFromString(const char* string) {
     return 0;
 }
 
-void convertAudio_toString(char* str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate) {
-    __uint64_t samples = convertAudio_toSamplesFromBytes(bytes, bitsPerSample, channelCount);
-    __uint64_t milliseconds = convertAudio_toMS(samples, sampleRate);
-    convertAudio_toStringFromMS(milliseconds, str);
+void convert_toString(char *str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate) {
+    __uint64_t samples = convert_toSamplesFromBytes(bytes, bitsPerSample, channelCount);
+    __uint64_t milliseconds = convert_toMS(samples, sampleRate);
+    convert_toStringFromMS(milliseconds, str);
 }
 

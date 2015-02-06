@@ -22,7 +22,7 @@
 #include "ssp_playlist.h"
 #include "ssp_player.h"
 #include "ssp_log.h"
-#include "ssp_convertaudio.h"
+#include "ssp_convert.h"
 #include "ssp_structs.h"
 
 static SSP_PLAYER* sspPlayer;

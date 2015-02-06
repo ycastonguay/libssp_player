@@ -22,7 +22,7 @@
 #include "ssp_bass.h"
 #include "../bass/bassmix.h"
 #include "ssp_structs.h"
-#include "ssp_convertaudio.h"
+#include "ssp_convert.h"
 #include "ssp_privatestructs.h"
 
 uint64_t player_getPosition(SSP_PLAYER* player) {
@@ -63,9 +63,9 @@ void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position) {
 
     uint64_t bytes = player_getPosition(player);
     position->bytes = bytes;
-    position->samples = convertAudio_toSamplesFromBytes(bytes, item->bitsPerSample, item->numberOfChannels);
-    position->ms = convertAudio_toMS(position->samples, item->sampleRate);
-    convertAudio_toStringFromMS(position->ms, position->str);
+    position->samples = convert_toSamplesFromBytes(bytes, item->bitsPerSample, item->numberOfChannels);
+    position->ms = convert_toMS(position->samples, item->sampleRate);
+    convert_toStringFromMS(position->ms, position->str);
 }
 
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {

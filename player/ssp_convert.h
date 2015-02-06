@@ -20,15 +20,15 @@
 
 #include <stdio.h>
 
-__uint64_t convertAudio_toSamples(__uint64_t milliseconds, int sampleRate);
-__uint64_t convertAudio_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount);
-__uint64_t convertAudio_toMS(__uint64_t samples, int sampleRate);
-__uint64_t convertAudio_toBytes(__uint64_t samples, int bitRate, int channelCount);
-float convertAudio_msToTempo(float milliseconds);
-float convertAudio_tempoToMS(float tempo);
-float convertAudio_levelToDB(float level, float maxLevel);
-void convertAudio_toStringFromMS(__uint64_t milliseconds, char* str);
-__uint64_t convertAudio_toMSFromString(const char* string);
-void convertAudio_toString(char* str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
+__uint64_t convert_toSamples(__uint64_t milliseconds, int sampleRate);
+__uint64_t convert_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount);
+__uint64_t convert_toMS(__uint64_t samples, int sampleRate);
+__uint64_t convert_toBytes(__uint64_t samples, int bitRate, int channelCount);
+float convert_msToTempo(float milliseconds);
+float convert_tempoToMS(float tempo);
+float convert_levelToDB(float level, float maxLevel);
+void convert_toStringFromMS(__uint64_t milliseconds, char *str);
+__uint64_t convert_toMSFromString(const char *string);
+void convert_toString(char *str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
 
 #endif /* defined(__player__ssp_convertaudio__) */
