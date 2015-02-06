@@ -23,6 +23,7 @@
 
 SSP_EQPRESET* eqpreset_create();
 void eqpreset_free(SSP_EQPRESET* preset);
+void eqpreset_copy(SSP_EQPRESET* dest, SSP_EQPRESET* src);
 void eqpreset_reset(SSP_EQPRESET* preset);
 void eqpreset_normalize(SSP_EQPRESET* preset);
 

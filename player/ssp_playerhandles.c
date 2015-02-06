@@ -16,23 +16,33 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdlib.h>
-#include "ssp_playerchannels.h"
+#include "ssp_playerhandles.h"
+#include "ssp_privatestructs.h"
 
-SSP_PLAYER_CHANNELS* playerChannels_create() {
-    SSP_PLAYER_CHANNELS* channels = malloc(sizeof(SSP_PLAYER_CHANNELS));
+SSP_PLAYER_HANDLES * playerChannels_create() {
+    SSP_PLAYER_HANDLES * channels = malloc(sizeof(SSP_PLAYER_HANDLES));
     playerChannels_reset(channels);
     return channels;
 }
 
-void playerChannels_free(SSP_PLAYER_CHANNELS *channels) {
+void playerChannels_free(SSP_PLAYER_HANDLES *handles) {
     // Nothing to free
 }
 
-void playerChannels_reset(SSP_PLAYER_CHANNELS* channels) {
-    channels->streamChannel = 0;
-    channels->fxChannel = 0;
-    channels->mixerChannel = 0;
-    channels->streamProc = NULL;
-    channels->syncProc = NULL;
-    channels->syncProcCount = 0;
+void playerChannels_reset(SSP_PLAYER_HANDLES *handles) {
+    handles->streamChannel = 0;
+    handles->fxChannel = 0;
+    handles->mixerChannel = 0;
+
+    handles->apePlugin = 0;
+    handles->flacPlugin = 0;
+    handles->mpcPlugin = 0;
+    handles->ttaPlugin = 0;
+    handles->wvPlugin = 0;
+
+    handles->eqFX = 0;
+
+    handles->streamProc = NULL;
+    handles->syncProc = NULL;
+    handles->syncProcCount = 0;
 }

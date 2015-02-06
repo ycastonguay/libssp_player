@@ -60,14 +60,18 @@ LIBRARY_API void SSP_GetDevice(SSP_DEVICE* device);
 LIBRARY_API void SSP_GetMixer(SSP_MIXER* mixer);
 
 // EQ
-LIBRARY_API SSP_EQPRESET* SSP_GetEQPreset();
-LIBRARY_API void SSP_SetEQPreset(SSP_EQPRESET* preset);
+LIBRARY_API void SSP_GetEQPreset(SSP_EQPRESET* preset);
+LIBRARY_API SSP_ERROR SSP_SetEQPreset(SSP_EQPRESET* preset);
+LIBRARY_API SSP_ERROR SSP_SetEQPresetBand(int band, float gain);
 
-LIBRARY_API bool SSP_GetEQBypassed();
-LIBRARY_API void SSP_SetEQBypassed(bool bypassed);
+LIBRARY_API bool SSP_GetEQEnabled();
+LIBRARY_API SSP_ERROR SSP_SetEQEnabled(bool enabled);
+
+LIBRARY_API SSP_ERROR SSP_ResetEQ();
+LIBRARY_API SSP_ERROR SSP_NormalizeEQ();
 
 // Loops
-LIBRARY_API SSP_LOOP* SSP_GetLoop();
+LIBRARY_API void SSP_GetLoop(SSP_LOOP* loop);
 LIBRARY_API void SSP_SetLoop(SSP_LOOP* loop);
 
 // Playback

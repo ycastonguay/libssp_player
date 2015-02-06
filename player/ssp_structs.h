@@ -47,14 +47,15 @@ typedef struct {
 
 typedef struct {
     float center;
-    const char* label;
+    char label[128];
     float bandwidth;
     float gain;
     float q;
 } SSP_EQPRESETBAND;
 
 typedef struct {
-    const char* name;
+    char id[38];
+    char name[128];
     SSP_EQPRESETBAND bands[18];
 } SSP_EQPRESET;
 

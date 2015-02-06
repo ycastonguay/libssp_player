@@ -22,12 +22,11 @@
 #include "ssp_eqpreset.h"
 #include "ssp_playhead.h"
 #include "ssp_bass.h"
-#include "ssp_playerchannels.h"
+#include "ssp_playerhandles.h"
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
 #include "ssp_mixer.h"
 #include "ssp_device.h"
-#include "ssp_playerplugins.h"
 #include "ssp_log.h"
 
 #pragma mark Initialization
@@ -39,8 +38,7 @@ SSP_PLAYER* player_create() {
     player->playhead = playhead_create();
     //player->device = device_create(); // uses default device
     player->mixer = mixer_create();
-    player->channels = playerChannels_create();
-    player->plugins = playerPlugins_create();
+    player->handles = playerChannels_create();
     player->loop = NULL;
     player->marker = NULL;
     player->callbackStateChanged = NULL;
@@ -79,15 +77,10 @@ SSP_ERROR player_free(SSP_PLAYER* player) {
         free(player->mixer);
         player->mixer = NULL;
     }
-    if(player->channels) {
-        playerChannels_free(player->channels);
-        free(player->channels);
-        player->channels = NULL;
-    }
-    if(player->plugins) {
-        playerPlugins_free(player->plugins);
-        free(player->plugins);
-        player->plugins = NULL;
+    if(player->handles) {
+        playerChannels_free(player->handles);
+        free(player->handles);
+        player->handles = NULL;
     }
     if(player->loop) {
         free(player->loop);
@@ -109,42 +102,42 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
         //BASS_PluginLoad("libbassflac.so", 0);
     #elif TARGET_IOS // iOS
         extern void BASS_APEplugin, BASSFLACplugin, BASS_MPCplugin, BASSWVplugin;
-        player->plugins->ape = BASS_PluginLoad(&BASS_APEplugin, 0);
-        if(player->plugins->ape == 0) {
+        player->handles->apePlugin = BASS_PluginLoad(&BASS_APEplugin, 0);
+        if(player->handles->apePlugin == 0) {
             return bass_getError("player_loadPlugins (APE)");
         }
-        player->plugins->flac = BASS_PluginLoad(&BASSFLACplugin, 0);
-        if(player->plugins->flac == 0) {
+        player->handles->flacPlugin = BASS_PluginLoad(&BASSFLACplugin, 0);
+        if(player->handles->flacPlugin == 0) {
             return bass_getError("player_loadPlugins (FLAC)");
         }
-        player->plugins->mpc = BASS_PluginLoad(&BASS_MPCplugin, 0);
-        if(player->plugins->mpc == 0) {
+        player->handles->mpcPlugin = BASS_PluginLoad(&BASS_MPCplugin, 0);
+        if(player->handles->mpcPlugin == 0) {
             return bass_getError("player_loadPlugins (MPC)");
         }
-        player->plugins->wv = BASS_PluginLoad(&BASSWVplugin, 0);
-        if(player->plugins->wv == 0) {
+        player->handles->wvPlugin = BASS_PluginLoad(&BASSWVplugin, 0);
+        if(player->handles->wvPlugin == 0) {
             return bass_getError("player_loadPlugins (WV)");
         }
     #elif TARGET_OSX
-        player->plugins->ape = BASS_PluginLoad("libbass_ape.dylib", 0);
-        if(player->plugins->ape == 0) {
+        player->handles->apePlugin = BASS_PluginLoad("libbass_ape.dylib", 0);
+        if(player->handles->apePlugin == 0) {
             return bass_getError("player_loadPlugins (APE)");
             // TODO: shall we return SSP_ERROR_PLUGIN instead?
         }
-        player->plugins->flac = BASS_PluginLoad("libbassflac.dylib", 0);
-        if(player->plugins->flac == 0) {
+        player->handles->flacPlugin = BASS_PluginLoad("libbassflac.dylib", 0);
+        if(player->handles->flacPlugin == 0) {
             return bass_getError("player_loadPlugins (FLAC)");
         }
-        player->plugins->mpc = BASS_PluginLoad("libbass_mpc.dylib", 0);
-        if(player->plugins->mpc == 0) {
+        player->handles->mpcPlugin = BASS_PluginLoad("libbass_mpc.dylib", 0);
+        if(player->handles->mpcPlugin == 0) {
             return bass_getError("player_loadPlugins (MPC)");
         }
-        player->plugins->tta = BASS_PluginLoad("libbass_tta.dylib", 0);
-        if(player->plugins->tta == 0) {
+        player->handles->ttaPlugin = BASS_PluginLoad("libbass_tta.dylib", 0);
+        if(player->handles->ttaPlugin == 0) {
             return bass_getError("player_loadPlugins (TTA)");
         }
-        player->plugins->wv = BASS_PluginLoad("libbasswv.dylib", 0);
-        if(player->plugins->wv == 0) {
+        player->handles->wvPlugin = BASS_PluginLoad("libbasswv.dylib", 0);
+        if(player->handles->wvPlugin == 0) {
             return bass_getError("player_loadPlugins (WV)");
         }
     #endif
@@ -154,32 +147,32 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
 
 SSP_ERROR player_freePlugins(SSP_PLAYER* player) {
     bool success = false;
-    if(player->plugins->ape > 0) {
-        success = BASS_PluginFree(player->plugins->ape);
+    if(player->handles->apePlugin > 0) {
+        success = BASS_PluginFree(player->handles->apePlugin);
         if(!success) {
             return bass_getError("player_freePlugins (APE)");
         }
     }
-    if(player->plugins->flac > 0) {
-        success = BASS_PluginFree(player->plugins->flac);
+    if(player->handles->flacPlugin > 0) {
+        success = BASS_PluginFree(player->handles->flacPlugin);
         if(!success) {
             return bass_getError("player_freePlugins (FLAC)");
         }
     }
-    if(player->plugins->mpc > 0) {
-        success = BASS_PluginFree(player->plugins->mpc);
+    if(player->handles->mpcPlugin > 0) {
+        success = BASS_PluginFree(player->handles->mpcPlugin);
         if(!success) {
             return bass_getError("player_freePlugins (MPC)");
         }
     }
-    if(player->plugins->tta > 0) {
-        success = BASS_PluginFree(player->plugins->tta);
+    if(player->handles->ttaPlugin > 0) {
+        success = BASS_PluginFree(player->handles->ttaPlugin);
         if(!success) {
             return bass_getError("player_freePlugins (TTA)");
         }
     }
-    if(player->plugins->wv > 0) {
-        success = BASS_PluginFree(player->plugins->wv);
+    if(player->handles->wvPlugin > 0) {
+        success = BASS_PluginFree(player->handles->wvPlugin);
         if(!success) {
             return bass_getError("player_freePlugins (WV)");
         }

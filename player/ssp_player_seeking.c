@@ -26,12 +26,12 @@
 #include "ssp_privatestructs.h"
 
 uint64_t player_getPosition(SSP_PLAYER* player) {
-    if(player->playhead->isSettingPosition || player->channels->fxChannel == 0) {
+    if(player->playhead->isSettingPosition || player->handles->fxChannel == 0) {
         return 0;
     }
 
-    //uint64_t position = BASS_ChannelGetPosition(player->channels->fxChannel, BASS_POS_BYTE);
-    uint64_t position = BASS_Mixer_ChannelGetPosition(player->channels->fxChannel, BASS_POS_BYTE);
+    //uint64_t position = BASS_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
+    uint64_t position = BASS_Mixer_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
     if(position == -1) {
         bass_getError("bass_getPosition");
     }
@@ -93,7 +93,7 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     player_removeSyncCallbacks(player);
 //    long length = Playlist.CurrentItem.Channel.GetLength();
 
-    success = BASS_ChannelLock(player->channels->mixerChannel, true);
+    success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
         return bass_getError("BASS_ChannelLock");
     }
@@ -105,7 +105,7 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
 //    if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.CurrentItem.AudioFile.SampleRate > 44100)
 //        bytes = (long)((float)bytes / 1.5f);
 
-    success = BASS_ChannelStop(player->channels->mixerChannel);
+    success = BASS_ChannelStop(player->handles->mixerChannel);
     if(!success) {
         return bass_getError("BASS_ChannelStop");
     }
@@ -115,11 +115,11 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     if(error != SSP_OK) {
         return error;
     }
-    error = bass_setPosition(player->channels->fxChannel, 0);
+    error = bass_setPosition(player->handles->fxChannel, 0);
     if(error != SSP_OK) {
         return error;
     }
-    error = bass_setMixerPosition(player->channels->mixerChannel, 0);
+    error = bass_setMixerPosition(player->handles->mixerChannel, 0);
     if(error != SSP_OK) {
         return error;
     }
@@ -138,13 +138,13 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     player_setSyncCallback(player, currentItem->length - bytesPosition);
 
     if(player->playhead->state != SSP_PLAYER_STATE_PAUSED) {
-        success = BASS_ChannelPlay(player->channels->mixerChannel, false);
+        success = BASS_ChannelPlay(player->handles->mixerChannel, false);
         if(!success) {
             return bass_getError("BASS_ChannelPlay");
         }
     }
 
-    success = BASS_ChannelLock(player->channels->mixerChannel, false);
+    success = BASS_ChannelLock(player->handles->mixerChannel, false);
     if(!success) {
         return bass_getError("BASS_ChannelLock");
     }

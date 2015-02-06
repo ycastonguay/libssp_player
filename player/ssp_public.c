@@ -1,4 +1,4 @@
-// Copyright © 2011-2015 Yanick Castonguay
+#include "ssp_errors.h"// Copyright © 2011-2015 Yanick Castonguay
 //
 // This file is part of Sessions, a music player for musicians.
 //
@@ -24,6 +24,7 @@
 #include "ssp_log.h"
 #include "ssp_convert.h"
 #include "ssp_structs.h"
+#include "ssp_eqpreset.h"
 
 static SSP_PLAYER* sspPlayer;
 
@@ -174,10 +175,32 @@ int SSP_Playlist_GetCurrentIndex() {
 
 #pragma mark EQ Presets
 
-SSP_EQPRESET* SSP_GetEQPreset() {
-    SSP_EQPRESET* preset = malloc(sizeof(SSP_EQPRESET));
-    memcpy(preset, sspPlayer->eqPreset, sizeof(SSP_EQPRESET));
-    return preset;
+void SSP_GetEQPreset(SSP_EQPRESET* preset) {
+    eqpreset_copy(preset, sspPlayer->eqPreset);
+}
+
+SSP_ERROR SSP_SetEQPreset(SSP_EQPRESET* preset) {
+    return player_applyEQ(sspPlayer, preset);
+}
+
+SSP_ERROR SSP_SetEQPresetBand(int band, float gain) {
+    return player_updateEQBand(sspPlayer, band, gain);
+}
+
+bool SSP_GetEQEnabled() {
+    return sspPlayer->playhead->isEQEnabled;
+}
+
+SSP_ERROR SSP_SetEQEnabled(bool enabled) {
+    return player_enableEQ(sspPlayer, enabled);
+}
+
+SSP_ERROR SSP_ResetEQ() {
+    return player_resetEQ(sspPlayer);
+}
+
+SSP_ERROR SSP_NormalizeEQ() {
+    return player_normalizeEQ(sspPlayer);
 }
 
 #pragma mark Seek / Position

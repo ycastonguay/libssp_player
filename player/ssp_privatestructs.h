@@ -22,22 +22,24 @@
 #include "ssp_structs.h"
 
 typedef struct {
-    HPLUGIN flac;
-    HPLUGIN ape;
-    HPLUGIN mpc;
-    HPLUGIN tta;
-    HPLUGIN wv;
-} SSP_PLAYER_PLUGINS;
-
-typedef struct {
     HCHANNEL streamChannel;
     HCHANNEL fxChannel;
     HCHANNEL mixerChannel;
+
+    HPLUGIN flacPlugin;
+    HPLUGIN apePlugin;
+    HPLUGIN mpcPlugin;
+    HPLUGIN ttaPlugin;
+    HPLUGIN wvPlugin;
+
+    HFX eqFX;
+
     STREAMPROC* streamProc;
     SYNCPROC* syncProc;
+
     int syncProcHandles[100];
     int syncProcCount;
-} SSP_PLAYER_CHANNELS;
+} SSP_PLAYER_HANDLES;
 
 typedef struct {
     void* items;
@@ -82,8 +84,7 @@ typedef struct {
     SSP_MARKER* marker;
 
     // private
-    SSP_PLAYER_CHANNELS* channels;
-    SSP_PLAYER_PLUGINS* plugins;
+    SSP_PLAYER_HANDLES* handles;
     SSP_PLAYLIST* playlist;
     SSP_PLAYHEAD* playhead;
 

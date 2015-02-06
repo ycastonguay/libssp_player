@@ -28,7 +28,7 @@
 #include "ssp_privatestructs.h"
 
 int player_getMixerData(SSP_PLAYER* player, void* buffer, int length) {
-    int bytes = BASS_ChannelGetData(player->channels->mixerChannel, buffer, length);
+    int bytes = BASS_ChannelGetData(player->handles->mixerChannel, buffer, length);
     if(bytes == -1) {
         bass_getError("player_getMixerData");
     }

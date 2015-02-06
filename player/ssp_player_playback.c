@@ -23,24 +23,25 @@
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
 #include "ssp_log.h"
+#include "ssp_privatestructs.h"
 
 #pragma mark Callbacks
 
 SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
     log_text("player_setSyncCallbackAfterChangingPlaylistItem\n");
 
-    bool success = BASS_ChannelLock(player->channels->mixerChannel, true);
+    bool success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
         return bass_getError("player_setSyncCallbackAfterChangingPlaylistItem");
     }
 
-    uint64_t position = BASS_ChannelGetPosition(player->channels->fxChannel, BASS_POS_BYTE);
+    uint64_t position = BASS_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
     if(position == -1) {
         return bass_getError("player_setSyncCallbackAfterChangingPlaylistItem");
     }
 
-    //DWORD buffered = BASS_Mixer_ChannelGetData(player->channels->mixerChannel, 0, BASS_DATA_AVAILABLE);
-    DWORD buffered = BASS_ChannelGetData(player->channels->mixerChannel, 0, BASS_DATA_AVAILABLE);
+    //DWORD buffered = BASS_Mixer_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
+    DWORD buffered = BASS_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
     if(buffered == -1) {
         return bass_getError("player_setSyncCallbackAfterChangingPlaylistItem");
     }
@@ -51,7 +52,7 @@ SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
     uint64_t syncPos = position + buffered + audioLength;
     player_setSyncCallback(player, syncPos);
 
-    success = BASS_ChannelLock(player->channels->mixerChannel, false);
+    success = BASS_ChannelLock(player->handles->mixerChannel, false);
     if(!success) {
         return bass_getError("player_setSyncCallbackAfterChangingPlaylistItem");
     }
@@ -152,21 +153,21 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
     bool playlistBackToStart = false;
     int nextPlaylistIndex = 0;
 
-    bool success = BASS_ChannelLock(player->channels->mixerChannel, true);
+    bool success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
         // TODO: how do we manage an error inside a callback?
         bass_getError("player_playerSyncProc");
         return;
     }
 
-    uint64_t position = BASS_ChannelGetPosition(player->channels->fxChannel, BASS_POS_BYTE);
+    uint64_t position = BASS_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
     if(position == -1) {
         bass_getError("player_playerSyncProc");
         return;
     }
 
-    //DWORD buffered = BASS_Mixer_ChannelGetData(player->channels->mixerChannel, 0, BASS_DATA_AVAILABLE);
-    DWORD buffered = BASS_ChannelGetData(player->channels->mixerChannel, 0, BASS_DATA_AVAILABLE);
+    //DWORD buffered = BASS_Mixer_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
+    DWORD buffered = BASS_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
     if(buffered == -1) {
         bass_getError("player_playerSyncProc");
         return;
@@ -198,7 +199,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
         // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
         float sampleRate;
-        bool success = BASS_ChannelGetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
+        bool success = BASS_ChannelGetAttribute(player->handles->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
         if(!success) {
             int bassError = BASS_ErrorGetCode();
             if(bassError != BASS_OK) {
@@ -210,13 +211,13 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         SSP_PLAYLISTITEM* nextItem = playlist_getItemAt(player->playlist, nextPlaylistIndex);
         if(nextItem != NULL && sampleRate != nextItem->sampleRate) {
             log_textf("player_playerSyncProc - Switching mixer sample rate to %d", nextItem->sampleRate);
-            BASS_ChannelSetAttribute(player->channels->mixerChannel, BASS_ATTRIB_FREQ, nextItem->sampleRate);
+            BASS_ChannelSetAttribute(player->handles->mixerChannel, BASS_ATTRIB_FREQ, nextItem->sampleRate);
         }
 
         player->playhead->positionOffset = offset;
     }
 
-    success = BASS_ChannelLock(player->channels->mixerChannel, false);
+    success = BASS_ChannelLock(player->handles->mixerChannel, false);
     if(!success) {
         bass_getError("player_playerSyncProc");
         return;
@@ -299,29 +300,29 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
     log_textf("player_setSyncCallback - position: %"PRIu64"\n", position);
-    HSYNC sync = BASS_Mixer_ChannelSetSync(player->channels->fxChannel, BASS_SYNC_POS, position, player_playerSyncProc, player);
+    HSYNC sync = BASS_Mixer_ChannelSetSync(player->handles->fxChannel, BASS_SYNC_POS, position, player_playerSyncProc, player);
     if(sync == 0) {
         return bass_getError("player_setSyncCallback");
     }
 
     // Add to list to remove later
-    player->channels->syncProcCount++;
-    player->channels->syncProcHandles[player->channels->syncProcCount-1] = sync;
+    player->handles->syncProcCount++;
+    player->handles->syncProcHandles[player->handles->syncProcCount-1] = sync;
 
     return SSP_OK;
 }
 
 SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
     // Remove sync procs
-    for(int a = 0; a < player->channels->syncProcCount; a++) {
-        bool success = BASS_Mixer_ChannelRemoveSync(player->channels->fxChannel, player->channels->syncProcHandles[a]);
+    for(int a = 0; a < player->handles->syncProcCount; a++) {
+        bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, player->handles->syncProcHandles[a]);
         if(!success) {
             return bass_getError("player_removeSyncCallbacks");
         }
     }
 
     // Reset list
-    player->channels->syncProcCount = 0;
+    player->handles->syncProcCount = 0;
 
     return SSP_OK;
 }
@@ -376,11 +377,11 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
 
 SSP_ERROR player_stop(SSP_PLAYER* player) {
     // reset loop here
-    if(player->playhead->isEQEnabled) {
-        // call remove eq here
-    }
+    //if(player->playhead->isEQEnabled) {
+        player_removeEQStage(player);
+    //}
 
-    bool success = BASS_ChannelStop(player->channels->mixerChannel);
+    bool success = BASS_ChannelStop(player->handles->mixerChannel);
     if(!success) {
         return SSP_ERROR_UNKNOWN;
     }
@@ -395,7 +396,7 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return error;
     }
 
-    success = BASS_StreamFree(player->channels->fxChannel);
+    success = BASS_StreamFree(player->handles->fxChannel);
     if(!success) {
         return SSP_ERROR_UNKNOWN;
     }
@@ -434,7 +435,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         channelsToLoad = 2;
 
     if(channelsToLoad == 0) {
-        log_text("player_play - ERROR: There are no channels to load!\n");
+        log_text("player_play - ERROR: There are no handles to load!\n");
         return SSP_ERROR_UNKNOWN;
     }
 
@@ -447,36 +448,47 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
 
     // Default output driver (i.e. DirectSound)
     log_text("player_play - Setting stream channel and proc...\n");
-    player->channels->streamProc = (STREAMPROC*)player_streamProc;
+    player->handles->streamProc = (STREAMPROC*)player_streamProc;
 
     // Prepare stream channel
-    player->channels->streamChannel = bass_createMemoryStream(firstItem->sampleRate, 2, player->mixer->useFloatingPoint, player->channels->streamProc, player);
-    if(player->channels->streamChannel == 0) {
+    player->handles->streamChannel = bass_createMemoryStream(firstItem->sampleRate, 2, player->mixer->useFloatingPoint, player->handles->streamProc, player);
+    if(player->handles->streamChannel == 0) {
         return SSP_ERROR_UNKNOWN;
     }
 
     // Prepare FX channel (for pitch and time shifting)
-    player->channels->fxChannel = bass_createStreamForTimeShifting(player->channels->streamChannel, true, player->mixer->useFloatingPoint);
-    if(player->channels->fxChannel == 0) {
+    player->handles->fxChannel = bass_createStreamForTimeShifting(player->handles->streamChannel, true, player->mixer->useFloatingPoint);
+    if(player->handles->fxChannel == 0) {
         return SSP_ERROR_UNKNOWN;
     }
 
     // Prepare mixer channel
-    player->channels->mixerChannel = bass_createMixerStream(player->mixer->sampleRate, 2, false, player->mixer->useFloatingPoint);
-    if(player->channels->mixerChannel == 0) {
+    player->handles->mixerChannel = bass_createMixerStream(player->mixer->sampleRate, 2, false, player->mixer->useFloatingPoint);
+    if(player->handles->mixerChannel == 0) {
         return SSP_ERROR_UNKNOWN;
     }
 
     // Add FX channel to mixer
-    error = bass_addChannelToMixer(player->channels->mixerChannel, player->channels->fxChannel);
+    error = bass_addChannelToMixer(player->handles->mixerChannel, player->handles->fxChannel);
     if(error != SSP_OK) {
         return error;
     }
 
     // Add BPM callbacks here
-    // Set initial volume
-    // Add eq
-    // If eq is bypassed, then reset it
+
+    player_setVolume(player, player->playhead->volume);
+
+    error = player_createEQStage(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    //if(player->playhead->isEQEnabled) {
+        error = player_applyEQ(player, player->eqPreset);
+        if (error != SSP_OK) {
+            return error;
+        }
+    //}
 
     if(player->playhead->repeatType == SSP_PLAYER_REPEAT_SONG) {
         BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
@@ -495,7 +507,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return error;
     }
 
-    error = bass_play(player->channels->mixerChannel, false);
+    error = bass_play(player->handles->mixerChannel, false);
     if(error != SSP_OK) {
         return error;
     }

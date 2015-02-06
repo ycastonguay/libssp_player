@@ -88,20 +88,12 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
         NSLog(@"Error!");
         return;
     }
-
-    timerRefreshPosition = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerRefreshPositionElapsed) userInfo:nil repeats:YES];
 }
 
 - (void)timerRefreshPositionElapsed {
-    uint64_t position = SSP_GetPosition();
-
-    // Can't find the right way to do this in Obj-C
-//    SSP_POSITION pos;
-//    SSP_GetPositionNew(&pos);
-    //SSP_POSITION* pos = malloc(sizeof(SSP_POSITION));
-    //SSP_GetPositionNew(pos);
-
-    self.lblPosition.stringValue = [NSString stringWithFormat:@"Position (bytes): %lld", position];
+    SSP_POSITION pos;
+    SSP_GetPositionNew(&pos);
+    self.lblPosition.stringValue = [NSString stringWithFormat:@"Position: %s", pos.str];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -142,6 +134,8 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     if(error != SSP_OK) {
         NSLog(@"libssp_player error: %d", error);
     }
+
+    timerRefreshPosition = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerRefreshPositionElapsed) userInfo:nil repeats:YES];
 }
 
 - (IBAction)actionPause:(id)sender {
@@ -156,6 +150,8 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     if(error != SSP_OK) {
         NSLog(@"libssp_player error: %d", error);
     }
+
+    [timerRefreshPosition invalidate];
 }
 
 - (IBAction)actionPrevious:(id)sender {

@@ -15,25 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdlib.h>
-#include "ssp_playerplugins.h"
+#ifndef __player__ssp_playerchannels__
+#define __player__ssp_playerchannels__
+
+#include <stdio.h>
 #include "ssp_privatestructs.h"
 
-SSP_PLAYER_PLUGINS* playerPlugins_create() {
-    SSP_PLAYER_PLUGINS* plugins = malloc(sizeof(SSP_PLAYER_PLUGINS));
-    playerPlugins_reset(plugins);
-    return plugins;
-}
+SSP_PLAYER_HANDLES * playerChannels_create();
+void playerChannels_free(SSP_PLAYER_HANDLES *channels);
+void playerChannels_reset(SSP_PLAYER_HANDLES *handles);
 
-void playerPlugins_free(SSP_PLAYER_PLUGINS *plugins) {
-    // Nothing to free
-    // TODO: Shall we call bass here? i.e. Do we add the player_loadPlugins here or leave in player_playback.c?
-}
-
-void playerPlugins_reset(SSP_PLAYER_PLUGINS* plugins) {
-    plugins->ape = 0;
-    plugins->flac = 0;
-    plugins->mpc = 0;
-    plugins->tta = 0;
-    plugins->wv = 0;
-}
+#endif /* defined(__player__ssp_playerchannels__) */
