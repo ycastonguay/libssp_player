@@ -101,6 +101,9 @@ LIBRARY_API void SSP_GetPositionNew(SSP_POSITION* position);
 LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
 //void SSP_SetPosition(double positionPercentage);
 
+// Data
+LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
+
 // Playlist
 LIBRARY_API SSP_ERROR SSP_Playlist_AddItem(char* filePath);
 LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index);

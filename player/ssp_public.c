@@ -235,3 +235,9 @@ int SSP_GetPitchShifting() {
 void SSP_SetPitchShifting(int pitchShifting) {
     player_setPitchShifting(sspPlayer, pitchShifting);
 }
+
+#pragma mark Data
+
+int SSP_GetMixerData(void* buffer, int length) {
+    return player_getMixerData(sspPlayer, buffer, length);
+}

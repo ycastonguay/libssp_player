@@ -165,6 +165,8 @@
 		1C5948A758CF8B9F936B7B6A /* ssp_playerplugins.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594EF46E73104C11BEF7B4 /* ssp_playerplugins.c */; };
 		1C59491FAFB36025EFF37C7F /* ssp_bass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594F798C02977B507E8328 /* ssp_bass.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C59494C1DAEA2BD4511BBA6 /* ssp_eqpreset.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */; };
+		1C59494F42EEB9C3AEFA84E1 /* ssp_player_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59488CECE6533CAF84652D /* ssp_player_data.c */; };
+		1C5949DFA717062A84D7144E /* ssp_player_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59488CECE6533CAF84652D /* ssp_player_data.c */; };
 		1C5949E8D26D0E53A2976B0C /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C5949FB02488ECFC63E2E35 /* ssp_playerchannels.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594B4882BDA7CE27C25CC9 /* ssp_playerchannels.c */; };
 		1C594A046986A5F919AAB7A0 /* ssp_playhead.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FE05BF7638B9077FC64 /* ssp_playhead.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -181,6 +183,7 @@
 		1C594BD02173A301FD819A57 /* check_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594675AB90276C2DC1EE20 /* check_playlist.c */; };
 		1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C594C1BE03E6E617402531E /* ssp_player_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59488CECE6533CAF84652D /* ssp_player_data.c */; };
 		1C594CA99CB4C86798BF179F /* ssp_player_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594E8FF5CA8DAD10A02C4F /* ssp_player_marker.c */; };
 		1C594CAF2B4569C16ECBEFB6 /* ssp_player_playhead.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594F0F84B39BBBAF4C65B2 /* ssp_player_playhead.c */; };
 		1C594CC350B2AD2663A63C00 /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
@@ -371,6 +374,7 @@
 		1C594675AB90276C2DC1EE20 /* check_playlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = check_playlist.c; sourceTree = "<group>"; };
 		1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_convertaudio.h; sourceTree = "<group>"; };
 		1C594821C97685FE107377AE /* ssp_player_seeking.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_seeking.c; sourceTree = "<group>"; };
+		1C59488CECE6533CAF84652D /* ssp_player_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_data.c; sourceTree = "<group>"; };
 		1C5948D7A1CF990B9FE24B3E /* check_playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = check_playlist.h; sourceTree = "<group>"; };
 		1C59494588C7D79421B97AC1 /* ssp_playhead.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playhead.c; sourceTree = "<group>"; };
 		1C59498135E3F083F91571F0 /* ssp_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_log.h; sourceTree = "<group>"; };
@@ -706,6 +710,7 @@
 				1C59498135E3F083F91571F0 /* ssp_log.h */,
 				1C5943A51ADD33A3B6191B29 /* ssp_enums.h */,
 				1C594F0F84B39BBBAF4C65B2 /* ssp_player_playhead.c */,
+				1C59488CECE6533CAF84652D /* ssp_player_data.c */,
 			);
 			path = player;
 			sourceTree = "<group>";
@@ -1172,6 +1177,7 @@
 				1C594CA99CB4C86798BF179F /* ssp_player_marker.c in Sources */,
 				1C59415CD53AA8F8A6B38A89 /* ssp_log.c in Sources */,
 				1C59451111DA641383FE746F /* ssp_player_playhead.c in Sources */,
+				1C5949DFA717062A84D7144E /* ssp_player_data.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1200,6 +1206,7 @@
 				1C5944662257B5764B545610 /* ssp_player_marker.c in Sources */,
 				1C594696D2478857A629EF98 /* ssp_log.c in Sources */,
 				1C594A6FE1FC8C747EFC86B7 /* ssp_player_playhead.c in Sources */,
+				1C59494F42EEB9C3AEFA84E1 /* ssp_player_data.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1228,6 +1235,7 @@
 				1C594609491C54CB6F4B58E2 /* ssp_player_marker.c in Sources */,
 				1C59401C23FAC5BBB3B505DF /* ssp_log.c in Sources */,
 				1C594CAF2B4569C16ECBEFB6 /* ssp_player_playhead.c in Sources */,
+				1C594C1BE03E6E617402531E /* ssp_player_data.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
