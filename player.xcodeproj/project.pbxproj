@@ -111,6 +111,17 @@
 		127B50C91A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
 		127B50CA1A6E0BED00B211B6 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 127B50C61A6E0BED00B211B6 /* vector.c */; };
 		127B50CB1A6E0BED00B211B6 /* vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 127B50C71A6E0BED00B211B6 /* vector.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		12D7039C1A8419D400F1644E /* libssp_player.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59AB1A6DB2FD00E071A5 /* libssp_player.dylib */; };
+		12D7039D1A8419DF00F1644E /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597B1A6D877500E071A5 /* libbass.dylib */; };
+		12D7039E1A8419DF00F1644E /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597C1A6D877500E071A5 /* libbass_ape.dylib */; };
+		12D7039F1A8419DF00F1644E /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597D1A6D877500E071A5 /* libbass_fx.dylib */; };
+		12D703A01A8419DF00F1644E /* libbass_mpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597E1A6D877500E071A5 /* libbass_mpc.dylib */; };
+		12D703A11A8419DF00F1644E /* libbass_tta.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E597F1A6D877500E071A5 /* libbass_tta.dylib */; };
+		12D703A21A8419DF00F1644E /* libbassenc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59801A6D877500E071A5 /* libbassenc.dylib */; };
+		12D703A31A8419DF00F1644E /* libbassflac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59811A6D877500E071A5 /* libbassflac.dylib */; };
+		12D703A41A8419DF00F1644E /* libbassmidi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59821A6D877500E071A5 /* libbassmidi.dylib */; };
+		12D703A51A8419DF00F1644E /* libbassmix.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59831A6D877500E071A5 /* libbassmix.dylib */; };
+		12D703A61A8419DF00F1644E /* libbasswv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 123E59841A6D877500E071A5 /* libbasswv.dylib */; };
 		1C59401C23FAC5BBB3B505DF /* ssp_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594A6B0695F438D9AB6640 /* ssp_log.c */; };
 		1C594051FA7463EF510355F2 /* ssp_player_playback.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C59445976180B151C054201 /* ssp_player_playback.c */; };
 		1C594069D3789BD14A7B2E25 /* ssp_bass.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594268D0858F4660A3ADA1 /* ssp_bass.c */; };
@@ -167,6 +178,7 @@
 		1C594B40CB5D75ED9AA39AE2 /* ssp_player_eq.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594008C2532463E457CE67 /* ssp_player_eq.c */; };
 		1C594B76F20C1BC8C731F74B /* ssp_log.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C59498135E3F083F91571F0 /* ssp_log.h */; };
 		1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FBA64AC8F10E45C0308 /* ssp_loop.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C594BD02173A301FD819A57 /* check_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594675AB90276C2DC1EE20 /* check_playlist.c */; };
 		1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C594C002D91CA3BE8F527B9 /* ssp_convertaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C594CA99CB4C86798BF179F /* ssp_player_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594E8FF5CA8DAD10A02C4F /* ssp_player_marker.c */; };
@@ -217,6 +229,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 123E59C11A6DB3A500E071A5;
 			remoteInfo = "player-ios-library";
+		};
+		12D7039A1A8419B000F1644E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 123E59541A6D80DC00E071A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 123E59AA1A6DB2FD00E071A5;
+			remoteInfo = "player-osx-library";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -349,9 +368,10 @@
 		1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_eqpreset.c; sourceTree = "<group>"; };
 		1C594566CB46E0FA1CD32751 /* ssp_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_mixer.h; sourceTree = "<group>"; };
 		1C594571D09145C91AAB4083 /* ssp_marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_marker.h; sourceTree = "<group>"; };
+		1C594675AB90276C2DC1EE20 /* check_playlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = check_playlist.c; sourceTree = "<group>"; };
 		1C5946F8841604A5ED9C50D3 /* ssp_convertaudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_convertaudio.h; sourceTree = "<group>"; };
-		1C5947D3B6411E60944106DA /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		1C594821C97685FE107377AE /* ssp_player_seeking.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_seeking.c; sourceTree = "<group>"; };
+		1C5948D7A1CF990B9FE24B3E /* check_playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = check_playlist.h; sourceTree = "<group>"; };
 		1C59494588C7D79421B97AC1 /* ssp_playhead.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_playhead.c; sourceTree = "<group>"; };
 		1C59498135E3F083F91571F0 /* ssp_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_log.h; sourceTree = "<group>"; };
 		1C5949D7AA53F24EADE8A734 /* ssp_loop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_loop.c; sourceTree = "<group>"; };
@@ -498,6 +518,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12D7039C1A8419D400F1644E /* libssp_player.dylib in Frameworks */,
+				12D7039D1A8419DF00F1644E /* libbass.dylib in Frameworks */,
+				12D7039E1A8419DF00F1644E /* libbass_ape.dylib in Frameworks */,
+				12D7039F1A8419DF00F1644E /* libbass_fx.dylib in Frameworks */,
+				12D703A01A8419DF00F1644E /* libbass_mpc.dylib in Frameworks */,
+				12D703A11A8419DF00F1644E /* libbass_tta.dylib in Frameworks */,
+				12D703A21A8419DF00F1644E /* libbassenc.dylib in Frameworks */,
+				12D703A31A8419DF00F1644E /* libbassflac.dylib in Frameworks */,
+				12D703A41A8419DF00F1644E /* libbassmidi.dylib in Frameworks */,
+				12D703A51A8419DF00F1644E /* libbassmix.dylib in Frameworks */,
+				12D703A61A8419DF00F1644E /* libbasswv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,7 +797,8 @@
 		1C594121672D3720F84855CC /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				1C5947D3B6411E60944106DA /* test.h */,
+				1C594675AB90276C2DC1EE20 /* check_playlist.c */,
+				1C5948D7A1CF990B9FE24B3E /* check_playlist.h */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -956,6 +988,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				12D7039B1A8419B000F1644E /* PBXTargetDependency */,
 			);
 			name = "player-test";
 			productName = "player-test";
@@ -1210,6 +1243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				125D82B81A702A340086412A /* main.c in Sources */,
+				1C594BD02173A301FD819A57 /* check_playlist.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1240,6 +1274,11 @@
 			isa = PBXTargetDependency;
 			target = 123E59C11A6DB3A500E071A5 /* player-ios-library */;
 			targetProxy = 123E59CE1A6DB3A500E071A5 /* PBXContainerItemProxy */;
+		};
+		12D7039B1A8419B000F1644E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 123E59AA1A6DB2FD00E071A5 /* player-osx-library */;
+			targetProxy = 12D7039A1A8419B000F1644E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1695,14 +1734,40 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(PROJECT_DIR)/bass/osx",
+				);
+				OTHER_LDFLAGS = "-lcheck";
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		125D82BA1A702A340086412A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(PROJECT_DIR)/bass/osx",
+				);
+				OTHER_LDFLAGS = "-lcheck";
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

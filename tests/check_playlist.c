@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __player__ssp_bass_test__
-#define __player__ssp_bass_test__
+#include "check_playlist.h"
 
-#include <stdio.h>
-#include <check.h>
-
-#endif
+START_TEST(test_example_two) {
+        ck_assert_int_eq(0, 0);
+        ck_assert_int_eq(0, 1);
+    }
+END_TEST
