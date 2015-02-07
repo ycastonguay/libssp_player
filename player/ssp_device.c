@@ -28,7 +28,7 @@ SSP_DEVICE* device_create() {
 
 void device_free(SSP_DEVICE *device) {
 //    if(device->name != NULL) {
-//        //free(device->name); // crashes on osx
+//        free(device->name);
 //        //free((char *)device->name); // crashes on osx
 //        //free((void *)device->name); // crashes on osx
 //        //device->name = NULL;
@@ -38,7 +38,16 @@ void device_free(SSP_DEVICE *device) {
 void device_reset(SSP_DEVICE* device) {
     device->isInitialized = false;
     device->deviceId = -1;
-    device->test = 100;
-    //device->name = "Default device";
-    strcpy(device->name, "Default device");
+    device->name = "Default device";
+}
+
+void device_copy(SSP_DEVICE* dest, SSP_DEVICE* src) {
+    dest->deviceId = src->deviceId;
+    dest->isInitialized = src->isInitialized;
+
+    size_t len = strlen(src->name) + 1;
+    dest->name = malloc(len);
+    memcpy(dest->name, src->name, len);
+
+    free(dest->name);
 }

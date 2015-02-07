@@ -17,6 +17,9 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include "../bass/bass.h"
+#include "../bass/bass_fx.h"
+#include "../bass/bassmix.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_eqpreset.h"
@@ -39,6 +42,7 @@ SSP_PLAYER* player_create() {
     //player->device = device_create(); // uses default device
     player->mixer = mixer_create();
     player->handles = playerChannels_create();
+    player->pathForPlugins = NULL;
     player->loop = NULL;
     player->marker = NULL;
     player->callbackStateChanged = NULL;
@@ -94,6 +98,15 @@ SSP_ERROR player_free(SSP_PLAYER* player) {
     return SSP_OK;
 }
 
+void player_getPathForPlugin(const char* dest, const char* pathForPlugins, const char* pluginFileName) {
+    if(pathForPlugins != NULL) {
+        sprintf(dest, "%s/%s", pathForPlugins, pluginFileName);
+    }
+    else {
+        strcpy(dest, pluginFileName);
+    }
+}
+
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
     
     #ifdef _WIN32 // Windows/CE
@@ -104,41 +117,51 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
         extern void BASS_APEplugin, BASSFLACplugin, BASS_MPCplugin, BASSWVplugin;
         player->handles->apePlugin = BASS_PluginLoad(&BASS_APEplugin, 0);
         if(player->handles->apePlugin == 0) {
-            return bass_getError("player_loadPlugins (APE)");
+            return SSP_ERROR_PLUGIN_APE_FAILEDTOLOAD;
         }
         player->handles->flacPlugin = BASS_PluginLoad(&BASSFLACplugin, 0);
         if(player->handles->flacPlugin == 0) {
-            return bass_getError("player_loadPlugins (FLAC)");
+            return SSP_ERROR_PLUGIN_FLAC_FAILEDTOLOAD;
         }
         player->handles->mpcPlugin = BASS_PluginLoad(&BASS_MPCplugin, 0);
         if(player->handles->mpcPlugin == 0) {
-            return bass_getError("player_loadPlugins (MPC)");
+            return SSP_ERROR_PLUGIN_MPC_FAILEDTOLOAD;
         }
         player->handles->wvPlugin = BASS_PluginLoad(&BASSWVplugin, 0);
         if(player->handles->wvPlugin == 0) {
-            return bass_getError("player_loadPlugins (WV)");
+            return SSP_ERROR_PLUGIN_WV_FAILEDTOLOAD;
         }
     #elif TARGET_OSX
-        player->handles->apePlugin = BASS_PluginLoad("libbass_ape.dylib", 0);
+        char filePath[1024];
+
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_ape.dylib");
+        player->handles->apePlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->apePlugin == 0) {
-            return bass_getError("player_loadPlugins (APE)");
-            // TODO: shall we return SSP_ERROR_PLUGIN instead?
+            return SSP_ERROR_PLUGIN_APE_FAILEDTOLOAD;
         }
-        player->handles->flacPlugin = BASS_PluginLoad("libbassflac.dylib", 0);
+
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbassflac.dylib");
+        player->handles->flacPlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->flacPlugin == 0) {
-            return bass_getError("player_loadPlugins (FLAC)");
+            return SSP_ERROR_PLUGIN_FLAC_FAILEDTOLOAD;
         }
-        player->handles->mpcPlugin = BASS_PluginLoad("libbass_mpc.dylib", 0);
+
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_mpc.dylib");
+        player->handles->mpcPlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->mpcPlugin == 0) {
-            return bass_getError("player_loadPlugins (MPC)");
+            return SSP_ERROR_PLUGIN_MPC_FAILEDTOLOAD;
         }
-        player->handles->ttaPlugin = BASS_PluginLoad("libbass_tta.dylib", 0);
+
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_tta.dylib");
+        player->handles->ttaPlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->ttaPlugin == 0) {
-            return bass_getError("player_loadPlugins (TTA)");
+            return SSP_ERROR_PLUGIN_TTA_FAILEDTOLOAD;
         }
-        player->handles->wvPlugin = BASS_PluginLoad("libbasswv.dylib", 0);
+
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbasswv.dylib");
+        player->handles->wvPlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->wvPlugin == 0) {
-            return bass_getError("player_loadPlugins (WV)");
+            return SSP_ERROR_PLUGIN_WV_FAILEDTOLOAD;
         }
     #endif
 
@@ -181,8 +204,25 @@ SSP_ERROR player_freePlugins(SSP_PLAYER* player) {
     return SSP_OK;
 }
 
+SSP_ERROR player_getBassVersions() {
+    uint32_t bassVersion = BASS_GetVersion();
+    uint32_t bassFXVersion = BASS_FX_GetVersion();
+    uint32_t bassMixVersion = BASS_Mixer_GetVersion();
+    //uint32_t bassEncVersion = BASS_Encode_GetVersion();
+    if (HIWORD(bassVersion) != BASSVERSION || LOWORD(bassVersion)<0x100) {
+        return SSP_ERROR_BASS_VERSION;
+    }
+
+    return SSP_OK;
+}
+
 SSP_ERROR player_init(SSP_PLAYER* player) {
-    SSP_ERROR error = player_loadPlugins(player);
+    SSP_ERROR error = player_getBassVersions();
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    error = player_loadPlugins(player);
     if(error != SSP_OK) {
         return error;
     }
@@ -208,6 +248,7 @@ SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, in
         return error;
     }
 
+    player->device->isInitialized = true;
     player_updateState(player, SSP_PLAYER_STATE_INITIALIZED);
 
     return SSP_OK;

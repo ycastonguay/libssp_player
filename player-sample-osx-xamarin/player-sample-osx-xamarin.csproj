@@ -9,6 +9,7 @@
     <RootNamespace>playersampleosxxamarin</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <AssemblyName>player-sample-osx-xamarin</AssemblyName>
+    <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,6 +94,46 @@
   <ItemGroup>
     <Content Include="..\output\libssp_player.dylib">
       <Link>libssp_player.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbasswv.dylib">
+      <Link>libbasswv.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbassmix.dylib">
+      <Link>libbassmix.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbassmidi.dylib">
+      <Link>libbassmidi.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbassflac.dylib">
+      <Link>libbassflac.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbassenc.dylib">
+      <Link>libbassenc.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbass_tta.dylib">
+      <Link>libbass_tta.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbass_mpc.dylib">
+      <Link>libbass_mpc.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbass_fx.dylib">
+      <Link>libbass_fx.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbass_ape.dylib">
+      <Link>libbass_ape.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bass\osx\libbass.dylib">
+      <Link>libbass.dylib</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

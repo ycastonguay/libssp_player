@@ -88,6 +88,8 @@ typedef struct {
     SSP_PLAYLIST* playlist;
     SSP_PLAYHEAD* playhead;
 
+    const char* pathForPlugins;
+
     player_statechanged_cb callbackStateChanged;
     void* callbackStateChangedUser;
 } SSP_PLAYER;

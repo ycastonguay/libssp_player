@@ -31,10 +31,8 @@ typedef struct {
 } SSP_POSITION;
 
 typedef struct {
-    //const char* name;
-    char name[128];
+    const char* name;
     int deviceId;
-    int test;
     bool isInitialized;
 } SSP_DEVICE;
 

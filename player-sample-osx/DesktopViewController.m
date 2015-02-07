@@ -40,12 +40,12 @@ void playlistIndexChangedCallback(void *user) {
     //PhoneViewController* vc = (__bridge_transfer id) user; // this crashes the app eventually
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
-    SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
-    //SSP_PLAYLISTITEM item;
-    //SSP_Playlist_GetItemAtNew(currentIndex, &item);
+
+    SSP_PLAYLISTITEM item;
+    SSP_Playlist_GetItemAtNew(currentIndex, &item);
     runOnMainQueueWithoutDeadlocking(^{
         mainViewController.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
-        mainViewController.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item->filePath];
+        mainViewController.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item.filePath];
     });
 }
 
@@ -67,16 +67,24 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     [self initializePlayer];
 }
 
+- (void)checkForError:(SSP_ERROR)error str:(NSString *)str{
+    if(error != SSP_OK) {
+        NSString *message = [NSString stringWithFormat:@"An error occured in libssp_player:\n%@\nError code: %d", str, error];
+        NSString *log = [NSString stringWithFormat:@"libssp_player error: [%@] code: [%d]", str, error];
+        NSLog(log);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:message];
+        [alert runModal];
+    }
+}
+
 - (void)initializePlayer {
     int version = SSP_GetVersion();
     NSLog(@"libssp_player version: %d", version);
 
-    SSP_ERROR error = SSP_Init();
-    if(error != SSP_OK) {
-        NSLog(@"Error!");
-        return;
-    }
-    
+    SSP_ERROR error = SSP_Init(NULL);
+    [self checkForError:error str:@"SSP_Init"];
+
     SSP_SetLogCallback(logCallback, NULL);
     //SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, (__bridge_retained void *)self); // eventually crashes the app
     SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL);
@@ -84,10 +92,11 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     SSP_SetStateChangedCallback(stateChangedCallback, NULL);
 
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
-    if(error != SSP_OK) {
-        NSLog(@"Error!");
-        return;
-    }
+    [self checkForError:error str:@"SSP_InitDevice"];
+
+    SSP_DEVICE device;
+    SSP_GetDevice(&device);
+    NSLog(@"Player initialization successful!");
 }
 
 - (void)timerRefreshPositionElapsed {
@@ -110,18 +119,24 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     panel.canChooseFiles = YES;
     panel.floatingPanel = YES;
     panel.allowedFileTypes = fileTypes;
-    
-    SSP_Playlist_Clear();
+
+    // Make sure player is stopped
+    SSP_ERROR error;
+    if(SSP_GetState() == SSP_PLAYER_STATE_PLAYING) {
+        error = SSP_Stop();
+        [self checkForError:error str:@"SSP_Stop"];
+    }
+
+    error = SSP_Playlist_Clear();
+    [self checkForError:error str:@"SSP_Playlist_Clear"];
 
     if([panel runModal] == NSOKButton) {
         for(int a = 0; a < panel.URLs.count; a++) {
             NSURL *url = [panel.URLs objectAtIndex:a];
-            const char* hello = [url.path UTF8String];
-            SSP_Playlist_AddItem(hello);
+            error = SSP_Playlist_AddItem([url.path UTF8String]);
+            [self checkForError:error str:@"SSP_Playlist_AddItem"];
         }
     }
-    
-    //SSP_Play();
 }
 
 - (IBAction)actionClose:(id)sender {
@@ -131,41 +146,27 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 
 - (IBAction)actionPlay:(id)sender {
     SSP_ERROR error = SSP_Play();
-    if(error != SSP_OK) {
-        NSLog(@"libssp_player error: %d", error);
-    }
-
+    [self checkForError:error str:@"SSP_Play"];
     timerRefreshPosition = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerRefreshPositionElapsed) userInfo:nil repeats:YES];
 }
 
 - (IBAction)actionPause:(id)sender {
     SSP_ERROR error = SSP_Pause();
-    if(error != SSP_OK) {
-        NSLog(@"libssp_player error: %d", error);
-    }
-}
+    [self checkForError:error str:@"SSP_Pause"];}
 
 - (IBAction)actionStop:(id)sender {
     SSP_ERROR error = SSP_Stop();
-    if(error != SSP_OK) {
-        NSLog(@"libssp_player error: %d", error);
-    }
-
+    [self checkForError:error str:@"SSP_Stop"];
     [timerRefreshPosition invalidate];
 }
 
 - (IBAction)actionPrevious:(id)sender {
     SSP_ERROR error = SSP_Previous();
-    if(error != SSP_OK) {
-        NSLog(@"libssp_player error: %d", error);
-    }
-}
+    [self checkForError:error str:@"SSP_Previous"];}
 
 - (IBAction)actionNext:(id)sender {
     SSP_ERROR error = SSP_Next();
-    if(error != SSP_OK) {
-        NSLog(@"libssp_player error: %d", error);
-    }
+    [self checkForError:error str:@"SSP_Next"];
 }
 
 @end

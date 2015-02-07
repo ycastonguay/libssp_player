@@ -24,7 +24,7 @@ namespace org.sessionsapp.player
     {
 #if IOS
         public const string DllImportValue = "__Internal";
-#elif ANDROID || LINUX
+#elif ANDROID
         public const string DllImportValue = "libssp_player.so";
 #elif OSX
         public const string DllImportValue = "libssp_player.dylib";
@@ -32,27 +32,26 @@ namespace org.sessionsapp.player
 
         [DllImport (DllImportValue)]
         public static extern int SSP_GetVersion();
-
         [DllImport (DllImportValue)]
-        public static extern int SSP_Init();
-
+        public static extern int SSP_Init(string pathForPlugins);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_Free();
         [DllImport (DllImportValue)]
         public static extern int SSP_InitDevice(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
-
         [DllImport (DllImportValue)]
         public static extern int SSP_FreeDevice();
 
-        //[DllImport (DllImportValue)]
         [DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
         public static extern void SSP_GetDevice(ref SSP_DEVICE device);
-        //public static extern void SSP_GetDeviceNew(SSP_DEVICE device);
         //public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
 
         [DllImport (DllImportValue)]
         public static extern long SSP_GetPosition();
+        //[DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetPositionNew")]
+        public static extern int SSP_GetPositionNew(ref SSP_POSITION position);
         [DllImport (DllImportValue)]
         public static extern int SSP_SetPosition(long position);
-
 
         [DllImport (DllImportValue)]
         public static extern int SSP_Play();
@@ -87,6 +86,10 @@ namespace org.sessionsapp.player
         public static extern void SSP_SetPlaylistIndexChangedCallback(PlaylistIndexChangedDelegate callback, IntPtr user);
         [DllImport (DllImportValue)]
         public static extern void SSP_RemovePlaylistIndexChangedCallback();
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetLogCallback(LogDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemoveLogCallback();
 
         // Errors
         public static int SSP_OK = 0;
@@ -95,32 +98,54 @@ namespace org.sessionsapp.player
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void PlaylistIndexChangedDelegate(IntPtr user);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void PlaylistEndedDelegate(IntPtr user);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void StateChangedDelegate(IntPtr user, SSPPlayerState state);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void LogDelegate(IntPtr user, string str);
 
+    public enum SSPPlayerState
+    {
+        Unknown = 0,
+        Initialized = 1,
+        Stopped = 2,
+        Playing = 3,
+        Paused = 4
+    }
+
+    public enum SSPRepeatType
+    {
+        Off = 0,
+        Playlist = 1,
+        Song = 2
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct SSP_POSITION
+    {
+        public string str;
+        public long bytes;
+        public long ms;
+        public long samples;
+    }
+        
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_DEVICE
     {
         public string name;
         public int deviceId;
-        public int test;
         public bool isInitialized;
-    }
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct SSP_AUDIOFILE
-    {
-        public string filePath;
-        public int sampleRate;
-        public int numberOfChannels;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_PLAYLISTITEM
     {
-        public SSP_AUDIOFILE audioFile;
+        public bool isLoaded;
+        public string filePath;
+        public int sampleRate;
+        public int numberOfChannels;
         public uint channel;
         public long length;
-        public long test;
-        public bool isLoaded;
     }
-
 }

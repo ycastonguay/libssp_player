@@ -318,7 +318,6 @@
 		123E596B1A6D877500E071A5 /* bassmidi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bassmidi.h; sourceTree = "<group>"; };
 		123E596C1A6D877500E071A5 /* bassmix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bassmix.h; sourceTree = "<group>"; };
 		123E596D1A6D877500E071A5 /* basswv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = basswv.h; sourceTree = "<group>"; };
-		123E596F1A6D877500E071A5 /* bass_fx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass_fx.h; sourceTree = "<group>"; };
 		123E59701A6D877500E071A5 /* libbass.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass.a; sourceTree = "<group>"; };
 		123E59711A6D877500E071A5 /* libbass_ape.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass_ape.a; sourceTree = "<group>"; };
 		123E59721A6D877500E071A5 /* libbass_fx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass_fx.a; sourceTree = "<group>"; };
@@ -726,7 +725,6 @@
 		123E596E1A6D877500E071A5 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				123E596F1A6D877500E071A5 /* bass_fx.h */,
 				123E59701A6D877500E071A5 /* libbass.a */,
 				123E59711A6D877500E071A5 /* libbass_ape.a */,
 				123E59721A6D877500E071A5 /* libbass_fx.a */,
@@ -1584,6 +1582,7 @@
 		123E59AD1A6DB2FD00E071A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
@@ -1603,6 +1602,7 @@
 		123E59AE1A6DB2FD00E071A5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;

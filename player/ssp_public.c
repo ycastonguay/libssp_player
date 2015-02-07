@@ -25,6 +25,7 @@
 #include "ssp_convert.h"
 #include "ssp_structs.h"
 #include "ssp_eqpreset.h"
+#include "ssp_device.h"
 
 static SSP_PLAYER* sspPlayer;
 
@@ -34,10 +35,15 @@ int SSP_GetVersion() {
     return SSP_VERSION;
 }
 
-SSP_ERROR SSP_Init() {
-    // Create player if not created yet
+SSP_ERROR SSP_Init(const char* pathForPlugins) {
     if(sspPlayer == NULL) {
         sspPlayer = player_create();
+    }
+
+    if(pathForPlugins != NULL) {
+        size_t len = strlen(pathForPlugins) + 1;
+        sspPlayer->pathForPlugins = malloc(len);
+        memcpy(sspPlayer->pathForPlugins, pathForPlugins, len);
     }
 
     return player_init(sspPlayer);
@@ -96,19 +102,7 @@ void SSP_RemoveStateChangedCallback() {
 #pragma mark Device
 
 void SSP_GetDevice(SSP_DEVICE* device) {
-
-    // TODO: Find a better way to copy structs w/ strings, memcpy?
-    SSP_DEVICE *deviceToCopy = sspPlayer->device;
-    device->deviceId = deviceToCopy->deviceId;
-    device->isInitialized = deviceToCopy->isInitialized;
-    //device->name = malloc(sizeof(deviceToCopy->name)); // works in c, crashes in c# and vice versa!
-
-    //strcpy(device->name, deviceToCopy->name);
-    device->test = 15000;
-
-    // Can't get this to work in C#...
-    //memcpy(device, sspPlayer->device, sizeof(SSP_DEVICE));
-    log_textf("---> getDevice - name: %s\n", sspPlayer->device->name);
+    device_copy(device, sspPlayer->device);
 }
 
 #pragma mark Playback

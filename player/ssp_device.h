@@ -24,5 +24,6 @@
 SSP_DEVICE* device_create();
 void device_free(SSP_DEVICE *device);
 void device_reset(SSP_DEVICE *device);
+void device_copy(SSP_DEVICE *dest, SSP_DEVICE *src);
 
 #endif /* defined(__player__ssp_device__) */

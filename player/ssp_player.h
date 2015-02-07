@@ -31,6 +31,7 @@ SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, in
 SSP_ERROR player_freeDevice(SSP_PLAYER* player);
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player);
 SSP_ERROR player_freePlugins(SSP_PLAYER* player);
+SSP_ERROR player_getBassVersions();
 
 void player_updateState(SSP_PLAYER* player, ssp_player_state_t state);
 
