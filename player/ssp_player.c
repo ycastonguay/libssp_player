@@ -51,10 +51,7 @@ SSP_PLAYER* player_create() {
 }
 
 SSP_ERROR player_free(SSP_PLAYER* player) {
-    SSP_ERROR error = player_freePlugins(player);
-    if(error != SSP_OK) {
-        return error;
-    }
+    player_freePlugins(player);
 
     if(player->playlist) {
         playlist_free(player->playlist);
@@ -111,8 +108,10 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
     
     #ifdef _WIN32 // Windows/CE
         //BASS_PluginLoad("bassflac.dll", 0);
+        // TODO: Complete implementation
     #elif __linux__ // Linux
         //BASS_PluginLoad("libbassflac.so", 0);
+        // TODO: Complete implementation
     #elif TARGET_IOS // iOS
         extern void BASS_APEplugin, BASSFLACplugin, BASS_MPCplugin, BASSWVplugin;
         player->handles->apePlugin = BASS_PluginLoad(&BASS_APEplugin, 0);
@@ -173,31 +172,36 @@ SSP_ERROR player_freePlugins(SSP_PLAYER* player) {
     if(player->handles->apePlugin > 0) {
         success = BASS_PluginFree(player->handles->apePlugin);
         if(!success) {
-            return bass_getError("player_freePlugins (APE)");
+            bass_getError("player_freePlugins (APE)");
+            return SSP_ERROR_PLUGIN_APE_FAILEDTOFREE;
         }
     }
     if(player->handles->flacPlugin > 0) {
         success = BASS_PluginFree(player->handles->flacPlugin);
         if(!success) {
-            return bass_getError("player_freePlugins (FLAC)");
+            bass_getError("player_freePlugins (FLAC)");
+            return SSP_ERROR_PLUGIN_FLAC_FAILEDTOFREE;
         }
     }
     if(player->handles->mpcPlugin > 0) {
         success = BASS_PluginFree(player->handles->mpcPlugin);
         if(!success) {
-            return bass_getError("player_freePlugins (MPC)");
+            bass_getError("player_freePlugins (MPC)");
+            return SSP_ERROR_PLUGIN_MPC_FAILEDTOFREE;
         }
     }
     if(player->handles->ttaPlugin > 0) {
         success = BASS_PluginFree(player->handles->ttaPlugin);
         if(!success) {
-            return bass_getError("player_freePlugins (TTA)");
+            bass_getError("player_freePlugins (TTA)");
+            return SSP_ERROR_PLUGIN_TTA_FAILEDTOFREE;
         }
     }
     if(player->handles->wvPlugin > 0) {
         success = BASS_PluginFree(player->handles->wvPlugin);
         if(!success) {
-            return bass_getError("player_freePlugins (WV)");
+            bass_getError("player_freePlugins (WV)");
+            return SSP_ERROR_PLUGIN_WV_FAILEDTOFREE;
         }
     }
 
@@ -258,7 +262,7 @@ SSP_ERROR player_freeDevice(SSP_PLAYER* player) {
     // Channels should be freed already with player_stop()
     bool success = BASS_Free();
     if(!success) {
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_DEVICE_FAILEDTOFREE;
     }
 
     device_free(player->device);

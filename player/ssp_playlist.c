@@ -64,12 +64,10 @@ void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
 }
 
 SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
-    // refresh audiofile metadata (?)
-    // check if channel exists, if true, then dispose (?)
     //log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
     item->channel = bass_createDecodeStream(item->filePath, useFloatingPoint);
     if(item->channel == 0) {
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYLISTITEM_LOAD_FAILEDTOCREATEDECODESTREAM;
     }
 
     BASS_CHANNELINFO info;
@@ -78,8 +76,12 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     item->sampleRate = info.freq;
     item->numberOfChannels = info.chans;
     item->bitsPerSample = 16; // TODO: Fill this correctly, I can't find a method in BASS for this...
-    item->length = bass_getLength(item->channel);
     item->isLoaded = true;
+
+    item->length = BASS_ChannelGetLength(item->channel, BASS_POS_BYTE);
+    if(item->length == -1) {
+        return SSP_ERROR_PLAYLISTITEM_LOAD_FAILEDTOGETLENGTH;
+    }
 
     return SSP_OK;
 }
@@ -138,12 +140,14 @@ void playlist_free(SSP_PLAYLIST *playlist) {
 SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
     bool success = BASS_ChannelStop(item->channel);
     if(!success) {
-        return bass_getError("playlistitem_disposeChannel");
+        bass_getError("BASS_ChannelStop");
+        return SSP_ERROR_PLAYLISTITEM_DISPOSE_FAILEDTOSTOPCHANNEL;
     }
 
     success = BASS_StreamFree(item->channel);
     if(!success) {
-        return bass_getError("playlistitem_disposeChannel");
+        bass_getError("BASS_StreamFree");
+        return SSP_ERROR_PLAYLISTITEM_DISPOSE_FAILEDTOFREESTREAM;
     }
 
     //playlistitem_reset(item); // is this really what we want? we don't necessary want to remove the file path, just reset the loaded status
@@ -161,13 +165,6 @@ SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
     item->filePath = malloc(strlen(filePath));
     strcpy(item->filePath, filePath);
     vector_add(playlist->items, item);
-
-    // test
-    int total = vector_total(playlist->items);
-    SSP_PLAYLISTITEM *firstItem = vector_get(playlist->items, 0);
-    SSP_PLAYLISTITEM *secondItem = vector_get(playlist->items, 1);
-    SSP_PLAYLISTITEM *thirdItem = vector_get(playlist->items, 2);
-    SSP_PLAYLISTITEM *lastItem = vector_get(playlist->items, vector_total(playlist->items)-1);
 
     return SSP_OK;
 }

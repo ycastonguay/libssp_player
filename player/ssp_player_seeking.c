@@ -111,16 +111,16 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     }
 
     // Flush buffer
-    error = bass_setPosition(currentItem->channel, 0);
-    if(error != SSP_OK) {
+    success = BASS_ChannelSetPosition(currentItem->channel, 0, BASS_POS_BYTE);
+    if(!success) {
+        return bass_getError("BASS_ChannelSetPosition");
+    }
+    success = BASS_ChannelSetPosition(player->handles->fxChannel, 0, BASS_POS_BYTE);
+    if(!success) {
         return error;
     }
-    error = bass_setPosition(player->handles->fxChannel, 0);
-    if(error != SSP_OK) {
-        return error;
-    }
-    error = bass_setMixerPosition(player->handles->mixerChannel, 0);
-    if(error != SSP_OK) {
+    success = BASS_Mixer_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
+    if(!success) {
         return error;
     }
 
@@ -130,8 +130,8 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
         bytesPosition *= 2;
 
     // Set position for decode channel
-    error = bass_setPosition(currentItem->channel, bytesPosition);
-    if(error != SSP_OK) {
+    success = BASS_ChannelSetPosition(currentItem->channel, bytesPosition, BASS_POS_BYTE);
+    if(!success) {
         return error;
     }
 

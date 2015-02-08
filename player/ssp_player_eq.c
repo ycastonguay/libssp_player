@@ -31,7 +31,8 @@ SSP_ERROR player_createEQStage(SSP_PLAYER* player) {
 
     player->handles->eqFX = BASS_ChannelSetFX(player->handles->mixerChannel, BASS_FX_BFX_PEAKEQ, 0);
     if(player->handles->eqFX == 0) {
-        return bass_getError("player_createEQStage");
+        bass_getError("player_createEQStage");
+        return SSP_ERROR_EQ_STAGE_FAILEDTOCREATE;
     }
     return SSP_OK;
 }
@@ -43,7 +44,8 @@ SSP_ERROR player_removeEQStage(SSP_PLAYER* player) {
 
     bool success = BASS_ChannelRemoveFX(player->handles->mixerChannel, player->handles->eqFX);
     if(!success) {
-        return bass_getError("player_removeEQStage");
+        bass_getError("player_removeEQStage");
+        return SSP_ERROR_EQ_STAGE_FAILEDTOREMOVE;
     }
 
     player->handles->eqFX = 0;

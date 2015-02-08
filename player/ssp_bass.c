@@ -17,7 +17,6 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "ssp_player.h"
 #include "../bass/bass_fx.h"
 #include "../bass/bassmix.h"
@@ -29,61 +28,23 @@ SSP_ERROR bass_getError(char* message) {
         return SSP_OK;
     }
 
-    // TODO: Convert errors here
     log_textf("ssp_bass: %s - bass error code: %d\n", message, error);
     return SSP_ERROR_UNKNOWN;
 }
 
 SSP_ERROR bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
-    // Check if the correct version of BASS is loaded
     if (HIWORD(BASS_GetVersion()) != BASSVERSION) {
         return bass_getError("bass_init");
     }
 
-    // Initialize default output device
-    if (!BASS_Init(-1, sampleRate, 0, NULL, NULL)) {
+    if (!BASS_Init(device, sampleRate, 0, NULL, NULL)) {
         return bass_getError("bass_init");
     }
 
-    // Set mixer properties
     BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
     BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
 
-    // TODO: initialize plugins here
-
-    return SSP_OK;
-}
-
-SSP_ERROR bass_start() {
-    bool success = BASS_Start();
-    if(!success) {
-        return bass_getError("bass_start");
-    }
-    return SSP_OK;
-}
-
-SSP_ERROR bass_stop() {
-    bool success = BASS_Stop();
-    if(!success) {
-        return bass_getError("bass_stop");
-    }
-    return SSP_OK;
-}
-
-SSP_ERROR bass_pause() {
-    bool success = BASS_Pause();
-    if(!success) {
-        return bass_getError("bass_pause");
-    }
-    return SSP_OK;
-}
-
-SSP_ERROR bass_play(uint32_t handle, bool restart) {
-    bool success = BASS_ChannelPlay(handle, restart);
-    if(!success) {
-        return bass_getError("bass_play");
-    }
-    return SSP_OK;
+    return SSP_ERROR_DEVICE_FAILEDTOLOAD;
 }
 
 int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatingPoint, STREAMPROC *streamProc, void* user) {
@@ -150,52 +111,4 @@ int bass_createMixerStream(int frequency, int numberOfChannels, bool decode, boo
     }
 
     return stream;
-}
-
-SSP_ERROR bass_addChannelToMixer(uint32_t mixerHandle, uint32_t channelHandle) {
-    bool success = BASS_Mixer_StreamAddChannel(mixerHandle, channelHandle, BASS_MIXER_BUFFER);
-    if(!success) {
-        return bass_getError("bass_addChannel");
-    }
-    return SSP_OK;
-}
-
-int bass_setMixerSyncProc(uint32_t handle, uint64_t position, void* syncProc) {
-    HSYNC sync = BASS_Mixer_ChannelSetSync(handle, BASS_SYNC_POS, position, syncProc, 0);
-    if(sync == 0) {
-        return bass_getError("bass_setMixerSyncProc");
-    }
-    return sync;
-}
-
-uint64_t bass_getPosition(uint32_t handle) {
-    QWORD position = BASS_ChannelGetPosition(handle, BASS_POS_BYTE);
-    if(position == -1) {
-        bass_getError("bass_getPosition"); // TODO: How do we return an error? -1 doesn't indicate anything...
-    }
-    return position;
-}
-
-uint64_t bass_getLength(uint32_t handle) {
-    QWORD length = BASS_ChannelGetLength(handle, BASS_POS_BYTE);
-    if(length == -1) {
-        bass_getError("bass_getLength"); // TODO: How do we return an error? -1 doesn't indicate anything...
-    }
-    return length;
-}
-
-SSP_ERROR bass_setPosition(uint32_t handle, uint64_t position) {
-    bool success = BASS_ChannelSetPosition(handle, position, BASS_POS_BYTE);
-    if(!success) {
-        return bass_getError("bass_setPosition");
-    }
-    return SSP_OK;
-}
-
-SSP_ERROR bass_setMixerPosition(uint32_t handle, uint64_t position) {
-    bool success = BASS_Mixer_ChannelSetPosition(handle, position, BASS_POS_BYTE);
-    if(!success) {
-        return bass_getError("bass_setMixerPosition");
-    }
-    return SSP_OK;
 }
