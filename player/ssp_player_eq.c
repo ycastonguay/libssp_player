@@ -22,7 +22,6 @@
 #include "ssp_player.h"
 #include "ssp_eqpreset.h"
 #include "ssp_bass.h"
-#include "ssp_privatestructs.h"
 
 SSP_ERROR player_createEQStage(SSP_PLAYER* player) {
     if(player->handles->eqFX != 0) {
@@ -88,6 +87,7 @@ SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset) {
         BASS_BFX_PEAKEQ eq;
         eq.lBand = a;
         eq.lChannel = BASS_BFX_CHANALL;
+        eq.fBandwidth = 0;
         eq.fCenter = eqpreset->bands[a].center;
         eq.fGain = eqpreset->bands[a].gain;
         eq.fQ = eqpreset->bands[a].q;

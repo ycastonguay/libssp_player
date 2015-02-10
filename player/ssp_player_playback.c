@@ -23,7 +23,7 @@
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
 #include "ssp_log.h"
-#include "ssp_privatestructs.h"
+#include "ssp_playlistitem.h"
 
 #pragma mark Callbacks
 

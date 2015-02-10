@@ -39,9 +39,9 @@ SSP_PLAYER* player_create() {
     player->playlist = playlist_create();
     player->eqPreset = eqpreset_create();
     player->playhead = playhead_create();
-    //player->device = device_create(); // uses default device
     player->mixer = mixer_create();
     player->handles = playerChannels_create();
+    player->device = NULL;
     player->pathForPlugins = NULL;
     player->loop = NULL;
     player->marker = NULL;

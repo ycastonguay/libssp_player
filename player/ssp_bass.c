@@ -17,22 +17,23 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "ssp_player.h"
+#include "../bass/bass.h"
 #include "../bass/bass_fx.h"
 #include "../bass/bassmix.h"
+#include "ssp_player.h"
 #include "ssp_log.h"
 
-SSP_ERROR bass_getError(char* message) {
+int bass_getError(char* message) {
     int error = BASS_ErrorGetCode();
     if(error == BASS_OK) {
-        return SSP_OK;
+        return BASS_OK;
     }
 
-    log_textf("ssp_bass: %s - bass error code: %d\n", message, error);
-    return SSP_ERROR_UNKNOWN;
+    log_textf("%s - BASS error: %d\n", message, error);
+    return error;
 }
 
-SSP_ERROR bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
+int bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
     if (HIWORD(BASS_GetVersion()) != BASSVERSION) {
         return bass_getError("bass_init");
     }
@@ -44,7 +45,7 @@ SSP_ERROR bass_init(int device, int sampleRate, int bufferSize, int updatePeriod
     BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
     BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
 
-    return SSP_ERROR_DEVICE_FAILEDTOLOAD;
+    return SSP_OK;
 }
 
 int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatingPoint, STREAMPROC *streamProc, void* user) {

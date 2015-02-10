@@ -26,6 +26,7 @@
 #include "ssp_structs.h"
 #include "ssp_eqpreset.h"
 #include "ssp_device.h"
+#include "ssp_playlistitem.h"
 
 static SSP_PLAYER* sspPlayer;
 

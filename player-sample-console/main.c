@@ -50,7 +50,7 @@ void playlistEndedCallback(void *user) {
 
 int initializePlayer() {
     printf("Initializing player...\n");
-    SSP_ERROR error = SSP_Init();
+    SSP_ERROR error = SSP_Init(NULL);
     if(error != SSP_OK) {
         checkForError(error);
         return 1;
@@ -73,9 +73,6 @@ int initializePlayer() {
     printf("Adding items to playlist...\n");
     SSP_Playlist_AddItem("/Users/usr/Documents/mp3/1.mp3");
     SSP_Playlist_AddItem("/Users/usr/Documents/mp3/2.mp3");
-    //SSP_Playlist_RemoveItemAt(0); // works and reorders the array, similar to a pop
-    //SSP_Playlist_RemoveItemAt(1); // fails, vector.c vector_delete does not manage the last index of the list correctly... this does not reorder the array
-    //SSP_Playlist_AddItem("hello3");
 
     printf("Starting playback...\n");
     error = SSP_Play();

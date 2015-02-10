@@ -82,7 +82,9 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     int version = SSP_GetVersion();
     NSLog(@"libssp_player version: %d", version);
 
-    SSP_ERROR error = SSP_Init(NULL);
+    NSFileManager* fileManager = [[NSFileManager alloc] init];
+    NSString* path = [fileManager currentDirectoryPath];
+    SSP_ERROR error = SSP_Init([path UTF8String]);
     [self checkForError:error str:@"SSP_Init"];
 
     SSP_SetLogCallback(logCallback, NULL);
@@ -140,6 +142,9 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 }
 
 - (IBAction)actionClose:(id)sender {
+    if(SSP_GetState() != SSP_PLAYER_STATE_STOPPED) {
+        SSP_Stop();
+    }
     SSP_Free();
     [NSApp terminate:self];
 }
