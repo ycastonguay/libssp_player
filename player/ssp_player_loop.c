@@ -27,16 +27,17 @@
 #include "ssp_structs.h"
 #include "ssp_privatestructs.h"
 
-// TODO: Review methods
-
 SSP_ERROR player_startLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
+    // TODO
     return SSP_OK;
 }
 
 SSP_ERROR player_updateLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
+    // TODO
     return SSP_OK;
 }
 
 SSP_ERROR player_stopLoop(SSP_PLAYER* player) {
+    // TODO
     return SSP_OK;
 }

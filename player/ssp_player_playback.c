@@ -24,6 +24,7 @@
 #include "ssp_bass.h"
 #include "ssp_log.h"
 #include "ssp_playlistitem.h"
+#include "ssp_privatestructs.h"
 
 #pragma mark Callbacks
 
@@ -40,7 +41,6 @@ SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
         return bass_getError("player_setSyncCallbackAfterChangingPlaylistItem");
     }
 
-    //DWORD buffered = BASS_Mixer_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
     DWORD buffered = BASS_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
     if(buffered == -1) {
         return bass_getError("player_setSyncCallbackAfterChangingPlaylistItem");
@@ -166,7 +166,6 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         return;
     }
 
-    //DWORD buffered = BASS_Mixer_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
     DWORD buffered = BASS_ChannelGetData(player->handles->mixerChannel, 0, BASS_DATA_AVAILABLE);
     if(buffered == -1) {
         bass_getError("player_playerSyncProc");
@@ -195,7 +194,6 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 //        // Multiply by 1.5 (I don't really know why, but this works for 48000Hz and 96000Hz. Maybe a bug in BASS with FLAC files?)
 //        if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate > 44100)
 //            offset = (long)((float)offset * 1.5f);
-//
 
         // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
         float sampleRate;
@@ -239,7 +237,6 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
     if(playbackStopped) {
 
-        //            // Check if EQ is enabled
 //            if (IsEQEnabled)
 //                RemoveEQ();
 
@@ -267,10 +264,6 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 //            // Set event data
 //            eventData.AudioFileStarted = null;
 //            eventData.AudioFileEnded = Playlist.CurrentItem.AudioFile;
-//
-        // <-----------------------------------------> This isn't supposed to be there!
-
-        // <-----------------------------------------> This isn't supposed to be there! this should be outside the check for callback
 //        }
 //        else
 //        {
@@ -295,7 +288,6 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 //
 //        // Raise event
 //        OnPlaylistIndexChanged(eventData);
-//    }
 }
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
@@ -359,6 +351,46 @@ void player_removeStateChangedCallback(SSP_PLAYER* player) {
     player->callbackStateChangedUser = NULL;
 }
 
+void player_setLoopPlaybackStartedCallback(SSP_PLAYER* player, player_loopplaybackstarted_cb cb, void* user) {
+    player->callbackLoopPlaybackStarted = cb;
+    player->callbackLoopPlaybackStartedUser = user;
+}
+
+void player_removeLoopPlaybackStartedCallback(SSP_PLAYER* player) {
+    player->callbackLoopPlaybackStarted = NULL;
+    player->callbackLoopPlaybackStartedUser = NULL;
+}
+
+void player_setLoopPlaybackStoppedCallback(SSP_PLAYER* player, player_loopplaybackstopped_cb cb, void* user) {
+    player->callbackLoopPlaybackStopped = cb;
+    player->callbackLoopPlaybackStoppedUser = user;
+}
+
+void player_removeLoopPlaybackStoppedCallback(SSP_PLAYER* player) {
+    player->callbackLoopPlaybackStopped = NULL;
+    player->callbackLoopPlaybackStoppedUser = NULL;
+}
+
+void player_setAudioInterruptedCallback(SSP_PLAYER* player, player_audiointerrupted_cb cb, void* user) {
+    player->callbackAudioInterrupted = cb;
+    player->callbackAudioInterruptedUser = user;
+}
+
+void player_removeAudioInterruptedCallback(SSP_PLAYER* player) {
+    player->callbackAudioInterrupted = NULL;
+    player->callbackAudioInterruptedUser = NULL;
+}
+
+void player_setBPMDetectedCallback(SSP_PLAYER* player, player_bpmdetected_cb cb, void* user) {
+    player->callbackBPMDetected = cb;
+    player->callbackBPMDetectedUser = user;
+}
+
+void player_removeBPMDetectedCallback(SSP_PLAYER* player) {
+    player->callbackBPMDetected = NULL;
+    player->callbackBPMDetectedUser = NULL;
+}
+
 #pragma mark Playback
 
 SSP_ERROR player_pause(SSP_PLAYER* player) {
@@ -404,6 +436,11 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVECALLBACKS;
     }
 
+    error = player_removeBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
     success = BASS_StreamFree(player->handles->fxChannel);
     if(!success) {
         return SSP_ERROR_PLAYBACK_STOP_FAILEDTOFREESTREAM;
@@ -428,7 +465,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     log_text("player_play\n");
     if(player->playhead->state == SSP_PLAYER_STATE_PLAYING) {
         if(player->playhead->isPlayingLoop) {
-            // TODO: stop loop
+            player_stopLoop(player);
         }
 
         player_stop(player);
@@ -484,7 +521,10 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOADDSTREAMTOMIXER;
     }
 
-    // Add BPM callbacks here
+    error = player_addBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     player_setVolume(player, player->playhead->volume);
 
@@ -501,7 +541,11 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     //}
 
     if(player->playhead->repeatType == SSP_PLAYER_REPEAT_SONG) {
-        BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
+        int result = BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
+        if (result == -1) {
+            bass_getError("BASS_ChannelFlags");
+            return SSP_ERROR_UNKNOWN;
+        }
     }
 
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);

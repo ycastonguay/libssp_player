@@ -1,4 +1,4 @@
-#include "ssp_errors.h"// Copyright © 2011-2015 Yanick Castonguay
+// Copyright © 2011-2015 Yanick Castonguay
 //
 // This file is part of Sessions, a music player for musicians.
 //
@@ -105,6 +105,38 @@ void SSP_SetStateChangedCallback(player_statechanged_cb cb, void* user) {
 
 void SSP_RemoveStateChangedCallback() {
     player_removeStateChangedCallback(sspPlayer);
+}
+
+void SSP_SetLoopPlaybackStartedCallback(player_loopplaybackstarted_cb cb, void* user) {
+    player_setLoopPlaybackStartedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemoveLoopPlaybackStartedCallback() {
+    player_removeLoopPlaybackStartedCallback(sspPlayer);
+}
+
+void SSP_SetLoopPlaybackStoppedCallback(player_loopplaybackstopped_cb cb, void* user) {
+    player_setLoopPlaybackStoppedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemoveLoopPlaybackStoppedCallback() {
+    player_removeLoopPlaybackStoppedCallback(sspPlayer);
+}
+
+void SSP_SetAudioInterruptedCallback(player_audiointerrupted_cb cb, void* user) {
+    player_setAudioInterruptedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemoveAudioInterruptedCallback() {
+    player_removeAudioInterruptedCallback(sspPlayer);
+}
+
+void SSP_SetBPMDetectedCallback(player_bpmdetected_cb cb, void* user) {
+    player_setBPMDetectedCallback(sspPlayer, cb, user);
+}
+
+void SSP_RemoveBPMDetectedCallback() {
+    player_removeBPMDetectedCallback(sspPlayer);
 }
 
 #pragma mark Device
@@ -227,44 +259,76 @@ bool SSP_GetIsShuffle() {
     return player_getIsShuffle(sspPlayer);
 }
 
-void SSP_SetIsShuffle(bool shuffle) {
-    player_setIsShuffle(sspPlayer, shuffle);
+SSP_ERROR SSP_SetIsShuffle(bool shuffle) {
+    return player_setIsShuffle(sspPlayer, shuffle);
 }
 
 ssp_player_repeat_t SSP_GetRepeatType() {
     return player_getRepeatType(sspPlayer);
 }
 
-void SSP_SetRepeatType(ssp_player_repeat_t repeat) {
-    player_setRepeatType(sspPlayer, repeat);
+SSP_ERROR SSP_SetRepeatType(ssp_player_repeat_t repeat) {
+    return player_setRepeatType(sspPlayer, repeat);
 }
 
 float SSP_GetVolume() {
     return player_getVolume(sspPlayer);
 }
 
-void SSP_SetVolume(float volume) {
-    player_setVolume(sspPlayer, volume);
+SSP_ERROR SSP_SetVolume(float volume) {
+    return player_setVolume(sspPlayer, volume);
 }
 
 float SSP_GetTimeShifting() {
     return player_getTimeShifting(sspPlayer);
 }
 
-void SSP_SetTimeShifting(float timeShifting) {
-    player_setTimeShifting(sspPlayer, timeShifting);
+SSP_ERROR SSP_SetTimeShifting(float timeShifting) {
+    return player_setTimeShifting(sspPlayer, timeShifting);
 }
 
 int SSP_GetPitchShifting() {
     return player_getPitchShifting(sspPlayer);
 }
 
-void SSP_SetPitchShifting(int pitchShifting) {
-    player_setPitchShifting(sspPlayer, pitchShifting);
+SSP_ERROR SSP_SetPitchShifting(int pitchShifting) {
+    return player_setPitchShifting(sspPlayer, pitchShifting);
 }
 
 #pragma mark Data
 
 int SSP_GetMixerData(void* buffer, int length) {
     return player_getMixerData(sspPlayer, buffer, length);
+}
+
+#pragma mark Encoder
+
+SSP_ERROR SSP_StartEncode(ssp_player_encoder_t encoder) {
+    return player_startEncode(sspPlayer, encoder);
+}
+
+SSP_ERROR SSP_StopEncode() {
+    return player_stopEncode(sspPlayer);
+}
+
+SSP_ERROR SSP_StartCast(SSP_CAST_SERVER* server) {
+    return player_startCast(sspPlayer, server);
+}
+
+SSP_ERROR SSP_StopCast() {
+    return player_stopCast(sspPlayer);
+}
+
+#pragma mark Loops
+
+SSP_ERROR SSP_StartLoop(SSP_LOOP* loop) {
+    return player_startLoop(sspPlayer, loop);
+}
+
+SSP_ERROR SSP_UpdateLoop(SSP_LOOP* loop) {
+    return player_updateLoop(sspPlayer, loop);
+}
+
+SSP_ERROR SSP_StopLoop() {
+    return player_stopLoop(sspPlayer);
 }

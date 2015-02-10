@@ -15,20 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#include <string.h>
-#include <stdlib.h>
-#include <inttypes.h>
-#include "../bass/bassmix.h"
+#include <stdio.h>
 #include "ssp_player.h"
-#include "ssp_playlist.h"
-#include "ssp_eqpreset.h"
-#include "ssp_playhead.h"
-#include "ssp_bass.h"
-#include "ssp_structs.h"
+#include "ssp_errors.h"
 #include "ssp_privatestructs.h"
 
-// TODO: Review methods
+SSP_ERROR player_addBPMCallbacks(SSP_PLAYER* player) {
+    // TODO
+    return SSP_OK;
+}
 
-SSP_ERROR player_goToMarker(SSP_PLAYER* player, SSP_MARKER* marker) {
+SSP_ERROR player_removeBPMCallbacks(SSP_PLAYER* player) {
+    // TODO
     return SSP_OK;
 }

@@ -32,6 +32,13 @@ typedef struct {
 
 typedef struct {
     const char* name;
+    const char* url;
+    const char* password;
+    int bitrate;
+} SSP_CAST_SERVER;
+
+typedef struct {
+    const char* name;
     int deviceId;
     bool isInitialized;
 } SSP_DEVICE;
@@ -59,11 +66,7 @@ typedef struct {
     SSP_EQPRESETBAND bands[18];
 } SSP_EQPRESET;
 
-typedef struct {
-    const char* name;
-    long position;
-} SSP_MARKER;
-
+// Could be simply startPosition and endPosition
 typedef struct {
     const char* name;
     uint64_t startPosition;

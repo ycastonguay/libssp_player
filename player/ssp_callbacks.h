@@ -20,15 +20,13 @@
 
 #include "ssp_enums.h"
 
-//event LoopPlaybackStarted OnLoopPlaybackStarted;
-//event LoopPlaybackStopped OnLoopPlaybackStopped;
-//event AudioInterrupted OnAudioInterrupted;
-//event BPMDetected OnBPMDetected;
-//event SegmentIndexChanged OnSegmentIndexChanged;
-
 typedef void (*player_log_cb)(void *user, const char* str);
 typedef void (*player_statechanged_cb)(void *user, ssp_player_state_t state);
 typedef void (*player_playlistindexchanged_cb)(void *user);
 typedef void (*player_playlistended_cb)(void *user);
+typedef void (*player_loopplaybackstarted_cb)(void *user);
+typedef void (*player_loopplaybackstopped_cb)(void *user);
+typedef void (*player_audiointerrupted_cb)(void *user);
+typedef void (*player_bpmdetected_cb)(void *user, float bpm);
 
 #endif

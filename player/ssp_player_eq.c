@@ -58,7 +58,10 @@ SSP_ERROR player_updateEQBand(SSP_PLAYER* player, int band, float gain) {
 
     //player->eqPreset->bands[band].gain = gain;
 
-    // remove bpm callbacks
+    SSP_ERROR error = player_removeBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     BASS_BFX_PEAKEQ eq;
     eq.lBand = band;
@@ -73,14 +76,21 @@ SSP_ERROR player_updateEQBand(SSP_PLAYER* player, int band, float gain) {
         return bass_getError("player_updateEQBand");
     }
 
-    // add bpm callbacks
+    error = player_addBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     return SSP_OK;
 }
 
 SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset) {
     eqpreset_copy(player->eqPreset, eqpreset);
-    // remove bpm callback
+
+    SSP_ERROR error = player_removeBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     int numberOfBands = sizeof(player->eqPreset->bands)/sizeof(player->eqPreset->bands[0]);
     for(int a = 0; a < numberOfBands; a++) {
@@ -98,16 +108,19 @@ SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset) {
         }
     }
 
-    // add bpm callback
+    error = player_addBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     return SSP_OK;
 }
 
 SSP_ERROR player_resetEQ(SSP_PLAYER* player) {
-    SSP_ERROR error;
     int numberOfBands = sizeof(player->eqPreset->bands)/sizeof(player->eqPreset->bands[0]);
     for(int a = 0; a < numberOfBands; a++) {
         player->eqPreset->bands[a].gain = 0;
-        error = player_updateEQBand(player, a, 0);
+        SSP_ERROR error = player_updateEQBand(player, a, 0);
         if(error != SSP_OK) {
             return error;
         }

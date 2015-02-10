@@ -28,7 +28,6 @@ uint64_t player_getPosition(SSP_PLAYER* player) {
         return 0;
     }
 
-    //uint64_t position = BASS_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
     uint64_t position = BASS_Mixer_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
     if(position == -1) {
         bass_getError("bass_getPosition");

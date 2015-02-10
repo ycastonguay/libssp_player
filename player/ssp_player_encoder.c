@@ -15,14 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __player__ssp_marker__
-#define __player__ssp_marker__
-
 #include <stdio.h>
-#include "ssp_structs.h"
+#include "ssp_player.h"
+#include "ssp_errors.h"
+#include "ssp_privatestructs.h"
 
-SSP_MARKER* marker_create();
-void marker_free(SSP_MARKER *marker);
-void marker_reset(SSP_MARKER *marker);
+SSP_ERROR player_startEncode(SSP_PLAYER* player, ssp_player_encoder_t encoder) {
+    // TODO
+    return SSP_OK;
+}
 
-#endif /* defined(__player__ssp_marker__) */
+SSP_ERROR player_stopEncode(SSP_PLAYER* player) {
+    // TODO
+    return SSP_OK;
+}
+
+SSP_ERROR player_startCast(SSP_PLAYER* player, SSP_CAST_SERVER* server) {
+    // TODO
+    return SSP_OK;
+}
+
+SSP_ERROR player_stopCast(SSP_PLAYER* player) {
+    // TODO
+    return SSP_OK;
+}

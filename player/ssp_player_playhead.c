@@ -27,16 +27,17 @@ bool player_getIsShuffle(SSP_PLAYER* player) {
     return player->playhead->isShuffleEnabled;
 }
 
-void player_setIsShuffle(SSP_PLAYER* player, bool shuffle) {
+SSP_ERROR player_setIsShuffle(SSP_PLAYER* player, bool shuffle) {
     player->playhead->isShuffleEnabled = shuffle;
     // TODO: Finish this
+    return SSP_OK;
 }
 
 ssp_player_repeat_t player_getRepeatType(SSP_PLAYER* player) {
     return player->playhead->repeatType;
 }
 
-void player_setRepeatType(SSP_PLAYER* player, ssp_player_repeat_t repeat) {
+SSP_ERROR player_setRepeatType(SSP_PLAYER* player, ssp_player_repeat_t repeat) {
     player->playhead->repeatType = repeat;
 
     // Enable/disable BASS_SAMPLE_LOOP flag if repeat type is Song
@@ -53,47 +54,74 @@ void player_setRepeatType(SSP_PLAYER* player, ssp_player_repeat_t repeat) {
             }
         }
     }
+
+    return SSP_OK;
 }
 
 float player_getVolume(SSP_PLAYER* player) {
     return player->playhead->volume;
 }
 
-void player_setVolume(SSP_PLAYER* player, float volume) {
+SSP_ERROR player_setVolume(SSP_PLAYER* player, float volume) {
     player->playhead->volume = volume;
     // TODO: Should we keep this in SSP_PLAYHEAD when the value is found in BASS?
     bool success = BASS_ChannelGetAttribute(player->handles->mixerChannel, BASS_ATTRIB_VOL, &volume);
     if(!success) {
         bass_getError("player_setVolume");
+        return SSP_ERROR_UNKNOWN;
     }
+
+    return SSP_OK;
 }
 
 float player_getTimeShifting(SSP_PLAYER* player) {
     return player->playhead->timeShifting;
 }
 
-void player_setTimeShifting(SSP_PLAYER* player, float timeShifting) {
+SSP_ERROR player_setTimeShifting(SSP_PLAYER* player, float timeShifting) {
     player->playhead->timeShifting = timeShifting;
 
-    //RemoveBPMCallbacks();
+    SSP_ERROR error = player_removeBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     bool success = BASS_ChannelSetAttribute(player->handles->fxChannel, BASS_ATTRIB_TEMPO, timeShifting);
     if(!success) {
         bass_getError("player_setTimeShifting");
+        return SSP_ERROR_UNKNOWN;
     }
-    //AddBPMCallbacks();
+
+    error = player_addBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    return SSP_OK;
 }
 
 int player_getPitchShifting(SSP_PLAYER* player) {
     return player->playhead->pitchShifting;
 }
 
-void player_setPitchShifting(SSP_PLAYER* player, int pitchShifting) {
+SSP_ERROR player_setPitchShifting(SSP_PLAYER* player, int pitchShifting) {
     player->playhead->pitchShifting = pitchShifting;
 
-    //RemoveBPMCallbacks();
+    SSP_ERROR error = player_removeBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     bool success = BASS_ChannelSetAttribute(player->handles->fxChannel, BASS_ATTRIB_TEMPO_PITCH, pitchShifting);
     if(!success) {
         bass_getError("player_setPitchShifting");
+        return SSP_ERROR_UNKNOWN;
     }
-    //AddBPMCallbacks();
+
+    error = player_addBPMCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    return SSP_OK;
 }

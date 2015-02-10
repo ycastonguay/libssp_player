@@ -44,9 +44,17 @@ SSP_PLAYER* player_create() {
     player->device = NULL;
     player->pathForPlugins = NULL;
     player->loop = NULL;
-    player->marker = NULL;
     player->callbackStateChanged = NULL;
     player->callbackStateChangedUser = NULL;
+    player->callbackLoopPlaybackStarted = NULL;
+    player->callbackLoopPlaybackStartedUser = NULL;
+    player->callbackLoopPlaybackStopped = NULL;
+    player->callbackLoopPlaybackStoppedUser = NULL;
+    player->callbackAudioInterrupted = NULL;
+    player->callbackAudioInterruptedUser = NULL;
+    player->callbackBPMDetected = NULL;
+    player->callbackBPMDetectedUser = NULL;
+
     return player;
 }
 
@@ -86,10 +94,6 @@ SSP_ERROR player_free(SSP_PLAYER* player) {
     if(player->loop) {
         free(player->loop);
         player->loop = NULL;
-    }
-    if(player->marker) {
-        free(player->marker);
-        player->marker = NULL;
     }
 
     return SSP_OK;

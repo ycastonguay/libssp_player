@@ -81,7 +81,6 @@ typedef struct {
     // get/set
     SSP_EQPRESET* eqPreset;
     SSP_LOOP* loop;
-    SSP_MARKER* marker;
 
     // private
     SSP_PLAYER_HANDLES* handles;
@@ -92,6 +91,18 @@ typedef struct {
 
     player_statechanged_cb callbackStateChanged;
     void* callbackStateChangedUser;
+
+    player_loopplaybackstarted_cb callbackLoopPlaybackStarted;
+    void* callbackLoopPlaybackStartedUser;
+
+    player_loopplaybackstopped_cb callbackLoopPlaybackStopped;
+    void* callbackLoopPlaybackStoppedUser;
+
+    player_audiointerrupted_cb callbackAudioInterrupted;
+    void* callbackAudioInterruptedUser;
+
+    player_bpmdetected_cb callbackBPMDetected;
+    void* callbackBPMDetectedUser;
 } SSP_PLAYER;
 
 #endif

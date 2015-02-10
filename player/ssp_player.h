@@ -1,4 +1,4 @@
-// Copyright © 2011-2015 Yanick Castonguay
+#include "ssp_errors.h"// Copyright © 2011-2015 Yanick Castonguay
 //
 // This file is part of Sessions, a music player for musicians.
 //
@@ -35,6 +35,16 @@ SSP_ERROR player_getBassVersions();
 
 void player_updateState(SSP_PLAYER* player, ssp_player_state_t state);
 
+// BPM
+SSP_ERROR player_addBPMCallbacks(SSP_PLAYER* player);
+SSP_ERROR player_removeBPMCallbacks(SSP_PLAYER* player);
+
+// Encoder
+SSP_ERROR player_startEncode(SSP_PLAYER* player, ssp_player_encoder_t encoder);
+SSP_ERROR player_stopEncode(SSP_PLAYER* player);
+SSP_ERROR player_startCast(SSP_PLAYER* player, SSP_CAST_SERVER* server);
+SSP_ERROR player_stopCast(SSP_PLAYER* player);
+
 // Playback
 SSP_ERROR player_pause(SSP_PLAYER* player);
 SSP_ERROR player_stop(SSP_PLAYER* player);
@@ -45,19 +55,19 @@ SSP_ERROR player_goTo(SSP_PLAYER* player, int index);
 
 // Playhead
 bool player_getIsShuffle(SSP_PLAYER* player);
-void player_setIsShuffle(SSP_PLAYER* player, bool shuffle);
+SSP_ERROR player_setIsShuffle(SSP_PLAYER* player, bool shuffle);
 
 ssp_player_repeat_t player_getRepeatType(SSP_PLAYER* player);
-void player_setRepeatType(SSP_PLAYER* player, ssp_player_repeat_t repeat);
+SSP_ERROR player_setRepeatType(SSP_PLAYER* player, ssp_player_repeat_t repeat);
 
 float player_getVolume(SSP_PLAYER* player);
-void player_setVolume(SSP_PLAYER* player, float volume);
+SSP_ERROR player_setVolume(SSP_PLAYER* player, float volume);
 
 float player_getTimeShifting(SSP_PLAYER* player);
-void player_setTimeShifting(SSP_PLAYER* player, float timeShifting);
+SSP_ERROR player_setTimeShifting(SSP_PLAYER* player, float timeShifting);
 
 int player_getPitchShifting(SSP_PLAYER* player);
-void player_setPitchShifting(SSP_PLAYER* player, int pitchShifting);
+SSP_ERROR player_setPitchShifting(SSP_PLAYER* player, int pitchShifting);
 
 // Position
 uint64_t player_getPosition(SSP_PLAYER* player);
@@ -76,6 +86,11 @@ SSP_ERROR player_resetEQ(SSP_PLAYER* player);
 SSP_ERROR player_enableEQ(SSP_PLAYER* player, bool enabled);
 SSP_ERROR player_normalizeEQ(SSP_PLAYER* player);
 
+// Loops
+SSP_ERROR player_startLoop(SSP_PLAYER* player, SSP_LOOP* loop);
+SSP_ERROR player_updateLoop(SSP_PLAYER* player, SSP_LOOP* loop);
+SSP_ERROR player_stopLoop(SSP_PLAYER* player);
+
 // Callbacks
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position);
 SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player);
@@ -88,5 +103,17 @@ void player_removePlaylistEndedCallback(SSP_PLAYER* player);
 
 void player_setStateChangedCallback(SSP_PLAYER* player, player_statechanged_cb cb, void* user);
 void player_removeStateChangedCallback(SSP_PLAYER* player);
+
+void player_setLoopPlaybackStartedCallback(SSP_PLAYER* player, player_loopplaybackstarted_cb cb, void* user);
+void player_removeLoopPlaybackStartedCallback(SSP_PLAYER* player);
+
+void player_setLoopPlaybackStoppedCallback(SSP_PLAYER* player, player_loopplaybackstopped_cb cb, void* user);
+void player_removeLoopPlaybackStoppedCallback(SSP_PLAYER* player);
+
+void player_setAudioInterruptedCallback(SSP_PLAYER* player, player_audiointerrupted_cb cb, void* user);
+void player_removeAudioInterruptedCallback(SSP_PLAYER* player);
+
+void player_setBPMDetectedCallback(SSP_PLAYER* player, player_bpmdetected_cb cb, void* user);
+void player_removeBPMDetectedCallback(SSP_PLAYER* player);
 
 #endif

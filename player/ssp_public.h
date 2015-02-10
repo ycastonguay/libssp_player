@@ -42,19 +42,6 @@ LIBRARY_API SSP_ERROR SSP_FreeDevice();
 LIBRARY_API SSP_ERROR SSP_Free();
 LIBRARY_API ssp_player_state_t SSP_GetState();
 
-// Callbacks
-LIBRARY_API void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
-LIBRARY_API void SSP_RemovePlaylistIndexChangedCallback();
-
-LIBRARY_API void SSP_SetPlaylistEndedCallback(player_playlistended_cb cb, void* user);
-LIBRARY_API void SSP_RemovePlaylistEndedCallback();
-
-LIBRARY_API void SSP_SetStateChangedCallback(player_statechanged_cb cb, void* user);
-LIBRARY_API void SSP_RemoveStateChangedCallback();
-
-LIBRARY_API void SSP_SetLogCallback(player_log_cb cb, void* user);
-LIBRARY_API void SSP_RemoveLogCallback();
-
 // Properties
 LIBRARY_API void SSP_GetDevice(SSP_DEVICE* device);
 LIBRARY_API void SSP_GetMixer(SSP_MIXER* mixer);
@@ -71,8 +58,9 @@ LIBRARY_API SSP_ERROR SSP_ResetEQ();
 LIBRARY_API SSP_ERROR SSP_NormalizeEQ();
 
 // Loops
-LIBRARY_API void SSP_GetLoop(SSP_LOOP* loop);
-LIBRARY_API void SSP_SetLoop(SSP_LOOP* loop);
+LIBRARY_API SSP_ERROR SSP_StartLoop(SSP_LOOP* loop);
+LIBRARY_API SSP_ERROR SSP_UpdateLoop(SSP_LOOP* loop);
+LIBRARY_API SSP_ERROR SSP_StopLoop();
 
 // Playback
 LIBRARY_API SSP_ERROR SSP_Play();
@@ -85,19 +73,19 @@ LIBRARY_API SSP_ERROR SSP_GoTo(int index);
 
 // Playhead
 LIBRARY_API bool SSP_GetIsShuffle();
-LIBRARY_API void SSP_SetIsShuffle(bool shuffle);
+LIBRARY_API SSP_ERROR SSP_SetIsShuffle(bool shuffle);
 
 LIBRARY_API ssp_player_repeat_t SSP_GetRepeatType();
-LIBRARY_API void SSP_SetRepeatType(ssp_player_repeat_t repeat);
+LIBRARY_API SSP_ERROR SSP_SetRepeatType(ssp_player_repeat_t repeat);
 
 LIBRARY_API float SSP_GetVolume();
-LIBRARY_API void SSP_SetVolume(float volume);
+LIBRARY_API SSP_ERROR SSP_SetVolume(float volume);
 
 LIBRARY_API float SSP_GetTimeShifting();
-LIBRARY_API void SSP_SetTimeShifting(float timeShifting);
+LIBRARY_API SSP_ERROR SSP_SetTimeShifting(float timeShifting);
 
 LIBRARY_API int SSP_GetPitchShifting();
-LIBRARY_API void SSP_SetPitchShifting(int pitchShifting);
+LIBRARY_API SSP_ERROR SSP_SetPitchShifting(int pitchShifting);
 
 // Position
 LIBRARY_API uint64_t SSP_GetPosition();
@@ -108,6 +96,12 @@ LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
 // Data
 LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
 
+// Encoder
+LIBRARY_API SSP_ERROR SSP_StartEncode(ssp_player_encoder_t encoder);
+LIBRARY_API SSP_ERROR SSP_StopEncode();
+LIBRARY_API SSP_ERROR SSP_StartCast(SSP_CAST_SERVER* server);
+LIBRARY_API SSP_ERROR SSP_StopCast();
+
 // Playlist
 LIBRARY_API SSP_ERROR SSP_Playlist_AddItem(char* filePath);
 LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index);
@@ -117,5 +111,30 @@ LIBRARY_API SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
 LIBRARY_API void SSP_Playlist_GetItemAtNew(int index, SSP_PLAYLISTITEM* item);
 LIBRARY_API int SSP_Playlist_GetCount();
 LIBRARY_API int SSP_Playlist_GetCurrentIndex();
+
+// Callbacks
+LIBRARY_API void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);
+LIBRARY_API void SSP_RemovePlaylistIndexChangedCallback();
+
+LIBRARY_API void SSP_SetPlaylistEndedCallback(player_playlistended_cb cb, void* user);
+LIBRARY_API void SSP_RemovePlaylistEndedCallback();
+
+LIBRARY_API void SSP_SetStateChangedCallback(player_statechanged_cb cb, void* user);
+LIBRARY_API void SSP_RemoveStateChangedCallback();
+
+LIBRARY_API void SSP_SetLogCallback(player_log_cb cb, void* user);
+LIBRARY_API void SSP_RemoveLogCallback();
+
+LIBRARY_API void SSP_SetLoopPlaybackStartedCallback(player_loopplaybackstarted_cb cb, void* user);
+LIBRARY_API void SSP_RemoveLoopPlaybackStartedCallback();
+
+LIBRARY_API void SSP_SetLoopPlaybackStoppedCallback(player_loopplaybackstopped_cb cb, void* user);
+LIBRARY_API void SSP_RemoveLoopPlaybackStoppedallback();
+
+LIBRARY_API void SSP_SetAudioInterruptedCallback(player_audiointerrupted_cb cb, void* user);
+LIBRARY_API void SSP_RemoveAudioInterruptedCallback();
+
+LIBRARY_API void SSP_SetBPMDetectedCallback(player_bpmdetected_cb cb, void* user);
+LIBRARY_API void SSP_RemoveBPMDetectedCallback();
 
 #endif /* defined(__player__ssp_public__) */
