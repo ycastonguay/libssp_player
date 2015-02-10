@@ -59,7 +59,14 @@ SSP_ERROR SSP_FreeDevice() {
 }
 
 SSP_ERROR SSP_Free() {
-    return player_free(sspPlayer);
+    SSP_ERROR error = player_free(sspPlayer);
+    if(error != SSP_OK) {
+        return error;
+    }
+    
+    free(sspPlayer);
+    sspPlayer = NULL;
+    return SSP_OK;
 }
 
 LIBRARY_API ssp_player_state_t SSP_GetState() {
@@ -157,7 +164,9 @@ SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index) {
 
 void SSP_Playlist_GetItemAtNew(int index, SSP_PLAYLISTITEM* item) {
     SSP_PLAYLISTITEM* localItem = playlist_getItemAt(sspPlayer->playlist, index);
-    playlistitem_copy(localItem, item);
+    if(localItem != NULL) {
+        playlistitem_copy(localItem, item);
+    }
 }
 
 int SSP_Playlist_GetCount() {

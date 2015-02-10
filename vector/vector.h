@@ -29,4 +29,7 @@ void *vector_get(vector *, int);
 void vector_delete(vector *, int);
 void vector_free(vector *);
 
+/* BEGIN - My addition - Yanick Castonguay - 02/09/2015 */
+void vector_insert(vector *v, int index, void *item);
+/* END - My addition - Yanick Castonguay - 02/09/2015 */
 #endif

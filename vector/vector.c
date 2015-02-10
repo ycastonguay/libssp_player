@@ -73,3 +73,19 @@ void vector_free(vector *v)
 {
     free(v->items);
 }
+
+/* BEGIN - My addition - Yanick Castonguay - 02/09/2015 */
+void vector_insert(vector *v, int index, void *item) {
+    int count = vector_total(v);
+
+    void* lastItem = vector_get(v, count-1);
+    vector_add(v, lastItem);
+
+    for(int a = count - 1; a >= index; a--) {
+        void* itemToMove = vector_get(v, a);
+        vector_set(v, a+1, itemToMove);
+    }
+
+    vector_set(v, index, item);
+}
+/* END - My addition - Yanick Castonguay - 02/09/2015 */

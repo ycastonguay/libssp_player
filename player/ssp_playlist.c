@@ -91,7 +91,11 @@ SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
 }
 
 SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index) {
-    // TODO: we need to copy items... unless we do a struct with a pointer to the next item
+    SSP_PLAYLISTITEM *item = playlistitem_create();
+    item->filePath = malloc(strlen(filePath));
+    strcpy(item->filePath, filePath);
+    vector_insert(playlist->items, index, item);
+
     return SSP_OK;
 }
 
@@ -104,12 +108,10 @@ SSP_ERROR playlist_removeItemAt(SSP_PLAYLIST *playlist, int index) {
 
 SSP_ERROR playlist_clear(SSP_PLAYLIST *playlist) {
     if(playlist->items != NULL) {
-        // Clear all items
         for(int a = 0; a < playlist_getCount(playlist); a++) {
             playlistitem_free(playlist_getItemAt(playlist, a));
         }
         
-        // Clear vector
         vector_free(playlist->items);
         free(playlist->items);
         playlist->items = NULL;
