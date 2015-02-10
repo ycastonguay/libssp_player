@@ -1,21 +1,23 @@
+// Copyright © 2011-2015 Yanick Castonguay
 //
-//  main.c
-//  player-test
+// This file is part of Sessions, a music player for musicians.
 //
-//  Created by Yanick Castonguay on 2015-01-21.
-//  Copyright (c) 2015 Yanick Castonguay. All rights reserved.
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
 #include "../tests/check_playlist.h"
-
-START_TEST(test_example) {
-    ck_assert_int_eq(0, 0);
-    ck_assert_int_eq(1, 1);
-}
-END_TEST
 
 Suite* player_suite(void)
 {
@@ -23,13 +25,14 @@ Suite* player_suite(void)
     TCase *tc_core;
 
     s = suite_create("Player");
-
-    /* Core test case */
     tc_core = tcase_create("Core");
 
-    tcase_add_test(tc_core, test_example);
-    //tcase_add_test(tc_core, test_example_two);
-    tcase_add_test(tc_core, test_example_three);
+    tcase_add_checked_fixture(tc_core, check_playlist_setup, check_playlist_teardown);
+    tcase_add_test(tc_core, test_playlist_add);
+    tcase_add_test(tc_core, test_playlist_remove);
+    tcase_add_test(tc_core, test_playlist_remove_partial);
+    tcase_add_test(tc_core, test_playlist_insert);
+    tcase_add_test(tc_core, test_playlist_insert2);
     suite_add_tcase(s, tc_core);
 
     return s;
@@ -42,6 +45,9 @@ int main(int argc, const char * argv[]) {
 
     s = player_suite();
     sr = srunner_create(s);
+
+    // Keep this line to allow debugging test cases
+    srunner_set_fork_status(sr, CK_NOFORK);
 
     srunner_run_all(sr, CK_NORMAL);
     number_failed = srunner_ntests_failed(sr);

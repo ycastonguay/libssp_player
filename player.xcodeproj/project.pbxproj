@@ -178,7 +178,6 @@
 		1C594B40CB5D75ED9AA39AE2 /* ssp_player_eq.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594008C2532463E457CE67 /* ssp_player_eq.c */; };
 		1C594B76F20C1BC8C731F74B /* ssp_log.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C59498135E3F083F91571F0 /* ssp_log.h */; };
 		1C594B9BA353B92FF288FD7D /* ssp_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C594FBA64AC8F10E45C0308 /* ssp_loop.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		1C594BD02173A301FD819A57 /* check_playlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594675AB90276C2DC1EE20 /* check_playlist.c */; };
 		1C594BD95E8CE950E4C43F1B /* ssp_marker.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594CEA5D3FB4FEB70298B7 /* ssp_marker.c */; };
 		1C594BDEE2C54A6D650EB54E /* ssp_playlistitem.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C594E8DDB77FED7E1D20BD8 /* ssp_playlistitem.c */; };
 		1C594C002D91CA3BE8F527B9 /* ssp_convert.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5946F8841604A5ED9C50D3 /* ssp_convert.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -371,7 +370,6 @@
 		1C5944EBDE73D1DFB7CD9B9C /* ssp_eqpreset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_eqpreset.c; sourceTree = "<group>"; };
 		1C594566CB46E0FA1CD32751 /* ssp_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_mixer.h; sourceTree = "<group>"; };
 		1C594571D09145C91AAB4083 /* ssp_marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_marker.h; sourceTree = "<group>"; };
-		1C594675AB90276C2DC1EE20 /* check_playlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = check_playlist.c; sourceTree = "<group>"; };
 		1C5946F8841604A5ED9C50D3 /* ssp_convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssp_convert.h; sourceTree = "<group>"; };
 		1C594821C97685FE107377AE /* ssp_player_seeking.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_seeking.c; sourceTree = "<group>"; };
 		1C59488CECE6533CAF84652D /* ssp_player_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ssp_player_data.c; sourceTree = "<group>"; };
@@ -800,7 +798,6 @@
 		1C594121672D3720F84855CC /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				1C594675AB90276C2DC1EE20 /* check_playlist.c */,
 				1C5948D7A1CF990B9FE24B3E /* check_playlist.h */,
 			);
 			path = tests;
@@ -1249,7 +1246,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				125D82B81A702A340086412A /* main.c in Sources */,
-				1C594BD02173A301FD819A57 /* check_playlist.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
