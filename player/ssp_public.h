@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 16
+#define SSP_VERSION 17
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -35,6 +35,7 @@
 #    define LIBRARY_API
 #endif
 
+// Initialization
 LIBRARY_API int SSP_GetVersion();
 LIBRARY_API SSP_ERROR SSP_Init(const char* pathForPlugins);
 LIBRARY_API SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
@@ -61,6 +62,7 @@ LIBRARY_API SSP_ERROR SSP_NormalizeEQ();
 LIBRARY_API SSP_ERROR SSP_StartLoop(SSP_LOOP* loop);
 LIBRARY_API SSP_ERROR SSP_UpdateLoop(SSP_LOOP* loop);
 LIBRARY_API SSP_ERROR SSP_StopLoop();
+LIBRARY_API void SSP_GetLoop(SSP_LOOP* loop);
 
 // Playback
 LIBRARY_API SSP_ERROR SSP_Play();

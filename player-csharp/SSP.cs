@@ -24,35 +24,63 @@ namespace org.sessionsapp.player
     {
 #if IOS
         public const string DllImportValue = "__Internal";
-#elif ANDROID
+#elif ANDROID || LINUX
         public const string DllImportValue = "libssp_player.so";
 #elif OSX
         public const string DllImportValue = "libssp_player.dylib";
 #endif
 
+        // Initialization
         [DllImport (DllImportValue)]
         public static extern int SSP_GetVersion();
         [DllImport (DllImportValue)]
         public static extern int SSP_Init(string pathForPlugins);
         [DllImport (DllImportValue)]
-        public static extern int SSP_Free();
-        [DllImport (DllImportValue)]
         public static extern int SSP_InitDevice(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
         [DllImport (DllImportValue)]
         public static extern int SSP_FreeDevice();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_Free();
+        [DllImport (DllImportValue)]
+        public static extern SSPPlayerState SSP_GetState();
 
-        [DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
+        //[DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
+        [DllImport (DllImportValue)]
         public static extern void SSP_GetDevice(ref SSP_DEVICE device);
         //public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
 
         [DllImport (DllImportValue)]
-        public static extern long SSP_GetPosition();
-        //[DllImport (DllImportValue)]
-        [DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetPositionNew")]
-        public static extern int SSP_GetPositionNew(ref SSP_POSITION position);
-        [DllImport (DllImportValue)]
-        public static extern int SSP_SetPosition(long position);
+        public static extern void SSP_GetMixer(ref SSP_MIXER mixer);
 
+        // EQ
+        [DllImport (DllImportValue)]
+        public static extern void SSP_GetEQPreset(ref SSP_EQPRESET preset);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetEQPreset(SSP_EQPRESET preset);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetEQPresetBand(int band, float gain);
+
+        [DllImport (DllImportValue)]
+        public static extern bool SSP_GetEQEnabled();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_GetEQEnabled(bool enabled);
+
+        [DllImport (DllImportValue)]
+        public static extern int SSP_ResetEQ();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_NormalizeEQ();
+
+        // Loops
+        [DllImport (DllImportValue)]
+        public static extern int SSP_StartLoop(SSP_LOOP loop);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_UpdateLoop(SSP_LOOP loop);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_StopLoop();
+        [DllImport (DllImportValue)]
+        public static extern void SSP_GetLoop(ref SSP_LOOP loop);
+
+        // Playback
         [DllImport (DllImportValue)]
         public static extern int SSP_Play();
         [DllImport (DllImportValue)]
@@ -66,6 +94,55 @@ namespace org.sessionsapp.player
         [DllImport (DllImportValue)]
         public static extern int SSP_GoTo(int index);
 
+        // Playhead
+        [DllImport (DllImportValue)]
+        public static extern bool SSP_GetIsShuffle();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetIsShuffle(bool shuffle);
+
+        [DllImport (DllImportValue)]
+        public static extern SSPRepeatType SSP_GetRepeatType();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetRepeatType(SSPRepeatType repeat);
+
+        [DllImport (DllImportValue)]
+        public static extern float SSP_GetVolume();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetVolume(float volume);
+
+        [DllImport (DllImportValue)]
+        public static extern float SSP_GetTimeShifting();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetTimeShifting(float timeShifting);
+
+        [DllImport (DllImportValue)]
+        public static extern float SSP_GetPitchShifting();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetPitchShifting(float pitchShifting);
+
+        // Position
+        [DllImport (DllImportValue)]
+        public static extern long SSP_GetPosition();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_GetPositionNew(ref SSP_POSITION position);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetPosition(long position);
+
+        // Data
+        // TODO: Use float array instead of void*
+        //LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
+
+        // Encoder
+        [DllImport (DllImportValue)]
+        public static extern int SSP_StartEncode(SSPEncoderType encoder);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_StopEncode();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_StartCast(SSP_CAST_SERVER server);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_StopCast();
+
+        // Playlist
         [DllImport (DllImportValue)]
         public static extern int SSP_Playlist_AddItem(string filePath);
         [DllImport (DllImportValue)]
@@ -73,9 +150,11 @@ namespace org.sessionsapp.player
         [DllImport (DllImportValue)]
         public static extern int SSP_Playlist_RemoveItemAt(int index);
         [DllImport (DllImportValue)]
+        public static extern int SSP_Playlist_Clear();
+        [DllImport (DllImportValue)]
         public static extern SSP_PLAYLISTITEM SSP_Playlist_GetItemAt(int index);
         [DllImport (DllImportValue)]
-        public static extern int SSP_Playlist_Clear();
+        public static extern int SSP_Playlist_GetItemAtNew(int index, ref SSP_PLAYLISTITEM item);
         [DllImport (DllImportValue)]
         public static extern int SSP_Playlist_GetCount();
         [DllImport (DllImportValue)]
@@ -86,10 +165,41 @@ namespace org.sessionsapp.player
         public static extern void SSP_SetPlaylistIndexChangedCallback(PlaylistIndexChangedDelegate callback, IntPtr user);
         [DllImport (DllImportValue)]
         public static extern void SSP_RemovePlaylistIndexChangedCallback();
+
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetPlaylistEndedCallback(PlaylistEndedDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemovePlaylistEndedCallback();
+
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetStateChangedCallback(StateChangedDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemoveStateChangedCallback();
+
         [DllImport (DllImportValue)]
         public static extern void SSP_SetLogCallback(LogDelegate callback, IntPtr user);
         [DllImport (DllImportValue)]
         public static extern void SSP_RemoveLogCallback();
+
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetLoopPlaybackStartedCallback(LoopPlaybackStartedDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemoveLoopPlaybackStartedCallback();
+
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetLoopPlaybackStoppedCallback(LoopPlaybackStoppedDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemoveLoopPlaybackStoppedCallback();
+
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetAudioInterruptedCallback(AudioInterruptedDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemoveAudioInterruptedCallback();
+
+        [DllImport (DllImportValue)]
+        public static extern void SSP_SetBPMDetectedCallback(BPMDetectedDelegate callback, IntPtr user);
+        [DllImport (DllImportValue)]
+        public static extern void SSP_RemoveBPMDetectedCallback();
 
         // Errors
         public static int SSP_OK = 0;
@@ -104,6 +214,14 @@ namespace org.sessionsapp.player
     public delegate void StateChangedDelegate(IntPtr user, SSPPlayerState state);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void LogDelegate(IntPtr user, string str);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void LoopPlaybackStartedDelegate(IntPtr user);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void LoopPlaybackStoppedDelegate(IntPtr user);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void AudioInterruptedDelegate(IntPtr user);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void BPMDetectedDelegate(IntPtr user, float bpm);
 
     public enum SSPPlayerState
     {
@@ -119,6 +237,56 @@ namespace org.sessionsapp.player
         Off = 0,
         Playlist = 1,
         Song = 2
+    }
+
+    public enum SSPEncoderType 
+    {
+        OGG = 0,
+        AAC = 1,
+        MP3 = 2
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct SSP_CAST_SERVER
+    {
+        public string name;
+        public string url;
+        public string password;
+        public int bitrate;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct SSP_MIXER
+    {
+        public int sampleRate;
+        public int bufferSize;
+        public int updatePeriod;
+        public bool useFloatingPoint;
+    }
+        
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct SSP_EQPRESETBAND
+    {
+        public float center;
+        public string label;
+        public float bandwidth;
+        public float gain;
+        public float q;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct SSP_EQPRESET
+    {
+        public string id;
+        public string name;
+        public SSP_EQPRESETBAND[] bands;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct SSP_LOOP
+    {
+        public long startPosition;
+        public long endPosition;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]

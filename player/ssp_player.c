@@ -216,7 +216,7 @@ SSP_ERROR player_getBassVersions() {
     uint32_t bassVersion = BASS_GetVersion();
     uint32_t bassFXVersion = BASS_FX_GetVersion();
     uint32_t bassMixVersion = BASS_Mixer_GetVersion();
-    //uint32_t bassEncVersion = BASS_Encode_GetVersion();
+    uint32_t bassEncVersion = BASS_Encode_GetVersion();
     if (HIWORD(bassVersion) != BASSVERSION || LOWORD(bassVersion)<0x100) {
         return SSP_ERROR_BASS_VERSION;
     }

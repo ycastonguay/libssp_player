@@ -22,7 +22,8 @@
 #include "ssp_structs.h"
 
 SSP_MIXER* mixer_create();
-void mixer_free(SSP_MIXER *mixer);
-void mixer_reset(SSP_MIXER *mixer);
+void mixer_free(SSP_MIXER* mixer);
+void mixer_reset(SSP_MIXER* mixer);
+void mixer_copy(SSP_MIXER* dest, SSP_MIXER* src);
 
 #endif /* defined(__player__ssp_mixer__) */

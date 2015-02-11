@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "ssp_loop.h"
 #include "ssp_structs.h"
+#include "ssp_errors.h"
 
 SSP_LOOP* loop_create() {
     SSP_LOOP* loop = malloc(sizeof(SSP_LOOP));
@@ -26,14 +27,26 @@ SSP_LOOP* loop_create() {
 }
 
 void loop_free(SSP_LOOP *loop) {
-    if(loop->name != NULL) {
-        free(loop->name);
-        loop->name = NULL;
-    }
 }
 
 void loop_reset(SSP_LOOP* loop) {
-    loop->name = "New loop";
     loop->startPosition = 0;
     loop->endPosition = 0;
+}
+
+void loop_copy(SSP_LOOP *dest, SSP_LOOP *src) {
+    dest->startPosition = src->startPosition;
+    dest->endPosition = src->endPosition;
+}
+
+SSP_ERROR loop_validate(SSP_LOOP* loop) {
+    if(loop == NULL) {
+        return SSP_ERROR_LOOP_INVALID;
+    }
+
+    if(loop->endPosition <= loop->startPosition) {
+        return SSP_ERROR_LOOP_INVALID;
+    }
+
+    return SSP_OK;
 }

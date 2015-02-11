@@ -20,9 +20,12 @@
 
 #include <stdio.h>
 #include "ssp_structs.h"
+#include "ssp_errors.h"
 
 SSP_LOOP* loop_create();
 void loop_free(SSP_LOOP *loop);
 void loop_reset(SSP_LOOP *loop);
+void loop_copy(SSP_LOOP *dest, SSP_LOOP *src);
+SSP_ERROR loop_validate(SSP_LOOP* loop);
 
 #endif /* defined(__player__ssp_loop__) */

@@ -27,6 +27,8 @@
 #include "ssp_eqpreset.h"
 #include "ssp_device.h"
 #include "ssp_playlistitem.h"
+#include "ssp_loop.h"
+#include "ssp_mixer.h"
 
 static SSP_PLAYER* sspPlayer;
 
@@ -143,6 +145,10 @@ void SSP_RemoveBPMDetectedCallback() {
 
 void SSP_GetDevice(SSP_DEVICE* device) {
     device_copy(device, sspPlayer->device);
+}
+
+void SSP_GetMixer(SSP_MIXER* mixer) {
+    mixer_copy(mixer, sspPlayer->mixer);
 }
 
 #pragma mark Playback
@@ -331,4 +337,8 @@ SSP_ERROR SSP_UpdateLoop(SSP_LOOP* loop) {
 
 SSP_ERROR SSP_StopLoop() {
     return player_stopLoop(sspPlayer);
+}
+
+void SSP_GetLoop(SSP_LOOP* loop) {
+    loop_copy(loop, sspPlayer->loop);
 }

@@ -35,3 +35,10 @@ void mixer_reset(SSP_MIXER* mixer) {
     mixer->updatePeriod = 100;
     mixer->useFloatingPoint = true;
 }
+
+void mixer_copy(SSP_MIXER* dest, SSP_MIXER* src) {
+    dest->sampleRate = src->sampleRate;
+    dest->bufferSize = src->bufferSize;
+    dest->updatePeriod = src->updatePeriod;
+    dest->useFloatingPoint = src->useFloatingPoint;
+}

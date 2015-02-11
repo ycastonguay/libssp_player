@@ -66,9 +66,8 @@ typedef struct {
     SSP_EQPRESETBAND bands[18];
 } SSP_EQPRESET;
 
-// Could be simply startPosition and endPosition
 typedef struct {
-    const char* name;
+    // does it need an id?
     uint64_t startPosition;
     uint64_t endPosition;
 } SSP_LOOP;
