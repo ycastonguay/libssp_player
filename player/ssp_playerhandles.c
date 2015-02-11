@@ -19,17 +19,17 @@
 #include "ssp_playerhandles.h"
 #include "ssp_privatestructs.h"
 
-SSP_PLAYER_HANDLES * playerChannels_create() {
-    SSP_PLAYER_HANDLES * channels = malloc(sizeof(SSP_PLAYER_HANDLES));
-    playerChannels_reset(channels);
-    return channels;
+SSP_PLAYER_HANDLES *playerHandles_create() {
+    SSP_PLAYER_HANDLES *handles = malloc(sizeof(SSP_PLAYER_HANDLES));
+    playerHandles_reset(handles);
+    return handles;
 }
 
-void playerChannels_free(SSP_PLAYER_HANDLES *handles) {
+void playerHandles_free(SSP_PLAYER_HANDLES *handles) {
     // Nothing to free
 }
 
-void playerChannels_reset(SSP_PLAYER_HANDLES *handles) {
+void playerHandles_reset(SSP_PLAYER_HANDLES *handles) {
     handles->streamChannel = 0;
     handles->fxChannel = 0;
     handles->mixerChannel = 0;
@@ -41,6 +41,10 @@ void playerChannels_reset(SSP_PLAYER_HANDLES *handles) {
     handles->wvPlugin = 0;
 
     handles->eqFX = 0;
+
+    handles->syncProcLoop = 0;
+
+    handles->encoder = 0;
 
     handles->streamProc = NULL;
     handles->syncProc = NULL;

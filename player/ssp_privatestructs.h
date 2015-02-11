@@ -19,6 +19,7 @@
 #define player_ssp_privatestructs____FILEEXTENSION___
 
 #include "../bass/bass.h"
+#include "../bass/bassenc.h"
 #include "ssp_structs.h"
 
 typedef struct {
@@ -33,6 +34,10 @@ typedef struct {
     HPLUGIN wvPlugin;
 
     HFX eqFX;
+
+    HSYNC syncProcLoop;
+
+    HENCODE encoder;
 
     STREAMPROC* streamProc;
     SYNCPROC* syncProc;

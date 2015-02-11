@@ -40,7 +40,7 @@ SSP_PLAYER* player_create() {
     player->eqPreset = eqpreset_create();
     player->playhead = playhead_create();
     player->mixer = mixer_create();
-    player->handles = playerChannels_create();
+    player->handles = playerHandles_create();
     player->device = NULL;
     player->pathForPlugins = NULL;
     player->loop = NULL;
@@ -87,7 +87,7 @@ SSP_ERROR player_free(SSP_PLAYER* player) {
         player->mixer = NULL;
     }
     if(player->handles) {
-        playerChannels_free(player->handles);
+        playerHandles_free(player->handles);
         free(player->handles);
         player->handles = NULL;
     }

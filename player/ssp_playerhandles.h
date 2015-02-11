@@ -15,14 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __player__ssp_playerchannels__
-#define __player__ssp_playerchannels__
+#ifndef __player__ssp_playerhandles__
+#define __player__ssp_playerhandles__
 
 #include <stdio.h>
 #include "ssp_privatestructs.h"
 
-SSP_PLAYER_HANDLES * playerChannels_create();
-void playerChannels_free(SSP_PLAYER_HANDLES *channels);
-void playerChannels_reset(SSP_PLAYER_HANDLES *handles);
+SSP_PLAYER_HANDLES *playerHandles_create();
+void playerHandles_free(SSP_PLAYER_HANDLES *handles);
+void playerHandles_reset(SSP_PLAYER_HANDLES *handles);
 
-#endif /* defined(__player__ssp_playerchannels__) */
+#endif /* defined(__player__ssp_playerhandles__) */

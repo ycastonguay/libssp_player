@@ -72,6 +72,8 @@
 #define SSP_ERROR_SETPOSITION_FAILEDTOFLUSHBUFFER               5003
 #define SSP_ERROR_SETPOSITION_FAILEDTOSETPOSITION               5004
 
+#define SSP_ERROR_LOOP_INVALID                                  6000
+
 // TODO: Consider merging FAILEDTOSTOPCHANNEL, FAILEDTOFREESTREAM, etc.
 
 #define SSP_ERROR int

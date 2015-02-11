@@ -17,27 +17,239 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <inttypes.h>
-#include "../bass/bassmix.h"
+#include "../bass/bass.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
-#include "ssp_eqpreset.h"
-#include "ssp_playhead.h"
+#include "ssp_loop.h"
+#include "ssp_log.h"
 #include "ssp_bass.h"
-#include "ssp_structs.h"
-#include "ssp_privatestructs.h"
+
+void CALLBACK player_loopSyncProc(HSYNC handle, DWORD channel, DWORD data, void *user) {
+    SSP_PLAYER *player = (SSP_PLAYER*)user;
+    log_text("player_loopSyncProc\n");
+
+//    if (Loop.Segments.Count - 1 > _currentSegmentIndex)
+//        _currentSegmentIndex = 0;
+//    else
+//        _currentSegmentIndex++;
+
+    SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
+    if(currentItem == NULL) {
+        log_text("player_loopSyncProc - Aborting before currentItem is null!");
+        return;
+    }
+
+    bool success = BASS_ChannelLock(player->handles->mixerChannel, true);
+    if(!success) {
+        bass_getError("BASS_ChannelLock");
+        return;
+    }
+
+//    if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.CurrentItem.AudioFile.SampleRate > 44100)
+//    {
+//        bytes = (long)((float)bytes / 1.5f);
+//    }
+
+    // Set position for the decode channel (needs to be in floating point)
+    uint64_t bytes = player->loop->startPosition;
+    success = BASS_ChannelSetPosition(currentItem->channel, bytes * 2, BASS_POS_BYTE);
+    if(!success) {
+        bass_getError("BASS_ChannelSetPosition");
+        return;
+    }
+
+    // Clear buffer
+    success = BASS_ChannelSetPosition(player->handles->fxChannel, 0, BASS_POS_BYTE);
+    if(!success) {
+        bass_getError("BASS_ChannelSetPosition");
+        return;
+    }
+
+    success = BASS_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
+    if(!success) {
+        bass_getError("BASS_ChannelSetPosition");
+        return;
+    }
+
+    // Set offset position (for calulating current position)
+    player->playhead->positionOffset = bytes;
+    success = BASS_ChannelLock(player->handles->mixerChannel, false);
+    if(!success) {
+        bass_getError("BASS_ChannelLock");
+        return;
+    }
+
+//    if(OnSegmentIndexChanged != null)
+//        OnSegmentIndexChanged(_currentSegmentIndex);
+}
+
+SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, uint64_t endPosition, bool skipToStartPosition) {
+    SSP_ERROR error = player_removeSyncCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
+    if(currentItem == NULL) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    bool success = BASS_ChannelLock(player->handles->mixerChannel, true);
+    if(!success) {
+        bass_getError("BASS_ChannelLock");
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    // Skip to the start position of the loop
+    if(skipToStartPosition) {
+        success = BASS_ChannelSetPosition(currentItem->channel, startPosition * 2, BASS_POS_BYTE);
+        if(!success) {
+            bass_getError("BASS_ChannelSetPosition");
+            return SSP_ERROR_UNKNOWN;
+        }
+
+        // Clear buffer
+        success = BASS_ChannelSetPosition(player->handles->fxChannel, 0, BASS_POS_BYTE);
+        if(!success) {
+            bass_getError("BASS_ChannelSetPosition");
+            return SSP_ERROR_UNKNOWN;
+        }
+
+        success = BASS_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
+        if(!success) {
+            bass_getError("BASS_ChannelSetPosition");
+            return SSP_ERROR_UNKNOWN;
+        }
+    }
+
+    // Create a new sync call back for the loop end position
+    uint64_t syncPosition = (endPosition - startPosition) * 2;
+
+    player->handles->syncProcLoop = BASS_ChannelSetSync(player->handles->fxChannel, BASS_SYNC_POS | BASS_SYNC_MIXTIME, syncPosition, player_loopSyncProc, player);
+    if(player->handles->syncProcLoop == 0) {
+        bass_getError("BASS_ChannelSetSync");
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    // Create a new sync call back for the song end position
+    uint64_t syncPositionEnd = (currentItem->length - (endPosition * 2)); // + buffered);
+    error = player_setSyncCallback(player, syncPositionEnd);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    // Set offset position (for calculating current position)
+    if(skipToStartPosition)
+        player->playhead->positionOffset = startPosition;
+
+    success = BASS_ChannelLock(player->handles->mixerChannel, false);
+    if(!success) {
+        bass_getError("BASS_ChannelLock");
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    return SSP_OK;
+}
 
 SSP_ERROR player_startLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
-    // TODO
+    SSP_ERROR error = loop_validate(loop);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+//    if (!IsPlaying)
+//        Play();
+
+//    if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.CurrentItem.AudioFile.SampleRate > 44100)
+//    {
+//        positionBytes = (long)((float)positionBytes / 1.5f);
+//    }
+
+    error = player_setLoopSyncPoint(player, loop->startPosition, loop->endPosition, true);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    player->loop = malloc(sizeof(SSP_LOOP));
+    loop_copy(player->loop, loop);
+
+    player->playhead->isPlayingLoop = true;
+
+    if(player->callbackLoopPlaybackStarted != NULL) {
+        player->callbackLoopPlaybackStarted(player->callbackLoopPlaybackStartedUser);
+    }
+
     return SSP_OK;
 }
 
 SSP_ERROR player_updateLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
-    // TODO
+    SSP_ERROR error = loop_validate(loop);
+    if(error != SSP_OK) {
+        return error;
+    }
+
+    if(player->loop == NULL) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    uint64_t currentPosition = player_getPosition(player);
+    uint64_t startPosition = player->loop->startPosition;
+    uint64_t endPosition = player->loop->endPosition;
+    uint64_t newStartPosition = loop->startPosition;
+    uint64_t newEndPosition = loop->endPosition;
+    bool restartLoop = false;
+
+    // Check if the start position has changed
+    if(startPosition != newStartPosition) {
+        // If the current position is before the new start position...
+        if(currentPosition < newStartPosition) {
+            // ... then we need to start the loop again from the new start position
+            log_text("player_updateLoop - currentPosition < newStartPosition -- Restarting loop!");
+            restartLoop = true;
+        }
+    }
+
+    // Check if the end position has changed
+    if (endPosition != newEndPosition)
+    {
+        // If the current position exceeds the new end position...
+        if (currentPosition > newEndPosition)
+        {
+            // ... then we need to start the loop again
+            log_text("player_updateLoop - currentPosition > newEndPosition -- Restarting loop!");
+            restartLoop = true;
+        }
+    }
+
+    // Set the new loop
+    player->loop = malloc(sizeof(SSP_LOOP));
+    loop_copy(player->loop, loop);
+
+    error = player_setLoopSyncPoint(player, newStartPosition, newEndPosition, restartLoop);
+    if(error != SSP_OK) {
+        return error;
+    }
+
     return SSP_OK;
 }
 
 SSP_ERROR player_stopLoop(SSP_PLAYER* player) {
-    // TODO
+    if(player->loop == NULL) {
+        return SSP_ERROR_LOOP_INVALID;
+    }
+
+    bool success = BASS_ChannelRemoveSync(player->handles->fxChannel, player->handles->syncProcLoop);
+    if(!success) {
+        bass_getError("BASS_ChannelRemoveSync");
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    player->loop = NULL;
+    player->playhead->isPlayingLoop = false;
+
+    if(player->callbackLoopPlaybackStopped != NULL) {
+        player->callbackLoopPlaybackStopped(player->callbackLoopPlaybackStoppedUser);
+    }
+
     return SSP_OK;
 }
