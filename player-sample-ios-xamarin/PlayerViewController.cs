@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
-using Foundation;
-using UIKit;
 using System.Timers;
 using ObjCRuntime;
+using UIKit;
 using org.sessionsapp.player;
-using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace playersampleiosxamarin
 {
     public partial class PlayerViewController : UIViewController
     {
-        private Timer _timer;
+        private Timer _timerRefreshPosition;
 
         // TOOD: Find a way to use the IntPtr user parameter instead
         static PlayerViewController CurrentViewController { get; set; }
@@ -33,8 +31,8 @@ namespace playersampleiosxamarin
             CurrentViewController = this;
             InitializePlayer();
             			
-            _timer = new Timer(100);
-            _timer.Elapsed += HandleTimerElapsed;
+            _timerRefreshPosition = new Timer(100);
+            _timerRefreshPosition.Elapsed += HandleTimerRefreshPositionElapsed;
         }
 
         private void InitializePlayer()
@@ -44,12 +42,16 @@ namespace playersampleiosxamarin
             lblVersion.Text = string.Format("Version {0}", version);
             Console.WriteLine("libssp_player version: {0}", version);
 
-            int error = SSP.SSP_Init();
+            int error = SSP.SSP_Init(null);
             if (error != SSP.SSP_OK)
             {
                 Console.WriteLine("libssp_player init failed with error code: {0}", error);
                 return;
             }
+
+            SSP.SSP_SetLogCallback(HandleLog, IntPtr.Zero);
+            SSP.SSP_SetStateChangedCallback(HandleStateChanged, IntPtr.Zero);
+            SSP.SSP_SetPlaylistIndexChangedCallback(HandlePlaylistIndexChanged, IntPtr.Zero);
 
             error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);
             if (error != SSP.SSP_OK)
@@ -58,35 +60,47 @@ namespace playersampleiosxamarin
                 return;
             }
 
-            SSP.SSP_SetPlaylistIndexChangedCallback(PlaylistIndexChanged, IntPtr.Zero);
-
-            SSP_DEVICE device = new SSP_DEVICE();
-            device.name = "Test name";
-            //device.deviceId = 100;
+            var device = new SSP_DEVICE();
             SSP.SSP_GetDevice(ref device);
 
             Console.WriteLine("libssp_player init successful!");
         }
 
-        private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
+        private void HandleTimerRefreshPositionElapsed(object sender, ElapsedEventArgs e)
         {
-            long position = SSP.SSP_GetPosition();
+            var position = new SSP_POSITION();
+            SSP.SSP_GetPositionNew(ref position);
 
             InvokeOnMainThread(() => {
-                lblPosition.Text = string.Format("Position (bytes): {0}", position);
+                lblPosition.Text = string.Format("Position: {0}", position.str);
+            });
+        }
+
+        [MonoPInvokeCallback(typeof(LogDelegate))]
+        private static void HandleLog(IntPtr user, string str)
+        {
+            Console.WriteLine("libssp_player :: {0}", str);
+        }
+
+        [MonoPInvokeCallback(typeof(StateChangedDelegate))]
+        private static void HandleStateChanged(IntPtr user, SSPPlayerState state)
+        {
+            CurrentViewController.InvokeOnMainThread(() => {
+                CurrentViewController.lblState.Text = string.Format("State: {0}", state);
             });
         }
 
         [MonoPInvokeCallback(typeof(PlaylistIndexChangedDelegate))]
-        private static void PlaylistIndexChanged(IntPtr user)
+        private static void HandlePlaylistIndexChanged(IntPtr user)
         {
-            Console.WriteLine("--> PlaylistIndexChanged");
-
+            var item = new SSP_PLAYLISTITEM();
             int index = SSP.SSP_Playlist_GetCurrentIndex();
-            SSP_PLAYLISTITEM item = SSP.SSP_Playlist_GetItemAt(index);
+            int count = SSP.SSP_Playlist_GetCount();
+            SSP.SSP_Playlist_GetItemAtNew(index, ref item);
 
             CurrentViewController.InvokeOnMainThread(() => {
-                CurrentViewController.lblFileName.Text = string.Format("{0} - {1}", index, index);
+                CurrentViewController.lblPlaylist.Text = string.Format("Playlist [{0}/{1}]", index+1, count);
+                CurrentViewController.lblFilePath.Text = string.Format("File path: {0}", item.filePath);
             });
         }
             
@@ -95,14 +109,15 @@ namespace playersampleiosxamarin
             SSP.SSP_Playlist_Clear();
 
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var files = Directory.EnumerateFiles(documents, "*.mp3");
-            foreach(var file in files)
+            string[] extensions = { ".mp3", ".flac", ".ape", ".wav" };
+            foreach (string file in Directory.EnumerateFiles(documents, "*.*", SearchOption.AllDirectories)
+                .Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
             {
                 SSP.SSP_Playlist_AddItem(file);
             }
 
             SSP.SSP_Play();
-            _timer.Start();
+            _timerRefreshPosition.Start();
         }
 
         partial void buttonPause_TouchUpInside(UIButton sender)
@@ -132,7 +147,5 @@ namespace playersampleiosxamarin
                 Console.WriteLine("SSP Error: {0}", error);
             }
         }
-
     }
 }
-

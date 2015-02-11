@@ -36,11 +36,19 @@ namespace playersampleiosxamarin
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel lblFileName { get; set; }
+		UILabel lblFilePath { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel lblPlaylist { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UILabel lblPosition { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel lblState { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -88,13 +96,21 @@ namespace playersampleiosxamarin
 				buttonStop.Dispose ();
 				buttonStop = null;
 			}
-			if (lblFileName != null) {
-				lblFileName.Dispose ();
-				lblFileName = null;
+			if (lblFilePath != null) {
+				lblFilePath.Dispose ();
+				lblFilePath = null;
+			}
+			if (lblPlaylist != null) {
+				lblPlaylist.Dispose ();
+				lblPlaylist = null;
 			}
 			if (lblPosition != null) {
 				lblPosition.Dispose ();
 				lblPosition = null;
+			}
+			if (lblState != null) {
+				lblState.Dispose ();
+				lblState = null;
 			}
 			if (lblVersion != null) {
 				lblVersion.Dispose ();
