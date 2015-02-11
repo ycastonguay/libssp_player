@@ -75,6 +75,7 @@ void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
 
 // Data
+DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, void *user);
 int player_getMixerData(SSP_PLAYER* player, void* buffer, int length);
 
 // EQ

@@ -292,6 +292,7 @@ namespace org.sessionsapp.player
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_POSITION
     {
+        [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string str;
         public long bytes;
         public long ms;

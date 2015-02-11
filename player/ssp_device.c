@@ -48,6 +48,4 @@ void device_copy(SSP_DEVICE* dest, SSP_DEVICE* src) {
     size_t len = strlen(src->name) + 1;
     dest->name = malloc(len);
     memcpy(dest->name, src->name, len);
-
-    free(dest->name);
 }
