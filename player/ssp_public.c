@@ -22,8 +22,6 @@
 #include "ssp_playlist.h"
 #include "ssp_player.h"
 #include "ssp_log.h"
-#include "ssp_convert.h"
-#include "ssp_structs.h"
 #include "ssp_eqpreset.h"
 #include "ssp_device.h"
 #include "ssp_playlistitem.h"
@@ -71,8 +69,26 @@ SSP_ERROR SSP_Free() {
     return SSP_OK;
 }
 
-LIBRARY_API ssp_player_state_t SSP_GetState() {
+#pragma mark Properties
+
+ssp_player_state_t SSP_GetState() {
     return sspPlayer->playhead->state;
+}
+
+void SSP_GetDevice(SSP_DEVICE* device) {
+    device_copy(device, sspPlayer->device);
+}
+
+void SSP_GetMixer(SSP_MIXER* mixer) {
+    mixer_copy(mixer, sspPlayer->mixer);
+}
+
+SSP_ERROR SSP_SetBufferSize(int bufferSize) {
+    return player_setBufferSize(sspPlayer, bufferSize);
+}
+
+SSP_ERROR SSP_SetUpdatePeriod(int updatePeriod) {
+    return player_setUpdatePeriod(sspPlayer, updatePeriod);
 }
 
 #pragma mark Callbacks
@@ -141,20 +157,14 @@ void SSP_RemoveBPMDetectedCallback() {
     player_removeBPMDetectedCallback(sspPlayer);
 }
 
-#pragma mark Device
-
-void SSP_GetDevice(SSP_DEVICE* device) {
-    device_copy(device, sspPlayer->device);
-}
-
-void SSP_GetMixer(SSP_MIXER* mixer) {
-    mixer_copy(mixer, sspPlayer->mixer);
-}
-
 #pragma mark Playback
 
 SSP_ERROR SSP_Play() {
     return player_play(sspPlayer);
+}
+
+SSP_ERROR SSP_PlayWithOptions(int startIndex, uint64_t startPosition, bool startPaused) {
+    return player_playWithOptions(sspPlayer, startIndex, startPosition, startPaused);
 }
 
 SSP_ERROR SSP_Pause() {
@@ -195,12 +205,7 @@ SSP_ERROR SSP_Playlist_Clear() {
     return playlist_clear(sspPlayer->playlist);
 }
 
-SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index) {
-    // TODO: Make a copy of the item, do not give away that pointer, the app might crash
-    return playlist_getItemAt(sspPlayer->playlist, index);
-}
-
-void SSP_Playlist_GetItemAtNew(int index, SSP_PLAYLISTITEM* item) {
+void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item) {
     SSP_PLAYLISTITEM* localItem = playlist_getItemAt(sspPlayer->playlist, index);
     if(localItem != NULL) {
         playlistitem_copy(localItem, item);
@@ -247,16 +252,16 @@ SSP_ERROR SSP_NormalizeEQ() {
 
 #pragma mark Seek / Position
 
-uint64_t SSP_GetPosition() {
-    return player_getPosition(sspPlayer);
-}
-
-void SSP_GetPositionNew(SSP_POSITION* position) {
+void SSP_GetPosition(SSP_POSITION* position) {
     player_getPositionNew(sspPlayer, position);
 }
 
 SSP_ERROR SSP_SetPosition(uint64_t position) {
     return player_setPosition(sspPlayer, position);
+}
+
+SSP_ERROR SSP_SetPositionPercentage(float position) {
+    return player_setPositionPercentage(sspPlayer, position);
 }
 
 #pragma mark Playhead
@@ -275,6 +280,22 @@ ssp_player_repeat_t SSP_GetRepeatType() {
 
 SSP_ERROR SSP_SetRepeatType(ssp_player_repeat_t repeat) {
     return player_setRepeatType(sspPlayer, repeat);
+}
+
+SSP_ERROR SSP_ToggleRepeatType() {
+    ssp_player_repeat_t repeat = player_getRepeatType(sspPlayer);
+    switch(repeat) {
+        case SSP_PLAYER_REPEAT_OFF:
+            return player_setRepeatType(sspPlayer, SSP_PLAYER_REPEAT_PLAYLIST);
+        case SSP_PLAYER_REPEAT_PLAYLIST:
+            return player_setRepeatType(sspPlayer, SSP_PLAYER_REPEAT_SONG);
+        case SSP_PLAYER_REPEAT_SONG:
+            return player_setRepeatType(sspPlayer, SSP_PLAYER_REPEAT_OFF);
+        default:
+            break;
+    }
+
+    return SSP_OK;
 }
 
 float SSP_GetVolume() {
@@ -301,10 +322,22 @@ SSP_ERROR SSP_SetPitchShifting(int pitchShifting) {
     return player_setPitchShifting(sspPlayer, pitchShifting);
 }
 
+bool SSP_GetIsSettingPosition() {
+    return sspPlayer->playhead->isSettingPosition;
+}
+
+bool SSP_GetIsPlayingLoop() {
+    return sspPlayer->playhead->isPlayingLoop;
+}
+
 #pragma mark Data
 
 int SSP_GetMixerData(void* buffer, int length) {
     return player_getMixerData(sspPlayer, buffer, length);
+}
+
+uint64_t SSP_GetBytesFromSecondsForCurrentChannel(float seconds) {
+    return player_getBytesFromSecondsForCurrentChannel(sspPlayer, seconds);
 }
 
 #pragma mark Encoder

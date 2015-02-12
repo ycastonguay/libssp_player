@@ -41,7 +41,7 @@ void log_text(const char* str) {
 void log_textf(const char* format, ...) {
     va_list ap;
     va_start(ap, format);
-    char result[256];
+    char result[1024];
     vsprintf(&result, format, ap);
 
     if(log_cb != NULL) {

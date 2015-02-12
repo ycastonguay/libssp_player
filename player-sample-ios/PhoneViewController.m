@@ -1,14 +1,22 @@
+// Copyright © 2011-2015 Yanick Castonguay
 //
-//  PhoneViewController.m
-//  player-sample-ios
+// This file is part of Sessions, a music player for musicians.
 //
-//  Created by Yanick Castonguay on 2015-01-20.
-//  Copyright (c) 2015 Yanick Castonguay. All rights reserved.
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #import "PhoneViewController.h"
 #import "ssp_public.h"
-#import "ssp_structs.h"
 
 // Evil way to make the view controller available to C callback methods, not trying to do anything fancy here
 static PhoneViewController* mainViewController = nil;
@@ -40,12 +48,11 @@ void playlistIndexChangedCallback(void *user) {
     //PhoneViewController* vc = (__bridge_transfer id) user; // this crashes the app eventually
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
-    SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
-    //SSP_PLAYLISTITEM item;
-    //SSP_Playlist_GetItemAtNew(currentIndex, &item);
+    SSP_PLAYLISTITEM item;
+    SSP_Playlist_GetItemAt(currentIndex, &item);
     runOnMainQueueWithoutDeadlocking(^{
         mainViewController.lblPlaylist.text = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
-        mainViewController.lblFilePath.text = [NSString stringWithFormat:@"File path: %s", item->filePath];
+        mainViewController.lblFilePath.text = [NSString stringWithFormat:@"File path: %s", item.filePath];
     });
 }
 
@@ -73,7 +80,7 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     NSLog(@"libssp_player version: %d", version);
     _lblVersion.text = [NSString stringWithFormat:@"Version %d", version];
 
-    SSP_ERROR error = SSP_Init();
+    SSP_ERROR error = SSP_Init(NULL);
     if(error != SSP_OK) {
         NSLog(@"Error!");
         return;
@@ -108,16 +115,8 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 }
 
 - (void)timerRefreshPositionElapsed {
-    uint64_t position = SSP_GetPosition();
-
-    // Can't find the right way to do this in Obj-C
     SSP_POSITION pos;
-    SSP_GetPositionNew(&pos);
-    //SSP_POSITION* pos = malloc(sizeof(SSP_POSITION));
-    //SSP_GetPositionNew(pos);
-
-    //self.lblPosition.text = [NSString stringWithFormat:@"Position (bytes): %lld", position];
-    //self.lblPosition.text = [NSString stringWithFormat:@"Position (bytes): %lld", pos.bytes];
+    SSP_GetPosition(&pos);
     self.lblPosition.text = [NSString stringWithFormat:@"Position: %s", pos.str];
 }
 

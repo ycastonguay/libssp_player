@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#include <string.h>
 #include <stdlib.h>
 #include "../bass/bass.h"
 #include "../bass/bass_fx.h"
@@ -26,11 +25,8 @@
 #include "ssp_playhead.h"
 #include "ssp_bass.h"
 #include "ssp_playerhandles.h"
-#include "ssp_structs.h"
-#include "ssp_privatestructs.h"
 #include "ssp_mixer.h"
 #include "ssp_device.h"
-#include "ssp_log.h"
 
 #pragma mark Initialization
 
@@ -281,4 +277,28 @@ void player_updateState(SSP_PLAYER* player, ssp_player_state_t state) {
     if(player->callbackStateChanged != NULL) {
         player->callbackStateChanged(player->callbackStateChangedUser, state);
     }
+}
+
+SSP_ERROR player_setBufferSize(SSP_PLAYER* player, int bufferSize) {
+    player->mixer->bufferSize = bufferSize;
+
+    bool success = BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
+    if(!success) {
+        bass_getError("BASS_SetConfig");
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    return SSP_OK;
+}
+
+SSP_ERROR player_setUpdatePeriod(SSP_PLAYER* player, int updatePeriod) {
+    player->mixer->updatePeriod = updatePeriod;
+
+    bool success = BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
+    if(!success) {
+        bass_getError("BASS_SetConfig");
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    return SSP_OK;
 }

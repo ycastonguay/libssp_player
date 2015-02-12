@@ -17,20 +17,30 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <inttypes.h>
-#include "../bass/bassmix.h"
+#include "../bass/bass.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
-#include "ssp_eqpreset.h"
-#include "ssp_playhead.h"
 #include "ssp_bass.h"
-#include "ssp_structs.h"
-#include "ssp_privatestructs.h"
 
 int player_getMixerData(SSP_PLAYER* player, void* buffer, int length) {
     int bytes = BASS_ChannelGetData(player->handles->mixerChannel, buffer, length);
     if(bytes == -1) {
         bass_getError("player_getMixerData");
+    }
+
+    return bytes;
+}
+
+uint64_t player_getBytesFromSecondsForCurrentChannel(SSP_PLAYER* player, float seconds) {
+    SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
+    if(item == NULL) {
+        return -1;
+    }
+
+    uint64_t bytes = BASS_ChannelSeconds2Bytes(item->channel, seconds);
+    if(bytes == -1) {
+        bass_getError("BASS_ChannelSeconds2Bytes");
+        return -1;
     }
 
     return bytes;

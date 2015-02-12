@@ -80,11 +80,6 @@ START_TEST(test_playlist_remove_partial) {
         error = SSP_Playlist_AddItem("item3");
         ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
 
-        for(int a = 0; a < SSP_Playlist_GetCount(); a++) {
-            SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(a);
-            printf("test2--> a: %d -- str: %s\n", a, item->filePath);
-        }
-
         error = SSP_Playlist_RemoveItemAt(1);
         ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
 
@@ -92,10 +87,10 @@ START_TEST(test_playlist_remove_partial) {
         ck_assert_int_eq(count, 2);
 
         SSP_PLAYLISTITEM item;
-        SSP_Playlist_GetItemAtNew(0, &item);
+        SSP_Playlist_GetItemAt(0, &item);
         ck_assert_str_eq(item.filePath, "item1");
 
-        SSP_Playlist_GetItemAtNew(1, &item);
+        SSP_Playlist_GetItemAt(1, &item);
         ck_assert_str_eq(item.filePath, "item3");
     }
 END_TEST
@@ -123,7 +118,7 @@ START_TEST(test_playlist_insert) {
         ck_assert_int_eq(count, 5);
 
         SSP_PLAYLISTITEM item;
-        SSP_Playlist_GetItemAtNew(1, &item);
+        SSP_Playlist_GetItemAt(1, &item);
         ck_assert_str_eq(item.filePath, "item5");
     }
 END_TEST
@@ -151,7 +146,7 @@ START_TEST(test_playlist_insert2) {
         ck_assert_int_eq(count, 5);
 
         SSP_PLAYLISTITEM item;
-        SSP_Playlist_GetItemAtNew(3, &item);
+        SSP_Playlist_GetItemAt(3, &item);
         ck_assert_str_eq(item.filePath, "item5");
     }
 END_TEST

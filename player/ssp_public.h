@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 17
+#define SSP_VERSION 19
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -41,11 +41,15 @@ LIBRARY_API SSP_ERROR SSP_Init(const char* pathForPlugins);
 LIBRARY_API SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 LIBRARY_API SSP_ERROR SSP_FreeDevice();
 LIBRARY_API SSP_ERROR SSP_Free();
-LIBRARY_API ssp_player_state_t SSP_GetState();
 
 // Properties
+LIBRARY_API ssp_player_state_t SSP_GetState();
 LIBRARY_API void SSP_GetDevice(SSP_DEVICE* device);
+
+// Mixer
 LIBRARY_API void SSP_GetMixer(SSP_MIXER* mixer);
+LIBRARY_API SSP_ERROR SSP_SetBufferSize(int bufferSize);
+LIBRARY_API SSP_ERROR SSP_SetUpdatePeriod(int updatePeriod);
 
 // EQ
 LIBRARY_API void SSP_GetEQPreset(SSP_EQPRESET* preset);
@@ -66,6 +70,7 @@ LIBRARY_API void SSP_GetLoop(SSP_LOOP* loop);
 
 // Playback
 LIBRARY_API SSP_ERROR SSP_Play();
+LIBRARY_API SSP_ERROR SSP_PlayWithOptions(int startIndex, uint64_t startPosition, bool startPaused);
 LIBRARY_API SSP_ERROR SSP_Pause();
 LIBRARY_API SSP_ERROR SSP_Stop();
 LIBRARY_API SSP_ERROR SSP_Previous();
@@ -79,6 +84,7 @@ LIBRARY_API SSP_ERROR SSP_SetIsShuffle(bool shuffle);
 
 LIBRARY_API ssp_player_repeat_t SSP_GetRepeatType();
 LIBRARY_API SSP_ERROR SSP_SetRepeatType(ssp_player_repeat_t repeat);
+LIBRARY_API SSP_ERROR SSP_ToggleRepeatType();
 
 LIBRARY_API float SSP_GetVolume();
 LIBRARY_API SSP_ERROR SSP_SetVolume(float volume);
@@ -89,14 +95,17 @@ LIBRARY_API SSP_ERROR SSP_SetTimeShifting(float timeShifting);
 LIBRARY_API int SSP_GetPitchShifting();
 LIBRARY_API SSP_ERROR SSP_SetPitchShifting(int pitchShifting);
 
+LIBRARY_API bool SSP_GetIsSettingPosition();
+LIBRARY_API bool SSP_GetIsPlayingLoop();
+
 // Position
-LIBRARY_API uint64_t SSP_GetPosition();
-LIBRARY_API void SSP_GetPositionNew(SSP_POSITION* position);
+LIBRARY_API void SSP_GetPosition(SSP_POSITION* position);
 LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
-//void SSP_SetPosition(double positionPercentage);
+LIBRARY_API SSP_ERROR SSP_SetPositionPercentage(float position);
 
 // Data
 LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
+LIBRARY_API uint64_t SSP_GetBytesFromSecondsForCurrentChannel(float seconds);
 
 // Encoder
 LIBRARY_API SSP_ERROR SSP_StartEncode(ssp_player_encoder_t encoder);
@@ -109,8 +118,7 @@ LIBRARY_API SSP_ERROR SSP_Playlist_AddItem(char* filePath);
 LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index);
 LIBRARY_API SSP_ERROR SSP_Playlist_RemoveItemAt(int index);
 LIBRARY_API SSP_ERROR SSP_Playlist_Clear();
-LIBRARY_API SSP_PLAYLISTITEM* SSP_Playlist_GetItemAt(int index);
-LIBRARY_API void SSP_Playlist_GetItemAtNew(int index, SSP_PLAYLISTITEM* item);
+LIBRARY_API void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item);
 LIBRARY_API int SSP_Playlist_GetCount();
 LIBRARY_API int SSP_Playlist_GetCurrentIndex();
 

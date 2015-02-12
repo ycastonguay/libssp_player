@@ -38,10 +38,11 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 void playlistIndexChangedCallback(void *user) {
     int currentIndex = SSP_Playlist_GetCurrentIndex();
     int count = SSP_Playlist_GetCount();
-    SSP_PLAYLISTITEM* item = SSP_Playlist_GetItemAt(currentIndex);
+    SSP_PLAYLISTITEM item;
+    SSP_Playlist_GetItemAt(currentIndex, &item);
 
     printf("Playlist index changed: [%d/%d]\n", currentIndex+1, count);
-    printf("Playlist item file path: %s\n", item->filePath);
+    printf("Playlist item file path: %s\n", item.filePath);
 }
 
 void playlistEndedCallback(void *user) {
@@ -110,11 +111,8 @@ int main(int argc, const char * argv[]) {
         if(ch == '.') {
             printf("Getting position...\n");
 
-            uint64_t bytes = SSP_GetPosition();
-            printf("Position (bytes): %"PRIu64"\n", bytes);
-
             SSP_POSITION position;
-            SSP_GetPositionNew(&position);
+            SSP_GetPosition(&position);
             printf("Position (samples): %"PRIu64"\n", position.samples);
             printf("Position (milliseconds): %"PRIu64"\n", position.ms);
             printf("Position (string): %s\n", position.str);

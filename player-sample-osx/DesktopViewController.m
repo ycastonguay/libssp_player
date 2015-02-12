@@ -1,14 +1,22 @@
+// Copyright © 2011-2015 Yanick Castonguay
 //
-//  DesktopViewController.m
-//  player-sample-osx
+// This file is part of Sessions, a music player for musicians.
 //
-//  Created by Yanick Castonguay on 2015-01-20.
-//  Copyright (c) 2015 Yanick Castonguay. All rights reserved.
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #import "DesktopViewController.h"
 #import "ssp_public.h"
-#import "ssp_structs.h"
 
 // Evil way to make the view controller available to C callback methods, not trying to do anything fancy here
 static DesktopViewController* mainViewController = nil;
@@ -42,7 +50,7 @@ void playlistIndexChangedCallback(void *user) {
     int count = SSP_Playlist_GetCount();
 
     SSP_PLAYLISTITEM item;
-    SSP_Playlist_GetItemAtNew(currentIndex, &item);
+    SSP_Playlist_GetItemAt(currentIndex, &item);
     runOnMainQueueWithoutDeadlocking(^{
         mainViewController.lblPlaylist.stringValue = [NSString stringWithFormat:@"Playlist [%d/%d]", currentIndex+1, count];
         mainViewController.lblFilePath.stringValue = [NSString stringWithFormat:@"File path: %s", item.filePath];
@@ -103,7 +111,7 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 
 - (void)timerRefreshPositionElapsed {
     SSP_POSITION pos;
-    SSP_GetPositionNew(&pos);
+    SSP_GetPosition(&pos);
     self.lblPosition.stringValue = [NSString stringWithFormat:@"Position: %s", pos.str];
 }
 

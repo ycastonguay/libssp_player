@@ -91,6 +91,10 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
 }
 
 SSP_ERROR player_play(SSP_PLAYER* player) {
+    return player_playWithOptions(player, 0, 0, false);
+}
+
+SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t startPosition, bool startPaused) {
     SSP_ERROR error;
 
     log_text("player_play\n");
@@ -103,10 +107,9 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
     }
 
     log_text("player_play - Getting current index and count...\n");
-    int currentIndex = player->playlist->currentIndex;
     int count = playlist_getCount(player->playlist);
 
-    int channelsToLoad = count - currentIndex;
+    int channelsToLoad = count - startIndex;
     if(channelsToLoad > 2)
         channelsToLoad = 2;
 
@@ -115,37 +118,33 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_PLAY_NOCHANNELSTOPLAY;
     }
 
-    SSP_PLAYLISTITEM* firstItem = playlist_getItemAt(player->playlist, currentIndex);
-    for(int a = currentIndex; a < currentIndex + channelsToLoad; a++) {
+    SSP_PLAYLISTITEM* firstItem = playlist_getItemAt(player->playlist, startIndex);
+    for(int a = startIndex; a < startIndex + channelsToLoad; a++) {
         log_textf("player_play - Loading playlist item %d...\n", a);
         SSP_PLAYLISTITEM* item = playlist_getItemAt(player->playlist, a);
         playlistitem_load(item, player->mixer->useFloatingPoint);
     }
 
-    // Default output driver (i.e. DirectSound)
     log_text("player_play - Setting stream channel and proc...\n");
     player->handles->streamProc = (STREAMPROC*)player_streamProc;
 
-    // Prepare stream channel
     player->handles->streamChannel = bass_createMemoryStream(firstItem->sampleRate, 2, player->mixer->useFloatingPoint, player->handles->streamProc, player);
     if(player->handles->streamChannel == 0) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEMEMORYSTREAM;
     }
 
-    // Prepare FX channel (for pitch and time shifting)
+    // FX channel is for pitch and time shifting
     player->handles->fxChannel = bass_createStreamForTimeShifting(player->handles->streamChannel, true, player->mixer->useFloatingPoint);
     if(player->handles->fxChannel == 0) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEFXCHANNEL;
     }
 
-    // Prepare mixer channel
     player->handles->mixerChannel = bass_createMixerStream(player->mixer->sampleRate, 2, false, player->mixer->useFloatingPoint);
     if(player->handles->mixerChannel == 0) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEMIXERCHANNEL;
     }
 
     // Add FX channel to mixer
-    //error = bass_addChannelToMixer(player->handles->mixerChannel, player->handles->fxChannel);
     bool success = BASS_Mixer_StreamAddChannel(player->handles->mixerChannel, player->handles->fxChannel, BASS_MIXER_BUFFER);
     if(!success) {
         bass_getError("BASS_Mixer_StreamAddChannel");
@@ -185,7 +184,7 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSETSYNCCALLBACK;
     }
 
-    player->playlist->currentMixerIndex = currentIndex;
+    player->playlist->currentMixerIndex = startIndex;
 
     success = BASS_Start();
     if(!success) {
@@ -199,7 +198,19 @@ SSP_ERROR player_play(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOPLAYCHANNEL;
     }
 
-    player_updateState(player, SSP_PLAYER_STATE_PLAYING);
+    if (startPaused) {
+        if(startPosition > 0) {
+            player_setPosition(player, startPosition);
+        }
+
+        success = BASS_Pause();
+        if(!success) {
+            bass_getError("BASS_Pause");
+            return SSP_ERROR_UNKNOWN;
+        }
+    }
+
+    player_updateState(player, startPaused ? SSP_PLAYER_STATE_PAUSED : SSP_PLAYER_STATE_PLAYING);
 
     if(player->playlist->callbackPlaylistIndexChanged != NULL) {
         player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);

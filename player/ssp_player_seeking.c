@@ -42,7 +42,6 @@ uint64_t player_getPosition(SSP_PLAYER* player) {
 //        // Multiply by 1.5 (I don't really know why, but this works for 48000Hz and 96000Hz. Maybe a bug in BASS with FLAC files?)
 //        outputPosition = (long)((float)outputPosition * 1.5f);
 //    }
-//
 
     position += player->playhead->positionOffset;
     return position;
@@ -74,20 +73,17 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     }
 
     if(player->playhead->isPlayingLoop) {
-//        // If the new position is outside the current loop, stop the loop playback
-//        var startPosition = Loop.GetStartSegment();
-//        var endPosition = Loop.GetEndSegment();
-//        if (bytes < startPosition.PositionBytes || bytes >= endPosition.PositionBytes)
-//        {
-//            StopLoop();
-//        }
+        if(player->loop != NULL) {
+            // If the new position is outside the current loop, stop the loop playback
+            if(position < player->loop->startPosition || position >= player->loop->endPosition) {
+                player_stopLoop(player);
+            }
+        }
     }
 
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
 
-//    // Get as much data available before locking channel
     player_removeSyncCallbacks(player);
-//    long length = Playlist.CurrentItem.Channel.GetLength();
 
     success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
@@ -98,7 +94,6 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     player->playhead->isSettingPosition = true;
     player->playhead->positionOffset = position;
 
-//    // Divide by 1.5 (I don't really know why, but this works for 48000Hz and 96000Hz. Maybe a bug in BASS with FLAC files?)
 //    if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.CurrentItem.AudioFile.SampleRate > 44100)
 //        bytes = (long)((float)bytes / 1.5f);
 
@@ -160,3 +155,8 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     return SSP_OK;
 }
 
+SSP_ERROR player_setPositionPercentage(SSP_PLAYER* player, float position) {
+    SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
+    uint64_t bytes = (uint64_t) (position * item->length);
+    return player_setPosition(player, bytes);
+}

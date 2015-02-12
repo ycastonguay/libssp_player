@@ -33,7 +33,10 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player);
 SSP_ERROR player_freePlugins(SSP_PLAYER* player);
 SSP_ERROR player_getBassVersions();
 
+// Properties
 void player_updateState(SSP_PLAYER* player, ssp_player_state_t state);
+SSP_ERROR player_setBufferSize(SSP_PLAYER* player, int bufferSize);
+SSP_ERROR player_setUpdatePeriod(SSP_PLAYER* player, int updatePeriod);
 
 // BPM
 SSP_ERROR player_addBPMCallbacks(SSP_PLAYER* player);
@@ -49,6 +52,7 @@ SSP_ERROR player_stopCast(SSP_PLAYER* player);
 SSP_ERROR player_pause(SSP_PLAYER* player);
 SSP_ERROR player_stop(SSP_PLAYER* player);
 SSP_ERROR player_play(SSP_PLAYER* player);
+SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t startPosition, bool startPaused);
 SSP_ERROR player_previous(SSP_PLAYER* player);
 SSP_ERROR player_next(SSP_PLAYER* player);
 SSP_ERROR player_goTo(SSP_PLAYER* player, int index);
@@ -73,10 +77,12 @@ SSP_ERROR player_setPitchShifting(SSP_PLAYER* player, int pitchShifting);
 uint64_t player_getPosition(SSP_PLAYER* player);
 void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
+SSP_ERROR player_setPositionPercentage(SSP_PLAYER* player, float position);
 
 // Data
 DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, void *user);
 int player_getMixerData(SSP_PLAYER* player, void* buffer, int length);
+uint64_t player_getBytesFromSecondsForCurrentChannel(SSP_PLAYER* player, float seconds);
 
 // EQ
 SSP_ERROR player_createEQStage(SSP_PLAYER* player);

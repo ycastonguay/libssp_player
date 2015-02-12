@@ -51,6 +51,10 @@ namespace org.sessionsapp.player
 
         [DllImport (DllImportValue)]
         public static extern void SSP_GetMixer(ref SSP_MIXER mixer);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetBufferSize(int bufferSize);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_SetUpdatePeriod(int updatePeriod);
 
         // EQ
         [DllImport (DllImportValue)]
@@ -63,7 +67,7 @@ namespace org.sessionsapp.player
         [DllImport (DllImportValue)]
         public static extern bool SSP_GetEQEnabled();
         [DllImport (DllImportValue)]
-        public static extern int SSP_GetEQEnabled(bool enabled);
+        public static extern int SSP_SetEQEnabled(bool enabled);
 
         [DllImport (DllImportValue)]
         public static extern int SSP_ResetEQ();
@@ -83,6 +87,8 @@ namespace org.sessionsapp.player
         // Playback
         [DllImport (DllImportValue)]
         public static extern int SSP_Play();
+        [DllImport (DllImportValue)]
+        public static extern int SSP_PlayWithOptions(int startIndex, long startPosition, bool startPaused);
         [DllImport (DllImportValue)]
         public static extern int SSP_Pause();
         [DllImport (DllImportValue)]
@@ -104,6 +110,8 @@ namespace org.sessionsapp.player
         public static extern SSPRepeatType SSP_GetRepeatType();
         [DllImport (DllImportValue)]
         public static extern int SSP_SetRepeatType(SSPRepeatType repeat);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_ToggleRepeatType();
 
         [DllImport (DllImportValue)]
         public static extern float SSP_GetVolume();
@@ -116,21 +124,31 @@ namespace org.sessionsapp.player
         public static extern int SSP_SetTimeShifting(float timeShifting);
 
         [DllImport (DllImportValue)]
-        public static extern float SSP_GetPitchShifting();
+        public static extern int SSP_GetPitchShifting();
         [DllImport (DllImportValue)]
-        public static extern int SSP_SetPitchShifting(float pitchShifting);
+        public static extern int SSP_SetPitchShifting(int pitchShifting);
+
+        [DllImport (DllImportValue)]
+        public static extern bool SSP_GetIsSettingPosition();
+        [DllImport (DllImportValue)]
+        public static extern bool SSP_GetIsPlayingLoop();
 
         // Position
         [DllImport (DllImportValue)]
-        public static extern long SSP_GetPosition();
+        public static extern int SSP_GetPosition(ref SSP_POSITION position);
         [DllImport (DllImportValue)]
-        public static extern int SSP_GetPositionNew(ref SSP_POSITION position);
+        public static extern int SSP_SetPosition(long position);       
         [DllImport (DllImportValue)]
-        public static extern int SSP_SetPosition(long position);
+        public static extern int SSP_SetPositionPercentage(float position);       
 
         // Data
-        // TODO: Use float array instead of void*
+        [DllImport (DllImportValue)]
+        public static extern long SSP_GetBytesFromSecondsForCurrentChannel(float seconds);
         //LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_GetMixerData(float[] buffer, int length);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_GetMixerData(int[] buffer, int length);
 
         // Encoder
         [DllImport (DllImportValue)]
@@ -152,9 +170,7 @@ namespace org.sessionsapp.player
         [DllImport (DllImportValue)]
         public static extern int SSP_Playlist_Clear();
         [DllImport (DllImportValue)]
-        public static extern SSP_PLAYLISTITEM SSP_Playlist_GetItemAt(int index);
-        [DllImport (DllImportValue)]
-        public static extern int SSP_Playlist_GetItemAtNew(int index, ref SSP_PLAYLISTITEM item);
+        public static extern int SSP_Playlist_GetItemAt(int index, ref SSP_PLAYLISTITEM item);
         [DllImport (DllImportValue)]
         public static extern int SSP_Playlist_GetCount();
         [DllImport (DllImportValue)]
