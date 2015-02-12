@@ -4,6 +4,8 @@ This library is an audio player written in C for [Sessions](http://mp4m.org), a 
 
 The source code is released under the GPLv3 license. For more information on the Sessions license, go to http://www.mp4m.org/license.
 
+Sessions uses the __BASS audio library__, which is a commercial library, but available for free for open source projects. The Sessions source code repository contains the BASS static/dynamic libraries needed to build each platform. To download updated versions of the BASS library, go to the [BASS library home page](http://www.un4seen.com). Please note that newer versions might introduce breaking changes.
+
 ## How to build libssp_player
 
 ### iOS
@@ -59,3 +61,6 @@ There are samples for just about every platform and language available:
 +  __Linux__ / GTK#: [`player-sample-linux-gtk-sharp`](player-sample-linux-gtk-sharp)
 +  __Windows__ / WPF: [`player-sample-win32-wpf`](player-sample-win32-wpf)
 +  __Console__ / C: [`player-sample-console`](player-sample-console)
+
+*'Sessions' and 'MPfm: Music Player for Musicians' are © 2011-2015 Yanick Castonguay and is released under the GPLv3 license.*
+*The BASS audio library is © 1999-2015 Un4seen Developments.*
