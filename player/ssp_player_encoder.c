@@ -39,12 +39,13 @@ SSP_ERROR player_startEncode(SSP_PLAYER* player, ssp_player_encoder_t encoder) {
             player->handles->encoder = BASS_Encode_Start(player->handles->mixerChannel, "oggenc -r -R 44100 -M 128 -m 128 -", flags, NULL, NULL);
             break;
         case SSP_PLAYER_ENCODER_AAC:
-            // BASS_Encode_StartCA is for OSX and iOS only
+            #if TARGET_IOS || TARGET_OSX
             player->handles->encoder = BASS_Encode_StartCA(player->handles->mixerChannel, ftype, atype, BASS_ENCODE_AUTOFREE, bitrate, NULL, NULL);
             if(player->handles->encoder == 0) {
                 bass_getError("BASS_Encode_StartCA");
                 return SSP_ERROR_UNKNOWN;
             }
+            #endif
             break;
         case SSP_PLAYER_ENCODER_MP3:
             player->handles->encoder = BASS_Encode_Start(player->handles->mixerChannel, "lame -r -x -s 44100 -b 128 -", flags, NULL, NULL);
