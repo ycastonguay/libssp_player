@@ -20,6 +20,7 @@
 
 SSP_PLAYHEAD* playhead_create() {
     SSP_PLAYHEAD* playhead = malloc(sizeof(SSP_PLAYHEAD));
+    playhead_reset(playhead);
     return playhead;
 }
 
@@ -36,7 +37,7 @@ void playhead_reset(SSP_PLAYHEAD* playhead) {
     playhead->timeShifting = 1;
     playhead->volume = 1;
     playhead->repeatType = SSP_PLAYER_REPEAT_OFF;
-    playhead->state = SSP_PLAYER_STATE_UNKNOWN;
+    playhead->state = SSP_PLAYER_STATE_UNINITIALIZED;
     playhead->positionOffset = 0;
     playhead->positionAfterUnpause = 0;
 }

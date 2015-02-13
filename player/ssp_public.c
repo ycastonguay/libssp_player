@@ -28,7 +28,7 @@
 #include "ssp_loop.h"
 #include "ssp_mixer.h"
 
-static SSP_PLAYER* sspPlayer;
+static SSP_PLAYER* sspPlayer = NULL;
 
 #pragma mark Initialization
 
@@ -72,6 +72,10 @@ SSP_ERROR SSP_Free() {
 #pragma mark Properties
 
 ssp_player_state_t SSP_GetState() {
+    if(sspPlayer == NULL || sspPlayer->playhead == NULL) {
+        return SSP_PLAYER_STATE_UNINITIALIZED;
+    }
+
     return sspPlayer->playhead->state;
 }
 
@@ -252,8 +256,8 @@ SSP_ERROR SSP_NormalizeEQ() {
 
 #pragma mark Seek / Position
 
-void SSP_GetPosition(SSP_POSITION* position) {
-    player_getPositionNew(sspPlayer, position);
+SSP_ERROR SSP_GetPosition(SSP_POSITION* position) {
+    return player_getPositionStruct(sspPlayer, position);
 }
 
 SSP_ERROR SSP_SetPosition(uint64_t position) {
@@ -262,6 +266,14 @@ SSP_ERROR SSP_SetPosition(uint64_t position) {
 
 SSP_ERROR SSP_SetPositionPercentage(float position) {
     return player_setPositionPercentage(sspPlayer, position);
+}
+
+SSP_ERROR SSP_GetPositionFromBytes(uint64_t bytes, SSP_POSITION* position) {
+    return player_getPositionFromBytes(sspPlayer, bytes, position);
+}
+
+SSP_ERROR SSP_GetPositionFromPercentage(float percentage, SSP_POSITION* position) {
+    return player_getPositionFromPercentage(sspPlayer, percentage, position);
 }
 
 #pragma mark Playhead
@@ -338,6 +350,10 @@ int SSP_GetMixerData(void* buffer, int length) {
 
 uint64_t SSP_GetBytesFromSecondsForCurrentChannel(float seconds) {
     return player_getBytesFromSecondsForCurrentChannel(sspPlayer, seconds);
+}
+
+uint64_t SSP_GetDataAvailable() {
+    return player_getDataAvailable(sspPlayer);
 }
 
 #pragma mark Encoder

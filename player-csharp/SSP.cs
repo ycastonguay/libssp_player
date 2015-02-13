@@ -26,7 +26,7 @@ namespace org.sessionsapp.player
         public const string DllImportValue = "__Internal";
 #elif ANDROID || LINUX
         public const string DllImportValue = "libssp_player.so";
-#elif OSX
+#elif OSX || MACOSX
         public const string DllImportValue = "libssp_player.dylib";
 #endif
 
@@ -139,7 +139,11 @@ namespace org.sessionsapp.player
         [DllImport (DllImportValue)]
         public static extern int SSP_SetPosition(long position);       
         [DllImport (DllImportValue)]
-        public static extern int SSP_SetPositionPercentage(float position);       
+        public static extern int SSP_SetPositionPercentage(float position);      
+        [DllImport (DllImportValue)]
+        public static extern int SSP_GetPositionFromBytes(long bytes, ref SSP_POSITION position);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_GetPositionFromPercentage(float percentage, ref SSP_POSITION position);
 
         // Data
         [DllImport (DllImportValue)]
@@ -149,6 +153,8 @@ namespace org.sessionsapp.player
         public static extern int SSP_GetMixerData(float[] buffer, int length);
         [DllImport (DllImportValue)]
         public static extern int SSP_GetMixerData(int[] buffer, int length);
+        [DllImport (DllImportValue)]
+        public static extern long SSP_GetDataAvailable();
 
         // Encoder
         [DllImport (DllImportValue)]
@@ -241,7 +247,7 @@ namespace org.sessionsapp.player
 
     public enum SSPPlayerState
     {
-        Unknown = 0,
+        Uninitialized = 0,
         Initialized = 1,
         Stopped = 2,
         Playing = 3,

@@ -99,13 +99,16 @@ LIBRARY_API bool SSP_GetIsSettingPosition();
 LIBRARY_API bool SSP_GetIsPlayingLoop();
 
 // Position
-LIBRARY_API void SSP_GetPosition(SSP_POSITION* position);
+LIBRARY_API SSP_ERROR SSP_GetPosition(SSP_POSITION* position);
 LIBRARY_API SSP_ERROR SSP_SetPosition(uint64_t position);
 LIBRARY_API SSP_ERROR SSP_SetPositionPercentage(float position);
+LIBRARY_API SSP_ERROR SSP_GetPositionFromBytes(uint64_t bytes, SSP_POSITION* position);
+LIBRARY_API SSP_ERROR SSP_GetPositionFromPercentage(float percentage, SSP_POSITION* position);
 
 // Data
 LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
 LIBRARY_API uint64_t SSP_GetBytesFromSecondsForCurrentChannel(float seconds);
+LIBRARY_API uint64_t SSP_GetDataAvailable();
 
 // Encoder
 LIBRARY_API SSP_ERROR SSP_StartEncode(ssp_player_encoder_t encoder);

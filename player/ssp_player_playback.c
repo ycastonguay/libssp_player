@@ -23,6 +23,7 @@
 #include "ssp_bass.h"
 #include "ssp_log.h"
 #include "ssp_playlistitem.h"
+#include "ssp_privatestructs.h"
 
 SSP_ERROR player_pause(SSP_PLAYER* player) {
     if(player->playhead->state == SSP_PLAYER_STATE_PLAYING) {
@@ -47,6 +48,10 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
 }
 
 SSP_ERROR player_stop(SSP_PLAYER* player) {
+    if(player->playhead->state != SSP_PLAYER_STATE_PLAYING && player->playhead->state != SSP_PLAYER_STATE_PAUSED) {
+        return SSP_OK;
+    }
+
     // reset loop here
     //if(player->playhead->isEQEnabled) {
         player_removeEQStage(player);

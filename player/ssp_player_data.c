@@ -21,6 +21,7 @@
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
+#include "ssp_privatestructs.h"
 
 int player_getMixerData(SSP_PLAYER* player, void* buffer, int length) {
     int bytes = BASS_ChannelGetData(player->handles->mixerChannel, buffer, length);
@@ -44,4 +45,13 @@ uint64_t player_getBytesFromSecondsForCurrentChannel(SSP_PLAYER* player, float s
     }
 
     return bytes;
+}
+
+uint64_t player_getDataAvailable(SSP_PLAYER* player) {
+    int data = BASS_ChannelGetData(player->handles->mixerChannel, NULL, BASS_DATA_AVAILABLE);
+    if(data == -1) {
+        bass_getError("player_getDataAvailable");
+    }
+
+    return data;
 }

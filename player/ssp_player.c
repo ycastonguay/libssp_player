@@ -231,6 +231,8 @@ SSP_ERROR player_init(SSP_PLAYER* player) {
         return error;
     }
 
+    playhead_reset(player->playhead);
+
     return SSP_OK;
 }
 

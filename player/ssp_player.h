@@ -75,14 +75,17 @@ SSP_ERROR player_setPitchShifting(SSP_PLAYER* player, int pitchShifting);
 
 // Position
 uint64_t player_getPosition(SSP_PLAYER* player);
-void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position);
+SSP_ERROR player_getPositionStruct(SSP_PLAYER* player, SSP_POSITION* position);
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position);
 SSP_ERROR player_setPositionPercentage(SSP_PLAYER* player, float position);
+SSP_ERROR player_getPositionFromBytes(SSP_PLAYER* player, uint64_t bytes, SSP_POSITION* position);
+SSP_ERROR player_getPositionFromPercentage(SSP_PLAYER* player, float percentage, SSP_POSITION* position);
 
 // Data
 DWORD CALLBACK player_streamProc(HSTREAM handle, float *buffer, DWORD length, void *user);
 int player_getMixerData(SSP_PLAYER* player, void* buffer, int length);
 uint64_t player_getBytesFromSecondsForCurrentChannel(SSP_PLAYER* player, float seconds);
+uint64_t player_getDataAvailable(SSP_PLAYER* player);
 
 // EQ
 SSP_ERROR player_createEQStage(SSP_PLAYER* player);

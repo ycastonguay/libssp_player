@@ -31,6 +31,7 @@ uint64_t player_getPosition(SSP_PLAYER* player) {
     uint64_t position = BASS_Mixer_ChannelGetPosition(player->handles->fxChannel, BASS_POS_BYTE);
     if(position == -1) {
         bass_getError("bass_getPosition");
+        return position;
     }
 
     if(player->mixer->useFloatingPoint) {
@@ -47,21 +48,40 @@ uint64_t player_getPosition(SSP_PLAYER* player) {
     return position;
 }
 
-void player_getPositionNew(SSP_PLAYER* player, SSP_POSITION* position) {
+SSP_ERROR player_getPositionFromBytes(SSP_PLAYER* player, uint64_t bytes, SSP_POSITION* position) {
     SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
     if(item == NULL || !item->isLoaded) {
         position->bytes = 0;
         position->samples = 0;
         position->ms = 0;
         position->str[0] = '\0';
-        return;
+        return SSP_OK;
     }
 
-    uint64_t bytes = player_getPosition(player);
     position->bytes = bytes;
     position->samples = convert_toSamplesFromBytes(bytes, item->bitsPerSample, item->numberOfChannels);
     position->ms = convert_toMS(position->samples, item->sampleRate);
     convert_toStringFromMS(position->ms, position->str);
+    return SSP_OK;
+}
+
+SSP_ERROR player_getPositionFromPercentage(SSP_PLAYER* player, float percentage, SSP_POSITION* position) {
+    SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
+    if(item == NULL) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    uint64_t bytes = (uint64_t) (percentage * item->length);
+    return player_getPositionFromBytes(player, bytes, position);
+}
+
+SSP_ERROR player_getPositionStruct(SSP_PLAYER* player, SSP_POSITION* position) {
+    uint64_t bytes = player_getPosition(player);
+    if(bytes == -1) {
+        return SSP_ERROR_UNKNOWN;
+    }
+
+    return player_getPositionFromBytes(player, bytes, position);
 }
 
 SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
