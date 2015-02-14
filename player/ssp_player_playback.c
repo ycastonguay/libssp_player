@@ -48,6 +48,7 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
 }
 
 SSP_ERROR player_stop(SSP_PLAYER* player) {
+    log_text("player_stop\n");
     if(player->playhead->state != SSP_PLAYER_STATE_PLAYING && player->playhead->state != SSP_PLAYER_STATE_PAUSED) {
         return SSP_OK;
     }
@@ -69,12 +70,12 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
 
     SSP_ERROR error = player_removeSyncCallbacks(player);
     if(error != SSP_OK) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVECALLBACKS;
+        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVESYNCCALLBACKS;
     }
 
     error = player_removeBPMCallbacks(player);
     if(error != SSP_OK) {
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVEBPMCALLBACKS;
     }
 
     success = BASS_StreamFree(player->handles->fxChannel);
@@ -103,7 +104,7 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
     SSP_ERROR error;
 
     log_text("player_play\n");
-    if(player->playhead->state == SSP_PLAYER_STATE_PLAYING) {
+    if(player->playhead->state == SSP_PLAYER_STATE_PLAYING || player->playhead->state == SSP_PLAYER_STATE_PAUSED) {
         if(player->playhead->isPlayingLoop) {
             player_stopLoop(player);
         }
@@ -179,7 +180,7 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
         int result = BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
         if (result == -1) {
             bass_getError("BASS_ChannelFlags");
-            return SSP_ERROR_UNKNOWN;
+            return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSETREPEATTYPE;
         }
     }
 
@@ -205,13 +206,16 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
 
     if (startPaused) {
         if(startPosition > 0) {
-            player_setPosition(player, startPosition);
+            error = player_setPosition(player, startPosition);
+            if(error != SSP_OK) {
+                return error;
+            }
         }
 
         success = BASS_Pause();
         if(!success) {
             bass_getError("BASS_Pause");
-            return SSP_ERROR_UNKNOWN;
+            return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSTARTPAUSED;
         }
     }
 

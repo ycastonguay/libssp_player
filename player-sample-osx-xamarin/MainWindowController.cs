@@ -70,7 +70,7 @@ namespace playersampleosxxamarin
         private void HandleTimerRefreshPositionElapsed(object sender, ElapsedEventArgs e)
         {
             var position = new SSP_POSITION();
-            SSP.SSP_GetPositionNew(ref position);
+            SSP.SSP_GetPosition(ref position);
 
             InvokeOnMainThread(() => {
                 lblPosition.StringValue = string.Format("Position: {0}", position.str);
@@ -148,7 +148,7 @@ namespace playersampleosxxamarin
             var item = new SSP_PLAYLISTITEM();
             int index = SSP.SSP_Playlist_GetCurrentIndex();
             int count = SSP.SSP_Playlist_GetCount();
-            SSP.SSP_Playlist_GetItemAtNew(index, ref item);
+            SSP.SSP_Playlist_GetItemAt(index, ref item);
 
             InvokeOnMainThread(() => {
                 if(lblPlaylist != null)

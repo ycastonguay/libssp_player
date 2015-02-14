@@ -25,6 +25,7 @@
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
 #include "ssp_playlistitem.h"
+#include "ssp_log.h"
 
 SSP_PLAYLIST* playlist_create() {
     SSP_PLAYLIST* playlist = malloc(sizeof(SSP_PLAYLIST));
@@ -82,6 +83,7 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
 }
 
 SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
+    log_textf("playlist_addItem - filePath: %s\n", filePath);
     SSP_PLAYLISTITEM *item = playlistitem_create();
     item->filePath = malloc(strlen(filePath));
     strcpy(item->filePath, filePath);
@@ -107,6 +109,7 @@ SSP_ERROR playlist_removeItemAt(SSP_PLAYLIST *playlist, int index) {
 }
 
 SSP_ERROR playlist_clear(SSP_PLAYLIST *playlist) {
+    log_text("playlist_clear\n");
     if(playlist->items != NULL) {
         for(int a = 0; a < playlist_getCount(playlist); a++) {
             playlistitem_free(playlist_getItemAt(playlist, a));

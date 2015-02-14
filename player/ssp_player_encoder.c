@@ -43,7 +43,7 @@ SSP_ERROR player_startEncode(SSP_PLAYER* player, ssp_player_encoder_t encoder) {
             player->handles->encoder = BASS_Encode_StartCA(player->handles->mixerChannel, ftype, atype, BASS_ENCODE_AUTOFREE, bitrate, NULL, NULL);
             if(player->handles->encoder == 0) {
                 bass_getError("BASS_Encode_StartCA");
-                return SSP_ERROR_UNKNOWN;
+                return SSP_ERROR_ENCODER_FAILEDTOSTART;
             }
             #endif
             break;
@@ -59,7 +59,7 @@ SSP_ERROR player_stopEncode(SSP_PLAYER* player) {
     bool success = BASS_Encode_Stop(player->handles->encoder);
     if(!success) {
         bass_getError("BASS_Encode_Stop");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_ENCODER_FAILEDTOSTOP;
     }
     player->handles->encoder = 0;
     return SSP_OK;
@@ -67,13 +67,13 @@ SSP_ERROR player_stopEncode(SSP_PLAYER* player) {
 
 SSP_ERROR player_startCast(SSP_PLAYER* player, SSP_CAST_SERVER* server) {
     if(player->handles->encoder == 0) {
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_CAST_ENCODERNOTFOUND;
     }
 
     bool success = BASS_Encode_CastInit(player->handles->encoder, server->url, server->password, BASS_ENCODE_TYPE_MP3, "name", "url", "genre", NULL, NULL, server->bitrate, TRUE);
     if(!success) {
         bass_getError("BASS_Encode_CastInit");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_CAST_FAILEDTOINIT;
     }
 
     return SSP_OK;

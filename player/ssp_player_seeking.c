@@ -54,7 +54,8 @@ SSP_ERROR player_getPositionFromBytes(SSP_PLAYER* player, uint64_t bytes, SSP_PO
         position->bytes = 0;
         position->samples = 0;
         position->ms = 0;
-        position->str[0] = '\0';
+        //position->str[0] = '\0';
+        convert_toStringFromMS(position->ms, position->str);
         return SSP_OK;
     }
 
@@ -68,7 +69,8 @@ SSP_ERROR player_getPositionFromBytes(SSP_PLAYER* player, uint64_t bytes, SSP_PO
 SSP_ERROR player_getPositionFromPercentage(SSP_PLAYER* player, float percentage, SSP_POSITION* position) {
     SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
     if(item == NULL) {
-        return SSP_ERROR_UNKNOWN;
+        player_getPositionFromBytes(player, 0, position);
+        return SSP_ERROR_CURRENTPLAYLISTITEMISNULL;
     }
 
     uint64_t bytes = (uint64_t) (percentage * item->length);
@@ -78,7 +80,8 @@ SSP_ERROR player_getPositionFromPercentage(SSP_PLAYER* player, float percentage,
 SSP_ERROR player_getPositionStruct(SSP_PLAYER* player, SSP_POSITION* position) {
     uint64_t bytes = player_getPosition(player);
     if(bytes == -1) {
-        return SSP_ERROR_UNKNOWN;
+        player_getPositionFromBytes(player, 0, position);
+        return SSP_ERROR_FAILEDTOGETPOSITION;
     }
 
     return player_getPositionFromBytes(player, bytes, position);

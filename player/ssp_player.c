@@ -27,6 +27,7 @@
 #include "ssp_playerhandles.h"
 #include "ssp_mixer.h"
 #include "ssp_device.h"
+#include "ssp_log.h"
 
 #pragma mark Initialization
 
@@ -249,6 +250,7 @@ SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, in
 
     playhead_reset(player->playhead);
 
+    log_textf("player_initDevice: Initializing device (%d Hz, ms buffer: %d, update period: %d, floatingPoint: %d)\n", sampleRate, bufferSize, updatePeriod, useFloatingPoint);
     SSP_ERROR error = bass_init(deviceId, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
     if(error != SSP_OK) {
         return error;
@@ -287,7 +289,7 @@ SSP_ERROR player_setBufferSize(SSP_PLAYER* player, int bufferSize) {
     bool success = BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
     if(!success) {
         bass_getError("BASS_SetConfig");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYHEAD_FAILEDTOSETBUFFERSIZE;
     }
 
     return SSP_OK;
@@ -299,7 +301,7 @@ SSP_ERROR player_setUpdatePeriod(SSP_PLAYER* player, int updatePeriod) {
     bool success = BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
     if(!success) {
         bass_getError("BASS_SetConfig");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYHEAD_FAILEDTOSETUPDATEPERIOD;
     }
 
     return SSP_OK;

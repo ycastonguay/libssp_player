@@ -25,7 +25,7 @@
 #include "ssp_structs.h"
 
 void check_playlist_setup(void) {
-    printf("[check_playlist_setup]\n");
+    //printf("[check_playlist_setup]\n");
     SSP_ERROR error = SSP_Init(NULL);
     if(error != SSP_OK) {
         printf("[check_playlist_setup] FAILED to call SSP_Init: %d", error);
@@ -33,11 +33,19 @@ void check_playlist_setup(void) {
 }
 
 void check_playlist_teardown(void) {
-    printf("[check_playlist_teardown]\n");
+    //printf("[check_playlist_teardown]\n");
     SSP_ERROR error = SSP_Free();
     if(error != SSP_OK) {
         printf("[check_playlist_setup] FAILED to call SSP_Free: %d", error);
     }
+}
+
+void printPlaylistItems() {
+//    SSP_PLAYLISTITEM item;
+//    for(int a = 0; a < SSP_Playlist_GetCount(); a++) {
+//        SSP_Playlist_GetItemAt(a, &item);
+//        printf("item %d = %s\n", a, item.filePath);
+//    }
 }
 
 START_TEST(test_playlist_add) {
@@ -52,22 +60,7 @@ START_TEST(test_playlist_add) {
     }
 END_TEST
 
-START_TEST(test_playlist_remove) {
-        SSP_ERROR error = SSP_Playlist_Clear();
-        ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
-
-        error = SSP_Playlist_AddItem("/test/file/path");
-        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
-
-        error = SSP_Playlist_RemoveItemAt(0);
-        ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
-
-        int count = SSP_Playlist_GetCount();
-        ck_assert_int_eq(count, 0);
-    }
-END_TEST
-
-START_TEST(test_playlist_remove_partial) {
+START_TEST(test_playlist_clear) {
         SSP_ERROR error = SSP_Playlist_Clear();
         ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
 
@@ -80,8 +73,63 @@ START_TEST(test_playlist_remove_partial) {
         error = SSP_Playlist_AddItem("item3");
         ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
 
+        error = SSP_Playlist_Clear();
+        ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
+
+        int count = SSP_Playlist_GetCount();
+        ck_assert_int_eq(count, 0);
+    }
+END_TEST
+
+START_TEST(test_playlist_remove_first) {
+        SSP_ERROR error = SSP_Playlist_Clear();
+        ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item1");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item2");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item3");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_RemoveItemAt(0);
+        ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
+
+        printPlaylistItems();
+
+        int count = SSP_Playlist_GetCount();
+        ck_assert_int_eq(count, 2);
+
+        SSP_PLAYLISTITEM item;
+        SSP_Playlist_GetItemAt(0, &item);
+        ck_assert_str_eq(item.filePath, "item2");
+
+        SSP_Playlist_GetItemAt(1, &item);
+        ck_assert_str_eq(item.filePath, "item3");
+    }
+END_TEST
+
+START_TEST(test_playlist_remove_middle) {
+        SSP_ERROR error = SSP_Playlist_Clear();
+        ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item1");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item2");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item3");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        printPlaylistItems();
+
         error = SSP_Playlist_RemoveItemAt(1);
         ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
+
+        printPlaylistItems();
 
         int count = SSP_Playlist_GetCount();
         ck_assert_int_eq(count, 2);
@@ -95,7 +143,7 @@ START_TEST(test_playlist_remove_partial) {
     }
 END_TEST
 
-START_TEST(test_playlist_insert) {
+START_TEST(test_playlist_remove_last) {
         SSP_ERROR error = SSP_Playlist_Clear();
         ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
 
@@ -108,22 +156,26 @@ START_TEST(test_playlist_insert) {
         error = SSP_Playlist_AddItem("item3");
         ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
 
-        error = SSP_Playlist_AddItem("item4");
-        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+        printPlaylistItems();
 
-        error = SSP_Playlist_InsertItemAt("item5", 1);
+        error = SSP_Playlist_RemoveItemAt(2);
         ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
 
+        printPlaylistItems();
+
         int count = SSP_Playlist_GetCount();
-        ck_assert_int_eq(count, 5);
+        ck_assert_int_eq(count, 2);
 
         SSP_PLAYLISTITEM item;
+        SSP_Playlist_GetItemAt(0, &item);
+        ck_assert_str_eq(item.filePath, "item1");
+
         SSP_Playlist_GetItemAt(1, &item);
-        ck_assert_str_eq(item.filePath, "item5");
+        ck_assert_str_eq(item.filePath, "item2");
     }
 END_TEST
 
-START_TEST(test_playlist_insert2) {
+START_TEST(test_playlist_insert_first) {
         SSP_ERROR error = SSP_Playlist_Clear();
         ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
 
@@ -136,18 +188,86 @@ START_TEST(test_playlist_insert2) {
         error = SSP_Playlist_AddItem("item3");
         ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
 
-        error = SSP_Playlist_AddItem("item4");
-        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+        printPlaylistItems();
 
-        error = SSP_Playlist_InsertItemAt("item5", 3);
+        error = SSP_Playlist_InsertItemAt("item4", 0);
         ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
 
+        printPlaylistItems();
+
         int count = SSP_Playlist_GetCount();
-        ck_assert_int_eq(count, 5);
+        ck_assert_int_eq(count, 4);
 
         SSP_PLAYLISTITEM item;
-        SSP_Playlist_GetItemAt(3, &item);
-        ck_assert_str_eq(item.filePath, "item5");
+        SSP_Playlist_GetItemAt(0, &item);
+        ck_assert_str_eq(item.filePath, "item4");
+
+        SSP_Playlist_GetItemAt(1, &item);
+        ck_assert_str_eq(item.filePath, "item1");
+    }
+END_TEST
+
+START_TEST(test_playlist_insert_middle) {
+        SSP_ERROR error = SSP_Playlist_Clear();
+        ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item1");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item2");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item3");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        printPlaylistItems();
+
+        error = SSP_Playlist_InsertItemAt("item4", 1);
+        ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
+
+        printPlaylistItems();
+
+        int count = SSP_Playlist_GetCount();
+        ck_assert_int_eq(count, 4);
+
+        SSP_PLAYLISTITEM item;
+        SSP_Playlist_GetItemAt(0, &item);
+        ck_assert_str_eq(item.filePath, "item1");
+
+        SSP_Playlist_GetItemAt(1, &item);
+        ck_assert_str_eq(item.filePath, "item4");
+    }
+END_TEST
+
+START_TEST(test_playlist_insert_last) {
+        SSP_ERROR error = SSP_Playlist_Clear();
+        ck_assert_msg(error == SSP_OK, "Failed to clear playlist - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item1");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item2");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        error = SSP_Playlist_AddItem("item3");
+        ck_assert_msg(error == SSP_OK, "Failed to add playlist item - error: %d", error);
+
+        printPlaylistItems();
+
+        error = SSP_Playlist_InsertItemAt("item4", 2);
+        ck_assert_msg(error == SSP_OK, "Failed to remove playlist item - error: %d", error);
+
+        printPlaylistItems();
+
+        int count = SSP_Playlist_GetCount();
+        ck_assert_int_eq(count, 4);
+
+        SSP_PLAYLISTITEM item;
+        SSP_Playlist_GetItemAt(0, &item);
+        ck_assert_str_eq(item.filePath, "item1");
+
+        SSP_Playlist_GetItemAt(2, &item);
+        ck_assert_str_eq(item.filePath, "item4");
     }
 END_TEST
 

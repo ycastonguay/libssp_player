@@ -22,18 +22,21 @@
 Suite* player_suite(void)
 {
     Suite *s;
-    TCase *tc_core;
+    TCase *tc_playlist;
 
     s = suite_create("Player");
-    tc_core = tcase_create("Core");
+    tc_playlist = tcase_create("Playlist");
 
-    tcase_add_checked_fixture(tc_core, check_playlist_setup, check_playlist_teardown);
-    tcase_add_test(tc_core, test_playlist_add);
-    tcase_add_test(tc_core, test_playlist_remove);
-    tcase_add_test(tc_core, test_playlist_remove_partial);
-    tcase_add_test(tc_core, test_playlist_insert);
-    tcase_add_test(tc_core, test_playlist_insert2);
-    suite_add_tcase(s, tc_core);
+    tcase_add_checked_fixture(tc_playlist, check_playlist_setup, check_playlist_teardown);
+    tcase_add_test(tc_playlist, test_playlist_add);
+    tcase_add_test(tc_playlist, test_playlist_clear);
+    tcase_add_test(tc_playlist, test_playlist_remove_first);
+    tcase_add_test(tc_playlist, test_playlist_remove_middle);
+    tcase_add_test(tc_playlist, test_playlist_remove_last);
+    tcase_add_test(tc_playlist, test_playlist_insert_first);
+    tcase_add_test(tc_playlist, test_playlist_insert_middle);
+    tcase_add_test(tc_playlist, test_playlist_insert_last);
+    suite_add_tcase(s, tc_playlist);
 
     return s;
 }

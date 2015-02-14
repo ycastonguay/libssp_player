@@ -68,7 +68,7 @@ SSP_ERROR player_setVolume(SSP_PLAYER* player, float volume) {
     bool success = BASS_ChannelGetAttribute(player->handles->mixerChannel, BASS_ATTRIB_VOL, &volume);
     if(!success) {
         bass_getError("player_setVolume");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYHEAD_FAILEDTOSETVOLUME;
     }
 
     return SSP_OK;
@@ -89,7 +89,7 @@ SSP_ERROR player_setTimeShifting(SSP_PLAYER* player, float timeShifting) {
     bool success = BASS_ChannelSetAttribute(player->handles->fxChannel, BASS_ATTRIB_TEMPO, timeShifting);
     if(!success) {
         bass_getError("player_setTimeShifting");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYHEAD_FAILEDTOSETTIMESHIFTING;
     }
 
     error = player_addBPMCallbacks(player);
@@ -115,7 +115,7 @@ SSP_ERROR player_setPitchShifting(SSP_PLAYER* player, int pitchShifting) {
     bool success = BASS_ChannelSetAttribute(player->handles->fxChannel, BASS_ATTRIB_TEMPO_PITCH, pitchShifting);
     if(!success) {
         bass_getError("player_setPitchShifting");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_PLAYHEAD_FAILEDTOSETPITCHSHIFTING;
     }
 
     error = player_addBPMCallbacks(player);

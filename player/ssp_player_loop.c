@@ -91,13 +91,13 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
 
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
     if(currentItem == NULL) {
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_CURRENTPLAYLISTITEMISNULL;
     }
 
     bool success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
         bass_getError("BASS_ChannelLock");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_FAILEDTOLOCKCHANNEL;
     }
 
     // Skip to the start position of the loop
@@ -105,20 +105,20 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
         success = BASS_ChannelSetPosition(currentItem->channel, startPosition * 2, BASS_POS_BYTE);
         if(!success) {
             bass_getError("BASS_ChannelSetPosition");
-            return SSP_ERROR_UNKNOWN;
+            return SSP_ERROR_FAILEDTOSETPOSITION;
         }
 
         // Clear buffer
         success = BASS_ChannelSetPosition(player->handles->fxChannel, 0, BASS_POS_BYTE);
         if(!success) {
             bass_getError("BASS_ChannelSetPosition");
-            return SSP_ERROR_UNKNOWN;
+            return SSP_ERROR_FAILEDTOSETPOSITION;
         }
 
         success = BASS_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
         if(!success) {
             bass_getError("BASS_ChannelSetPosition");
-            return SSP_ERROR_UNKNOWN;
+            return SSP_ERROR_FAILEDTOSETPOSITION;
         }
     }
 
@@ -128,7 +128,7 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
     player->handles->syncProcLoop = BASS_ChannelSetSync(player->handles->fxChannel, BASS_SYNC_POS | BASS_SYNC_MIXTIME, syncPosition, player_loopSyncProc, player);
     if(player->handles->syncProcLoop == 0) {
         bass_getError("BASS_ChannelSetSync");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_FAILEDTOSETSYNC;
     }
 
     // Create a new sync call back for the song end position
@@ -145,7 +145,7 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
     success = BASS_ChannelLock(player->handles->mixerChannel, false);
     if(!success) {
         bass_getError("BASS_ChannelLock");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_FAILEDTOLOCKCHANNEL;
     }
 
     return SSP_OK;
@@ -189,7 +189,7 @@ SSP_ERROR player_updateLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
     }
 
     if(player->loop == NULL) {
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_LOOP_INVALID;
     }
 
     uint64_t currentPosition = player_getPosition(player);
@@ -241,7 +241,7 @@ SSP_ERROR player_stopLoop(SSP_PLAYER* player) {
     bool success = BASS_ChannelRemoveSync(player->handles->fxChannel, player->handles->syncProcLoop);
     if(!success) {
         bass_getError("BASS_ChannelRemoveSync");
-        return SSP_ERROR_UNKNOWN;
+        return SSP_ERROR_FAILEDTOREMOVESYNC;
     }
 
     player->loop = NULL;

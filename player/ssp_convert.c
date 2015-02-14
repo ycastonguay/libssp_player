@@ -74,7 +74,7 @@ void convert_toStringFromMS(__uint64_t milliseconds, char *str) {
         sprintf(str, "%01d:%02d:%02d.%03d", hours, minutes, seconds, ms);
     }
     else {
-        sprintf(str, "%02d:%02d.%03d", minutes, seconds, ms);
+        sprintf(str, "%01d:%02d.%03d", minutes, seconds, ms);
     }
 }
 
