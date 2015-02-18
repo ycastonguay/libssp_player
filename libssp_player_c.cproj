@@ -33,48 +33,46 @@
     <Folder Include="player\" />
     <Folder Include="player-sample-console\" />
     <Folder Include="bass\" />
-    <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="vector\vector.c" />
     <Compile Include="player-sample-console\main.c" />
     <Compile Include="player\ssp_bass.c" />
-    <Compile Include="player\ssp_convertaudio.c" />
     <Compile Include="player\ssp_device.c" />
     <Compile Include="player\ssp_eqpreset.c" />
     <Compile Include="player\ssp_log.c" />
     <Compile Include="player\ssp_loop.c" />
-    <Compile Include="player\ssp_marker.c" />
     <Compile Include="player\ssp_mixer.c" />
     <Compile Include="player\ssp_player.c" />
     <Compile Include="player\ssp_player_eq.c" />
     <Compile Include="player\ssp_player_loop.c" />
-    <Compile Include="player\ssp_player_marker.c" />
     <Compile Include="player\ssp_player_playback.c" />
     <Compile Include="player\ssp_player_seeking.c" />
-    <Compile Include="player\ssp_playerchannels.c" />
-    <Compile Include="player\ssp_playerplugins.c" />
     <Compile Include="player\ssp_playhead.c" />
     <Compile Include="player\ssp_playlist.c" />
     <Compile Include="player\ssp_public.c" />
-    <Compile Include="tests\test.c" />
+    <Compile Include="player\ssp_convert.c" />
+    <Compile Include="player\ssp_player_bpm.c" />
+    <Compile Include="player\ssp_player_callbacks.c" />
+    <Compile Include="player\ssp_player_data.c" />
+    <Compile Include="player\ssp_player_encoder.c" />
+    <Compile Include="player\ssp_player_playhead.c" />
+    <Compile Include="player\ssp_player_stream.c" />
+    <Compile Include="player\ssp_playerhandles.c" />
+    <Compile Include="player\ssp_playlistitem.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vector\vector.h" />
     <None Include="player\ssp_bass.h" />
     <None Include="player\ssp_callbacks.h" />
-    <None Include="player\ssp_convertaudio.h" />
     <None Include="player\ssp_device.h" />
     <None Include="player\ssp_enums.h" />
     <None Include="player\ssp_eqpreset.h" />
     <None Include="player\ssp_errors.h" />
     <None Include="player\ssp_log.h" />
     <None Include="player\ssp_loop.h" />
-    <None Include="player\ssp_marker.h" />
     <None Include="player\ssp_mixer.h" />
     <None Include="player\ssp_player.h" />
-    <None Include="player\ssp_playerchannels.h" />
-    <None Include="player\ssp_playerplugins.h" />
     <None Include="player\ssp_playhead.h" />
     <None Include="player\ssp_playlist.h" />
     <None Include="player\ssp_privatestructs.h" />
@@ -87,6 +85,8 @@
     <None Include="bass\bassmidi.h" />
     <None Include="bass\bassmix.h" />
     <None Include="bass\basswv.h" />
-    <None Include="tests\test.h" />
+    <None Include="player\ssp_convert.h" />
+    <None Include="player\ssp_playerhandles.h" />
+    <None Include="player\ssp_playlistitem.h" />
   </ItemGroup>
 </Project>

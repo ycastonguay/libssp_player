@@ -16,12 +16,14 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdlib.h>
+#include <inttypes.h>
 #include "../bass/bassmix.h"
 #include "ssp_enums.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
 #include "ssp_convert.h"
+#include "ssp_log.h"
 
 uint64_t player_getPosition(SSP_PLAYER* player) {
     if(player->playhead->isSettingPosition || player->handles->fxChannel == 0) {
@@ -34,15 +36,8 @@ uint64_t player_getPosition(SSP_PLAYER* player) {
         return position;
     }
 
-    if(player->mixer->useFloatingPoint) {
-        position /= 2;
-    }
-
 //    if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.CurrentItem.AudioFile.SampleRate > 44100)
-//    {
-//        // Multiply by 1.5 (I don't really know why, but this works for 48000Hz and 96000Hz. Maybe a bug in BASS with FLAC files?)
 //        outputPosition = (long)((float)outputPosition * 1.5f);
-//    }
 
     position += player->playhead->positionOffset;
     return position;
@@ -62,6 +57,11 @@ SSP_ERROR player_getPositionFromBytes(SSP_PLAYER* player, uint64_t bytes, SSP_PO
     position->bytes = bytes;
     position->samples = convert_toSamplesFromBytes(bytes, item->bitsPerSample, item->numberOfChannels);
     position->ms = convert_toMS(position->samples, item->sampleRate);
+
+    if(player->mixer->useFloatingPoint) {
+        position->ms = position->ms / 2;
+    }
+
     convert_toStringFromMS(position->ms, position->str);
     return SSP_OK;
 }
@@ -105,8 +105,14 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     }
 
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
+    if(currentItem == NULL) {
+        return SSP_ERROR_CURRENTPLAYLISTITEMISNULL;
+    }
 
-    player_removeSyncCallbacks(player);
+    SSP_ERROR error = player_removeSyncCallbacks(player);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
@@ -137,24 +143,21 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
         bass_getError("BASS_ChannelSetPosition (fxChannel)");
         return SSP_ERROR_SETPOSITION_FAILEDTOFLUSHBUFFER;
     }
-    success = BASS_Mixer_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
+    success = BASS_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
     if(!success) {
         bass_getError("BASS_ChannelSetPosition (mixerChannel)");
         return SSP_ERROR_SETPOSITION_FAILEDTOFLUSHBUFFER;
     }
 
-    // Calculate position for floating point
-    uint64_t bytesPosition = position;
-    if (player->mixer->useFloatingPoint)
-        bytesPosition *= 2;
-
     // Set position for decode channel
-    success = BASS_ChannelSetPosition(currentItem->channel, bytesPosition, BASS_POS_BYTE);
+    success = BASS_ChannelSetPosition(currentItem->channel, position, BASS_POS_BYTE);
     if(!success) {
+        bass_getError("BASS_ChannelSetPosition (currentItem->channel)");
         return SSP_ERROR_SETPOSITION_FAILEDTOSETPOSITION;
     }
 
-    SSP_ERROR error = player_setSyncCallback(player, currentItem->length - bytesPosition);
+    uint64_t bytesSync = currentItem->length - position;
+    error = player_setSyncCallback(player, bytesSync);
     if(error != SSP_OK) {
         return error;
     }
@@ -180,6 +183,11 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
 
 SSP_ERROR player_setPositionPercentage(SSP_PLAYER* player, float position) {
     SSP_PLAYLISTITEM* item = playlist_getCurrentItem(player->playlist);
-    uint64_t bytes = (uint64_t) (position * item->length);
+    if(item == NULL) {
+        return SSP_ERROR_CURRENTPLAYLISTITEMISNULL;
+    }
+
+    uint64_t bytes = (uint64_t) ((position / 100) * item->length);
+    log_textf("player_setPositionPercentage - position: %f - bytes: %"PRIu64" - length:%"PRIu64"\n", position, bytes, item->length);
     return player_setPosition(player, bytes);
 }

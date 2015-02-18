@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 #include <string.h>
 #include "../bass/bass.h"
 #include "ssp_errors.h"
@@ -24,6 +25,7 @@
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
 #include "ssp_playlistitem.h"
+#include "ssp_log.h"
 
 SSP_PLAYLISTITEM* playlistitem_create() {
     SSP_PLAYLISTITEM* item = malloc(sizeof(SSP_PLAYLISTITEM));
@@ -62,7 +64,7 @@ void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
 }
 
 SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
-    //log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->audioFile->filePath);
+    log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->filePath);
     item->channel = bass_createDecodeStream(item->filePath, useFloatingPoint);
     if(item->channel == 0) {
         return SSP_ERROR_PLAYLISTITEM_LOAD_FAILEDTOCREATEDECODESTREAM;
@@ -80,6 +82,8 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     if(item->length == -1) {
         return SSP_ERROR_PLAYLISTITEM_LOAD_FAILEDTOGETLENGTH;
     }
+
+    log_textf("playlistitem_load - Load successful; length: %"PRIu64" sampleRate: %d \n", item->length, item->sampleRate);
 
     return SSP_OK;
 }

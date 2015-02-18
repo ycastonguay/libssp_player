@@ -11,6 +11,7 @@ namespace playersampleiosxamarin
     public partial class PlayerViewController : UIViewController
     {
         private Timer _timerRefreshPosition;
+        private static SSP_POSITION _length;
 
         // TOOD: Find a way to use the IntPtr user parameter instead
         static PlayerViewController CurrentViewController { get; set; }
@@ -37,7 +38,6 @@ namespace playersampleiosxamarin
 
         private void InitializePlayer()
         {
-            // Perform any additional setup after loading the view, typically from a nib.
             int version = SSP.SSP_GetVersion();
             lblVersion.Text = string.Format("Version {0}", version);
             Console.WriteLine("libssp_player version: {0}", version);
@@ -69,10 +69,10 @@ namespace playersampleiosxamarin
         private void HandleTimerRefreshPositionElapsed(object sender, ElapsedEventArgs e)
         {
             var position = new SSP_POSITION();
-            SSP.SSP_GetPositionNew(ref position);
+            SSP.SSP_GetPosition(ref position);
 
             InvokeOnMainThread(() => {
-                lblPosition.Text = string.Format("Position: {0}", position.str);
+                lblPosition.Text = string.Format("Position: {0} / {1}", position.str, _length.str);
             });
         }
 
@@ -96,7 +96,11 @@ namespace playersampleiosxamarin
             var item = new SSP_PLAYLISTITEM();
             int index = SSP.SSP_Playlist_GetCurrentIndex();
             int count = SSP.SSP_Playlist_GetCount();
-            SSP.SSP_Playlist_GetItemAtNew(index, ref item);
+            SSP.SSP_Playlist_GetItemAt(index, ref item);
+
+            var length = new SSP_POSITION();
+            SSP.SSP_GetPositionFromBytes(item.length, ref length);
+            _length = length;
 
             CurrentViewController.InvokeOnMainThread(() => {
                 CurrentViewController.lblPlaylist.Text = string.Format("Playlist [{0}/{1}]", index+1, count);

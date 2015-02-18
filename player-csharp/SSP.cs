@@ -148,7 +148,6 @@ namespace org.sessionsapp.player
         // Data
         [DllImport (DllImportValue)]
         public static extern long SSP_GetBytesFromSecondsForCurrentChannel(float seconds);
-        //LIBRARY_API int SSP_GetMixerData(void* buffer, int length);
         [DllImport (DllImportValue)]
         public static extern int SSP_GetMixerData(float[] buffer, int length);
         [DllImport (DllImportValue)]
@@ -343,7 +342,8 @@ namespace org.sessionsapp.player
         public string filePath;
         public int sampleRate;
         public int numberOfChannels;
-        public uint channel;
+        public int bitsPerSample;
+        public int channel;
         public long length;
     }
 }

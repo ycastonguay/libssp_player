@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
+#include <stdlib.h>
 #include "ssp_privatestructs.h"
 
 void player_setPlaylistIndexChangedCallback(SSP_PLAYER* player, player_playlistindexchanged_cb cb, void *user) {

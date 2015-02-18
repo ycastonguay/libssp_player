@@ -186,9 +186,8 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
     log_textf("player_playerSyncProc - playbackStopped: %d playlistBackToStart: %d nextPlaylistIndex: %d\n", playbackStopped, playlistBackToStart, nextPlaylistIndex);
 
-    uint64_t offset = 0 - (position / 2);
+    uint64_t offset = 0 - position + buffered;
     if(!playbackStopped) {
-//        // Multiply by 1.5 (I don't really know why, but this works for 48000Hz and 96000Hz. Maybe a bug in BASS with FLAC files?)
 //        if (Playlist.CurrentItem.AudioFile.FileType == AudioFileFormat.FLAC && Playlist.Items[nextPlaylistIndex].AudioFile.SampleRate > 44100)
 //            offset = (long)((float)offset * 1.5f);
 
@@ -218,9 +217,8 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         return;
     }
 
-    //player_removeSyncCallbacks(<#(SSP_PLAYER*)player#>)
+    // TODO: Remove sync callback correctly
 //    RemoveSyncCallback(handle);
-    // We may not have to call this because of BASS_SYNC_ONETIME
 
     // Is this the last song?
     if(player->playlist->currentIndex == playlist_getCount(player->playlist) - 1) {
@@ -234,10 +232,15 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
     if(playbackStopped) {
 
+        // TODO: Why not replace this with player_stop()?
 //            if (IsEQEnabled)
 //                RemoveEQ();
 
-        playlist_disposeChannels(player->playlist);
+        SSP_ERROR error = playlist_disposeChannels(player->playlist);
+        if(error != SSP_OK) {
+            return;
+        }
+
         player_updateState(player, SSP_PLAYER_STATE_STOPPED);
     }
 
@@ -289,12 +292,13 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
     log_textf("player_setSyncCallback - position: %"PRIu64"\n", position);
+
     HSYNC sync = BASS_Mixer_ChannelSetSync(player->handles->fxChannel, BASS_SYNC_POS, position, player_playerSyncProc, player);
     if(sync == 0) {
-        return bass_getError("player_setSyncCallback");
+        bass_getError("player_setSyncCallback");
+        return SSP_ERROR_UNKNOWN;
     }
 
-    // Add to list to remove later
     player->handles->syncProcCount++;
     player->handles->syncProcHandles[player->handles->syncProcCount-1] = sync;
 
@@ -302,7 +306,6 @@ SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
 }
 
 SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
-    // Remove sync procs
     for(int a = 0; a < player->handles->syncProcCount; a++) {
         bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, player->handles->syncProcHandles[a]);
         if(!success) {
@@ -310,7 +313,6 @@ SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
         }
     }
 
-    // Reset list
     player->handles->syncProcCount = 0;
 
     return SSP_OK;

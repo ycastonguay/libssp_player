@@ -23,7 +23,6 @@
 #include "ssp_bass.h"
 #include "ssp_log.h"
 #include "ssp_playlistitem.h"
-#include "ssp_privatestructs.h"
 
 SSP_ERROR player_pause(SSP_PLAYER* player) {
     if(player->playhead->state == SSP_PLAYER_STATE_PLAYING) {
@@ -128,12 +127,14 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
     for(int a = startIndex; a < startIndex + channelsToLoad; a++) {
         log_textf("player_play - Loading playlist item %d...\n", a);
         SSP_PLAYLISTITEM* item = playlist_getItemAt(player->playlist, a);
-        playlistitem_load(item, player->mixer->useFloatingPoint);
+        error = playlistitem_load(item, player->mixer->useFloatingPoint);
+        if(error != SSP_OK) {
+            return error;
+        }
     }
 
     log_text("player_play - Setting stream channel and proc...\n");
     player->handles->streamProc = (STREAMPROC*)player_streamProc;
-
     player->handles->streamChannel = bass_createMemoryStream(firstItem->sampleRate, 2, player->mixer->useFloatingPoint, player->handles->streamProc, player);
     if(player->handles->streamChannel == 0) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEMEMORYSTREAM;
@@ -150,7 +151,6 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEMIXERCHANNEL;
     }
 
-    // Add FX channel to mixer
     bool success = BASS_Mixer_StreamAddChannel(player->handles->mixerChannel, player->handles->fxChannel, BASS_MIXER_BUFFER);
     if(!success) {
         bass_getError("BASS_Mixer_StreamAddChannel");
@@ -184,13 +184,14 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
         }
     }
 
+    player->playlist->currentIndex = startIndex;
+    player->playlist->currentMixerIndex = startIndex;
+
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
     error = player_setSyncCallback(player, currentItem->length);
     if(error != SSP_OK) {
         return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSETSYNCCALLBACK;
     }
-
-    player->playlist->currentMixerIndex = startIndex;
 
     success = BASS_Start();
     if(!success) {
@@ -239,7 +240,7 @@ SSP_ERROR player_previous(SSP_PLAYER* player) {
         player->playlist->currentIndex--;
     }
 
-    error = player_play(player);
+    error = player_playWithOptions(player, player->playlist->currentIndex, 0, false);
     if(error != SSP_OK) {
         return error;
     }
@@ -257,7 +258,7 @@ SSP_ERROR player_next(SSP_PLAYER* player) {
         player->playlist->currentIndex++;
     }
 
-    error = player_play(player);
+    error = player_playWithOptions(player, player->playlist->currentIndex, 0, false);
     if(error != SSP_OK) {
         return error;
     }
@@ -273,7 +274,7 @@ SSP_ERROR player_goTo(SSP_PLAYER* player, int index) {
 
     player->playlist->currentIndex = index;
 
-    error = player_play(player);
+    error = player_playWithOptions(player, player->playlist->currentIndex, 0, false);
     if(error != SSP_OK) {
         return error;
     }
