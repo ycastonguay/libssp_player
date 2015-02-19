@@ -193,7 +193,7 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
 
         // Check if the sample rate needs to be changed (i.e. main channel sample rate different than the decoding file)
         float sampleRate;
-        bool success = BASS_ChannelGetAttribute(player->handles->mixerChannel, BASS_ATTRIB_FREQ, &sampleRate);
+        bool success = BASS_ChannelGetAttribute(player->handles->streamChannel, BASS_ATTRIB_FREQ, &sampleRate);
         if(!success) {
             int bassError = BASS_ErrorGetCode();
             if(bassError != BASS_OK) {
@@ -203,9 +203,13 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         }
 
         SSP_PLAYLISTITEM* nextItem = playlist_getItemAt(player->playlist, nextPlaylistIndex);
-        if(nextItem != NULL && sampleRate != nextItem->sampleRate) {
-            log_textf("player_playerSyncProc - Switching mixer sample rate to %d", nextItem->sampleRate);
-            BASS_ChannelSetAttribute(player->handles->mixerChannel, BASS_ATTRIB_FREQ, nextItem->sampleRate);
+        if(nextItem != NULL) {
+	        float newSampleRate = nextItem->sampleRate;
+	        log_textf("player_playerSyncProc - Mixer sample rate is %f; Next playlist item sample rate is %f", sampleRate, newSampleRate);
+	        if(sampleRate != newSampleRate) {
+	        	log_textf("player_playerSyncProc - Switching sample rate to %f", newSampleRate);
+	            BASS_ChannelSetAttribute(player->handles->streamChannel, BASS_ATTRIB_FREQ, newSampleRate);
+	        }
         }
 
         player->playhead->positionOffset = offset;
