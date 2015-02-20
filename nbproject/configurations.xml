@@ -18,31 +18,40 @@
       <itemPath>player/ssp_bass.c</itemPath>
       <itemPath>player/ssp_bass.h</itemPath>
       <itemPath>player/ssp_callbacks.h</itemPath>
-      <itemPath>player/ssp_convertaudio.c</itemPath>
-      <itemPath>player/ssp_convertaudio.h</itemPath>
+      <itemPath>player/ssp_convert.c</itemPath>
+      <itemPath>player/ssp_convert.h</itemPath>
       <itemPath>player/ssp_device.c</itemPath>
       <itemPath>player/ssp_device.h</itemPath>
+      <itemPath>player/ssp_enums.h</itemPath>
       <itemPath>player/ssp_eqpreset.c</itemPath>
       <itemPath>player/ssp_eqpreset.h</itemPath>
       <itemPath>player/ssp_errors.h</itemPath>
+      <itemPath>player/ssp_log.c</itemPath>
+      <itemPath>player/ssp_log.h</itemPath>
       <itemPath>player/ssp_loop.c</itemPath>
       <itemPath>player/ssp_loop.h</itemPath>
-      <itemPath>player/ssp_marker.c</itemPath>
-      <itemPath>player/ssp_marker.h</itemPath>
       <itemPath>player/ssp_mixer.c</itemPath>
       <itemPath>player/ssp_mixer.h</itemPath>
       <itemPath>player/ssp_player.c</itemPath>
       <itemPath>player/ssp_player.h</itemPath>
+      <itemPath>player/ssp_player_bpm.c</itemPath>
+      <itemPath>player/ssp_player_callbacks.c</itemPath>
+      <itemPath>player/ssp_player_data.c</itemPath>
+      <itemPath>player/ssp_player_encoder.c</itemPath>
+      <itemPath>player/ssp_player_eq.c</itemPath>
+      <itemPath>player/ssp_player_loop.c</itemPath>
       <itemPath>player/ssp_player_playback.c</itemPath>
+      <itemPath>player/ssp_player_playhead.c</itemPath>
       <itemPath>player/ssp_player_seeking.c</itemPath>
-      <itemPath>player/ssp_playerchannels.c</itemPath>
-      <itemPath>player/ssp_playerchannels.h</itemPath>
-      <itemPath>player/ssp_playerplugins.c</itemPath>
-      <itemPath>player/ssp_playerplugins.h</itemPath>
+      <itemPath>player/ssp_player_stream.c</itemPath>
+      <itemPath>player/ssp_playerhandles.c</itemPath>
+      <itemPath>player/ssp_playerhandles.h</itemPath>
       <itemPath>player/ssp_playhead.c</itemPath>
       <itemPath>player/ssp_playhead.h</itemPath>
       <itemPath>player/ssp_playlist.c</itemPath>
       <itemPath>player/ssp_playlist.h</itemPath>
+      <itemPath>player/ssp_playlistitem.c</itemPath>
+      <itemPath>player/ssp_playlistitem.h</itemPath>
       <itemPath>player/ssp_privatestructs.h</itemPath>
       <itemPath>player/ssp_public.c</itemPath>
       <itemPath>player/ssp_public.h</itemPath>
@@ -88,7 +97,7 @@
       <compileType>
         <cTool>
           <standard>3</standard>
-          <commandLine>-Lbass/win32 -Lbass/osx -Lbass/linux -Lbass/linux/x64 -lbass -lbassmix -lbass_fx</commandLine>
+          <commandLine>-Lbass/win32 -Lbass/osx -Lbass/linux -Lbass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc</commandLine>
           <preprocessorList>
             <Elem>LINUX</Elem>
           </preprocessorList>
@@ -114,13 +123,15 @@
       </item>
       <item path="player/ssp_callbacks.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="player/ssp_convertaudio.c" ex="false" tool="0" flavor2="0">
+      <item path="player/ssp_convert.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_convertaudio.h" ex="false" tool="3" flavor2="0">
+      <item path="player/ssp_convert.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_device.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_enums.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_eqpreset.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -128,13 +139,13 @@
       </item>
       <item path="player/ssp_errors.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="player/ssp_log.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_log.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="player/ssp_loop.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_loop.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="player/ssp_marker.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="player/ssp_marker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_mixer.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -144,17 +155,29 @@
       </item>
       <item path="player/ssp_player.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="player/ssp_player_bpm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_callbacks.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_data.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_encoder.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_eq.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_loop.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="player/ssp_player_playback.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_playhead.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_player_seeking.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_playerchannels.c" ex="false" tool="0" flavor2="0">
+      <item path="player/ssp_player_stream.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_playerchannels.h" ex="false" tool="3" flavor2="0">
+      <item path="player/ssp_playerhandles.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_playerplugins.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="player/ssp_playerplugins.h" ex="false" tool="3" flavor2="0">
+      <item path="player/ssp_playerhandles.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_playhead.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -163,6 +186,10 @@
       <item path="player/ssp_playlist.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_playlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playlistitem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playlistitem.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_privatestructs.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -217,13 +244,15 @@
       </item>
       <item path="player/ssp_callbacks.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="player/ssp_convertaudio.c" ex="false" tool="0" flavor2="0">
+      <item path="player/ssp_convert.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_convertaudio.h" ex="false" tool="3" flavor2="0">
+      <item path="player/ssp_convert.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_device.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_enums.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_eqpreset.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -231,13 +260,13 @@
       </item>
       <item path="player/ssp_errors.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="player/ssp_log.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_log.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="player/ssp_loop.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_loop.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="player/ssp_marker.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="player/ssp_marker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_mixer.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -247,17 +276,29 @@
       </item>
       <item path="player/ssp_player.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="player/ssp_player_bpm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_callbacks.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_data.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_encoder.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_eq.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_loop.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="player/ssp_player_playback.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_playhead.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_player_seeking.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_playerchannels.c" ex="false" tool="0" flavor2="0">
+      <item path="player/ssp_player_stream.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_playerchannels.h" ex="false" tool="3" flavor2="0">
+      <item path="player/ssp_playerhandles.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="player/ssp_playerplugins.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="player/ssp_playerplugins.h" ex="false" tool="3" flavor2="0">
+      <item path="player/ssp_playerhandles.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_playhead.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -266,6 +307,10 @@
       <item path="player/ssp_playlist.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_playlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="player/ssp_playlistitem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_playlistitem.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="player/ssp_privatestructs.h" ex="false" tool="3" flavor2="0">
       </item>

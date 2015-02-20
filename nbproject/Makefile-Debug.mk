@@ -36,25 +36,33 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/player/ssp_bass.o \
-	${OBJECTDIR}/player/ssp_convertaudio.o \
+	${OBJECTDIR}/player/ssp_convert.o \
 	${OBJECTDIR}/player/ssp_device.o \
 	${OBJECTDIR}/player/ssp_eqpreset.o \
+	${OBJECTDIR}/player/ssp_log.o \
 	${OBJECTDIR}/player/ssp_loop.o \
-	${OBJECTDIR}/player/ssp_marker.o \
 	${OBJECTDIR}/player/ssp_mixer.o \
 	${OBJECTDIR}/player/ssp_player.o \
+	${OBJECTDIR}/player/ssp_player_bpm.o \
+	${OBJECTDIR}/player/ssp_player_callbacks.o \
+	${OBJECTDIR}/player/ssp_player_data.o \
+	${OBJECTDIR}/player/ssp_player_encoder.o \
+	${OBJECTDIR}/player/ssp_player_eq.o \
+	${OBJECTDIR}/player/ssp_player_loop.o \
 	${OBJECTDIR}/player/ssp_player_playback.o \
+	${OBJECTDIR}/player/ssp_player_playhead.o \
 	${OBJECTDIR}/player/ssp_player_seeking.o \
-	${OBJECTDIR}/player/ssp_playerchannels.o \
-	${OBJECTDIR}/player/ssp_playerplugins.o \
+	${OBJECTDIR}/player/ssp_player_stream.o \
+	${OBJECTDIR}/player/ssp_playerhandles.o \
 	${OBJECTDIR}/player/ssp_playhead.o \
 	${OBJECTDIR}/player/ssp_playlist.o \
+	${OBJECTDIR}/player/ssp_playlistitem.o \
 	${OBJECTDIR}/player/ssp_public.o \
 	${OBJECTDIR}/vector/vector.o
 
 
 # C Compiler Flags
-CFLAGS=-Lbass/win32 -Lbass/osx -Lbass/linux -Lbass/linux/x64 -lbass -lbassmix -lbass_fx
+CFLAGS=-Lbass/win32 -Lbass/osx -Lbass/linux -Lbass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc
 
 # CC Compiler Flags
 CCFLAGS=
@@ -82,10 +90,10 @@ ${OBJECTDIR}/player/ssp_bass.o: player/ssp_bass.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_bass.o player/ssp_bass.c
 
-${OBJECTDIR}/player/ssp_convertaudio.o: player/ssp_convertaudio.c 
+${OBJECTDIR}/player/ssp_convert.o: player/ssp_convert.c 
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_convertaudio.o player/ssp_convertaudio.c
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_convert.o player/ssp_convert.c
 
 ${OBJECTDIR}/player/ssp_device.o: player/ssp_device.c 
 	${MKDIR} -p ${OBJECTDIR}/player
@@ -97,15 +105,15 @@ ${OBJECTDIR}/player/ssp_eqpreset.o: player/ssp_eqpreset.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_eqpreset.o player/ssp_eqpreset.c
 
+${OBJECTDIR}/player/ssp_log.o: player/ssp_log.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_log.o player/ssp_log.c
+
 ${OBJECTDIR}/player/ssp_loop.o: player/ssp_loop.c 
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_loop.o player/ssp_loop.c
-
-${OBJECTDIR}/player/ssp_marker.o: player/ssp_marker.c 
-	${MKDIR} -p ${OBJECTDIR}/player
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_marker.o player/ssp_marker.c
 
 ${OBJECTDIR}/player/ssp_mixer.o: player/ssp_mixer.c 
 	${MKDIR} -p ${OBJECTDIR}/player
@@ -117,25 +125,60 @@ ${OBJECTDIR}/player/ssp_player.o: player/ssp_player.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player.o player/ssp_player.c
 
+${OBJECTDIR}/player/ssp_player_bpm.o: player/ssp_player_bpm.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_bpm.o player/ssp_player_bpm.c
+
+${OBJECTDIR}/player/ssp_player_callbacks.o: player/ssp_player_callbacks.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_callbacks.o player/ssp_player_callbacks.c
+
+${OBJECTDIR}/player/ssp_player_data.o: player/ssp_player_data.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_data.o player/ssp_player_data.c
+
+${OBJECTDIR}/player/ssp_player_encoder.o: player/ssp_player_encoder.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_encoder.o player/ssp_player_encoder.c
+
+${OBJECTDIR}/player/ssp_player_eq.o: player/ssp_player_eq.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_eq.o player/ssp_player_eq.c
+
+${OBJECTDIR}/player/ssp_player_loop.o: player/ssp_player_loop.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_loop.o player/ssp_player_loop.c
+
 ${OBJECTDIR}/player/ssp_player_playback.o: player/ssp_player_playback.c 
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_playback.o player/ssp_player_playback.c
+
+${OBJECTDIR}/player/ssp_player_playhead.o: player/ssp_player_playhead.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_playhead.o player/ssp_player_playhead.c
 
 ${OBJECTDIR}/player/ssp_player_seeking.o: player/ssp_player_seeking.c 
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_seeking.o player/ssp_player_seeking.c
 
-${OBJECTDIR}/player/ssp_playerchannels.o: player/ssp_playerchannels.c 
+${OBJECTDIR}/player/ssp_player_stream.o: player/ssp_player_stream.c 
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_playerchannels.o player/ssp_playerchannels.c
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_stream.o player/ssp_player_stream.c
 
-${OBJECTDIR}/player/ssp_playerplugins.o: player/ssp_playerplugins.c 
+${OBJECTDIR}/player/ssp_playerhandles.o: player/ssp_playerhandles.c 
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_playerplugins.o player/ssp_playerplugins.c
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_playerhandles.o player/ssp_playerhandles.c
 
 ${OBJECTDIR}/player/ssp_playhead.o: player/ssp_playhead.c 
 	${MKDIR} -p ${OBJECTDIR}/player
@@ -146,6 +189,11 @@ ${OBJECTDIR}/player/ssp_playlist.o: player/ssp_playlist.c
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_playlist.o player/ssp_playlist.c
+
+${OBJECTDIR}/player/ssp_playlistitem.o: player/ssp_playlistitem.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_playlistitem.o player/ssp_playlistitem.c
 
 ${OBJECTDIR}/player/ssp_public.o: player/ssp_public.c 
 	${MKDIR} -p ${OBJECTDIR}/player
