@@ -19,16 +19,17 @@
 #define __player__ssp_convertaudio__
 
 #include <stdio.h>
+#include <stdint.h>
 
-__uint64_t convert_toSamples(__uint64_t milliseconds, int sampleRate);
-__uint64_t convert_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount);
-__uint64_t convert_toMS(__uint64_t samples, int sampleRate);
-__uint64_t convert_toBytes(__uint64_t samples, int bitRate, int channelCount);
+uint64_t convert_toSamples(uint64_t milliseconds, int sampleRate);
+uint64_t convert_toSamplesFromBytes(uint64_t bytes, int bitsPerSample, int channelCount);
+uint64_t convert_toMS(uint64_t samples, int sampleRate);
+uint64_t convert_toBytes(uint64_t samples, int bitRate, int channelCount);
 float convert_msToTempo(float milliseconds);
 float convert_tempoToMS(float tempo);
 float convert_levelToDB(float level, float maxLevel);
-void convert_toStringFromMS(__uint64_t milliseconds, char *str);
-__uint64_t convert_toMSFromString(const char *string);
-void convert_toString(char *str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
+void convert_toStringFromMS(uint64_t milliseconds, char *str);
+uint64_t convert_toMSFromString(const char *string);
+void convert_toString(char *str, uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
 
 #endif /* defined(__player__ssp_convertaudio__) */

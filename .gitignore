@@ -22,11 +22,17 @@ output/
 obj/
 libs/
 dist/
+Debug/
+Release/
 .idea/
 **/.DS_Store
 **/bin
 **/obj
 **/*.userprefs
+**/*.suo
+**/*.sdf
+**/*.vcxproj.filters
+**/*.vcxproj.user
 
 # CocoaPods
 #

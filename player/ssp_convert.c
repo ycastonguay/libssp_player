@@ -18,19 +18,19 @@
 #include <math.h>
 #include "ssp_convert.h"
 
-__uint64_t convert_toSamples(__uint64_t milliseconds, int sampleRate) {
+uint64_t convert_toSamples(uint64_t milliseconds, int sampleRate) {
     return milliseconds * (sampleRate / 1000);
 }
 
-__uint64_t convert_toSamplesFromBytes(__uint64_t bytes, int bitsPerSample, int channelCount) {
+uint64_t convert_toSamplesFromBytes(uint64_t bytes, int bitsPerSample, int channelCount) {
     return bytes * 8 / bitsPerSample / channelCount;
 }
 
-__uint64_t convert_toMS(__uint64_t samples, int sampleRate) {
+uint64_t convert_toMS(uint64_t samples, int sampleRate) {
     return samples * 1000 / sampleRate;
 }
 
-__uint64_t convert_toBytes(__uint64_t samples, int bitRate, int channelCount) {
+uint64_t convert_toBytes(uint64_t samples, int bitRate, int channelCount) {
     return samples * bitRate * channelCount / 8;
 }
 
@@ -46,12 +46,12 @@ float convert_levelToDB(float level, float maxLevel) {
     return 20.0f * log10f(level / maxLevel);
 }
 
-void convert_toStringFromMS(__uint64_t milliseconds, char *str) {
-    __uint64_t pos = milliseconds;
+void convert_toStringFromMS(uint64_t milliseconds, char *str) {
+    uint64_t pos = milliseconds;
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
-    __uint64_t ms = 0;
+    uint64_t ms = 0;
 
     if (pos >= 3600000)
     {
@@ -78,7 +78,7 @@ void convert_toStringFromMS(__uint64_t milliseconds, char *str) {
     }
 }
 
-__uint64_t convert_toMSFromString(const char *string) {
+uint64_t convert_toMSFromString(const char *string) {
     //    string strHours = String.Empty;
 //    string strMinutes = String.Empty;
 //    string strSeconds = String.Empty;
@@ -120,9 +120,9 @@ __uint64_t convert_toMSFromString(const char *string) {
     return 0;
 }
 
-void convert_toString(char *str, __uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate) {
-    __uint64_t samples = convert_toSamplesFromBytes(bytes, bitsPerSample, channelCount);
-    __uint64_t milliseconds = convert_toMS(samples, sampleRate);
+void convert_toString(char *str, uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate) {
+    uint64_t samples = convert_toSamplesFromBytes(bytes, bitsPerSample, channelCount);
+    uint64_t milliseconds = convert_toMS(samples, sampleRate);
     convert_toStringFromMS(milliseconds, str);
 }
 

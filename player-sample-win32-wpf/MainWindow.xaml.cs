@@ -32,7 +32,7 @@ namespace player_sample_win32_wpf
             int version = SSP.SSP_GetVersion();
             Console.WriteLine("libssp_player version {0}", version);
 
-            int error = SSP.SSP_Init();
+            int error = SSP.SSP_Init(string.Empty);
             HandleSspError(error);
 
             error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);

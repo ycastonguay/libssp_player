@@ -56,7 +56,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;bass.lib;bassmix.lib;bass_fx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;bass.lib;bassmix.lib;bass_fx.lib;bassenc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,37 +76,48 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="player\ssp_bass.c" />
-    <ClCompile Include="player\ssp_convertaudio.c" />
+    <ClCompile Include="player\ssp_convert.c" />
     <ClCompile Include="player\ssp_device.c" />
     <ClCompile Include="player\ssp_eqpreset.c" />
+    <ClCompile Include="player\ssp_log.c" />
     <ClCompile Include="player\ssp_loop.c" />
-    <ClCompile Include="player\ssp_marker.c" />
     <ClCompile Include="player\ssp_mixer.c" />
     <ClCompile Include="player\ssp_player.c" />
-    <ClCompile Include="player\ssp_playerchannels.c" />
-    <ClCompile Include="player\ssp_playerplugins.c" />
+    <ClCompile Include="player\ssp_playerhandles.c" />
+    <ClCompile Include="player\ssp_player_bpm.c" />
+    <ClCompile Include="player\ssp_player_callbacks.c" />
+    <ClCompile Include="player\ssp_player_data.c" />
+    <ClCompile Include="player\ssp_player_encoder.c" />
+    <ClCompile Include="player\ssp_player_eq.c" />
+    <ClCompile Include="player\ssp_player_loop.c" />
     <ClCompile Include="player\ssp_player_playback.c" />
+    <ClCompile Include="player\ssp_player_playhead.c" />
     <ClCompile Include="player\ssp_player_seeking.c" />
+    <ClCompile Include="player\ssp_player_stream.c" />
     <ClCompile Include="player\ssp_playhead.c" />
     <ClCompile Include="player\ssp_playlist.c" />
+    <ClCompile Include="player\ssp_playlistitem.c" />
     <ClCompile Include="player\ssp_public.c" />
     <ClCompile Include="vector\vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player\ssp_bass.h" />
     <ClInclude Include="player\ssp_callbacks.h" />
-    <ClInclude Include="player\ssp_convertaudio.h" />
+    <ClInclude Include="player\ssp_convert.h" />
     <ClInclude Include="player\ssp_device.h" />
+    <ClInclude Include="player\ssp_enums.h" />
     <ClInclude Include="player\ssp_eqpreset.h" />
     <ClInclude Include="player\ssp_errors.h" />
+    <ClInclude Include="player\ssp_log.h" />
     <ClInclude Include="player\ssp_loop.h" />
-    <ClInclude Include="player\ssp_marker.h" />
     <ClInclude Include="player\ssp_mixer.h" />
     <ClInclude Include="player\ssp_player.h" />
     <ClInclude Include="player\ssp_playerchannels.h" />
+    <ClInclude Include="player\ssp_playerhandles.h" />
     <ClInclude Include="player\ssp_playerplugins.h" />
     <ClInclude Include="player\ssp_playhead.h" />
     <ClInclude Include="player\ssp_playlist.h" />
+    <ClInclude Include="player\ssp_playlistitem.h" />
     <ClInclude Include="player\ssp_privatestructs.h" />
     <ClInclude Include="player\ssp_public.h" />
     <ClInclude Include="player\ssp_structs.h" />

@@ -28,204 +28,206 @@ namespace org.sessionsapp.player
         public const string DllImportValue = "libssp_player.so";
 #elif OSX || MACOSX
         public const string DllImportValue = "libssp_player.dylib";
+#elif WIN32
+        public const string DllImportValue = "libssp_player.dll";
 #endif
 
         // Initialization
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetVersion();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Init(string pathForPlugins);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_InitDevice(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_FreeDevice();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Free();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern SSPPlayerState SSP_GetState();
 
         // iOS-only
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_IOS_ConfigureAirPlay(bool enable);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_IOS_ConfigureAudioInterruptionNotification(bool enable);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetDevice(ref SSP_DEVICE device);
         //[DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
         //public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetMixer(ref SSP_MIXER mixer);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetBufferSize(int bufferSize);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetUpdatePeriod(int updatePeriod);
 
         // EQ
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetEQPreset(ref SSP_EQPRESET preset);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetEQPreset(SSP_EQPRESET preset);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetEQPresetBand(int band, float gain);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool SSP_GetEQEnabled();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetEQEnabled(bool enabled);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_ResetEQ();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_NormalizeEQ();
 
         // Loops
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StartLoop(SSP_LOOP loop);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_UpdateLoop(SSP_LOOP loop);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StopLoop();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetLoop(ref SSP_LOOP loop);
 
         // Playback
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Play();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_PlayWithOptions(int startIndex, long startPosition, bool startPaused);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Pause();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Stop();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Previous();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Next();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GoTo(int index);
 
         // Playhead
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool SSP_GetIsShuffle();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetIsShuffle(bool shuffle);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern SSPRepeatType SSP_GetRepeatType();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetRepeatType(SSPRepeatType repeat);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_ToggleRepeatType();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern float SSP_GetVolume();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetVolume(float volume);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern float SSP_GetTimeShifting();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetTimeShifting(float timeShifting);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetPitchShifting();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetPitchShifting(int pitchShifting);
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool SSP_GetIsSettingPosition();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool SSP_GetIsPlayingLoop();
 
         // Position
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetPosition(ref SSP_POSITION position);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetPosition(long position);       
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetPositionPercentage(float position);      
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetPositionFromBytes(long bytes, ref SSP_POSITION position);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetPositionFromPercentage(float percentage, ref SSP_POSITION position);
 
         // Data
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern long SSP_GetBytesFromSecondsForCurrentChannel(float seconds);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetMixerData(float[] buffer, int length);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetMixerData(int[] buffer, int length);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern long SSP_GetDataAvailable();
 
         // Encoder
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StartEncode(SSPEncoderType encoder);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StopEncode();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StartCast(SSP_CAST_SERVER server);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StopCast();
 
         // Playlist
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_AddItem(string filePath);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_InsertItemAt(string filePath, int index);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_RemoveItemAt(int index);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_Clear();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetItemAt(int index, ref SSP_PLAYLISTITEM item);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetCount();
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetCurrentIndex();
 
         // Callbacks
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetPlaylistIndexChangedCallback(PlaylistIndexChangedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemovePlaylistIndexChangedCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetPlaylistEndedCallback(PlaylistEndedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemovePlaylistEndedCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetStateChangedCallback(StateChangedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemoveStateChangedCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetLogCallback(LogDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemoveLogCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetLoopPlaybackStartedCallback(LoopPlaybackStartedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemoveLoopPlaybackStartedCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetLoopPlaybackStoppedCallback(LoopPlaybackStoppedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemoveLoopPlaybackStoppedCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetAudioInterruptedCallback(AudioInterruptedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemoveAudioInterruptedCallback();
 
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_SetBPMDetectedCallback(BPMDetectedDelegate callback, IntPtr user);
-        [DllImport (DllImportValue)]
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_RemoveBPMDetectedCallback();
 
         // Errors
