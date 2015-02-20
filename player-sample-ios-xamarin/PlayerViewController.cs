@@ -13,6 +13,11 @@ namespace playersampleiosxamarin
         private Timer _timerRefreshPosition;
         private static SSP_POSITION _length;
 
+        private LogDelegate _logDelegate;
+        private StateChangedDelegate _stateChangedDelegate;
+        private PlaylistIndexChangedDelegate _playlistIndexChangedDelegate;
+        private AudioInterruptedDelegate _audioInterruptedDelegate;
+
         // TOOD: Find a way to use the IntPtr user parameter instead
         static PlayerViewController CurrentViewController { get; set; }
 
@@ -49,14 +54,33 @@ namespace playersampleiosxamarin
                 return;
             }
 
-            SSP.SSP_SetLogCallback(HandleLog, IntPtr.Zero);
-            SSP.SSP_SetStateChangedCallback(HandleStateChanged, IntPtr.Zero);
-            SSP.SSP_SetPlaylistIndexChangedCallback(HandlePlaylistIndexChanged, IntPtr.Zero);
+            _logDelegate = new LogDelegate(HandleLog);
+            _stateChangedDelegate = new StateChangedDelegate(HandleStateChanged);
+            _playlistIndexChangedDelegate = new PlaylistIndexChangedDelegate(HandlePlaylistIndexChanged);
+            _audioInterruptedDelegate = new AudioInterruptedDelegate(HandleAudioInterrupted);
+            SSP.SSP_SetLogCallback(_logDelegate, IntPtr.Zero);
+            SSP.SSP_SetStateChangedCallback(_stateChangedDelegate, IntPtr.Zero);
+            SSP.SSP_SetPlaylistIndexChangedCallback(_playlistIndexChangedDelegate, IntPtr.Zero);
+            SSP.SSP_SetAudioInterruptedCallback(_audioInterruptedDelegate, IntPtr.Zero);
 
             error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);
             if (error != SSP.SSP_OK)
             {
                 Console.WriteLine("libssp_player init device failed with error code: {0}", error);
+                return;
+            }
+
+            error = SSP.SSP_IOS_ConfigureAirPlay(true);
+            if (error != SSP.SSP_OK)
+            {
+                Console.WriteLine("libssp_player failed to configure AirPlay with error code: {0}", error);
+                return;
+            }
+
+            error = SSP.SSP_IOS_ConfigureAudioInterruptionNotification(true);
+            if (error != SSP.SSP_OK)
+            {
+                Console.WriteLine("libssp_player failed to configure audio interruption notification with error code: {0}", error);
                 return;
             }
 
@@ -106,6 +130,12 @@ namespace playersampleiosxamarin
                 CurrentViewController.lblPlaylist.Text = string.Format("Playlist [{0}/{1}]", index+1, count);
                 CurrentViewController.lblFilePath.Text = string.Format("File path: {0}", item.filePath);
             });
+        }
+
+        [MonoPInvokeCallback(typeof(AudioInterruptedDelegate))]
+        private static void HandleAudioInterrupted(IntPtr user, bool ended)
+        {
+            Console.WriteLine("libssp_player -- Audio has been interrupted; ended: {0}", ended);
         }
             
         partial void buttonPlay_TouchUpInside(UIButton sender)

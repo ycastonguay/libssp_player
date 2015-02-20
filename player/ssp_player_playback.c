@@ -52,10 +52,10 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return SSP_OK;
     }
 
-    // reset loop here
-    //if(player->playhead->isEQEnabled) {
-        player_removeEQStage(player);
-    //}
+    SSP_ERROR error = player_removeEQStage(player);
+    if(error != SSP_OK) {
+        return error;
+    }
 
     bool success = BASS_ChannelStop(player->handles->mixerChannel);
     if(!success) {
@@ -67,7 +67,7 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_STOP_FAILEDTOSTOPCHANNEL;
     }
 
-    SSP_ERROR error = player_removeSyncCallbacks(player);
+    error = player_removeSyncCallbacks(player);
     if(error != SSP_OK) {
         return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVESYNCCALLBACKS;
     }
@@ -87,6 +87,7 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
         return SSP_ERROR_PLAYBACK_STOP_FAILEDTODISPOSECHANNELS;
     }
 
+    player->loop = NULL;
     player->playhead->positionAfterUnpause = 0;
     player->playhead->positionOffset = 0;
     player->playhead->isPlayingLoop = false;
@@ -169,12 +170,12 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
         return error;
     }
 
-    //if(player->playhead->isEQEnabled) {
+    if(player->playhead->isEQEnabled) {
         error = player_applyEQ(player, player->eqPreset);
         if (error != SSP_OK) {
             return error;
         }
-    //}
+    }
 
     if(player->playhead->repeatType == SSP_PLAYER_REPEAT_SONG) {
         int result = BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);

@@ -18,6 +18,7 @@
 #ifndef player_callbacks_h
 #define player_callbacks_h
 
+#include <stdbool.h>
 #include "ssp_enums.h"
 
 typedef void (*player_log_cb)(void *user, const char* str);
@@ -26,7 +27,7 @@ typedef void (*player_playlistindexchanged_cb)(void *user);
 typedef void (*player_playlistended_cb)(void *user);
 typedef void (*player_loopplaybackstarted_cb)(void *user);
 typedef void (*player_loopplaybackstopped_cb)(void *user);
-typedef void (*player_audiointerrupted_cb)(void *user);
+typedef void (*player_audiointerrupted_cb)(void *user, bool ended);
 typedef void (*player_bpmdetected_cb)(void *user, float bpm);
 
 #endif

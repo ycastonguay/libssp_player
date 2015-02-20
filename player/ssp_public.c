@@ -17,6 +17,8 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <inttypes.h>
+#include "ssp_bass.h"
 #include "ssp_public.h"
 #include "ssp_privatestructs.h"
 #include "ssp_playlist.h"
@@ -27,6 +29,7 @@
 #include "ssp_playlistitem.h"
 #include "ssp_loop.h"
 #include "ssp_mixer.h"
+#include "ssp_structs.h"
 
 static SSP_PLAYER* sspPlayer = NULL;
 
@@ -66,6 +69,37 @@ SSP_ERROR SSP_Free() {
     
     free(sspPlayer);
     sspPlayer = NULL;
+    return SSP_OK;
+}
+
+#pragma mark iOS
+
+void player_ios_notifyProc(DWORD status) {
+	bool ended = status == BASS_IOSNOTIFY_INTERRUPT_END;
+
+	// This event doesn't have a user pointer, so we have to use the player as a singleton
+    if(sspPlayer->callbackAudioInterrupted != NULL) {
+        sspPlayer->callbackAudioInterrupted(sspPlayer->callbackAudioInterruptedUser, ended);
+    }
+}
+
+SSP_ERROR SSP_IOS_ConfigureAirPlay(bool enable) {
+    bool success = BASS_SetConfig(BASS_CONFIG_IOS_MIXAUDIO, enable ? 0 : 1);
+    if(!success) {
+    	bass_getError("BASS_SetConfig(BASS_CONFIG_IOS_MIXAUDIO)");
+    	return SSP_ERROR_UNKNOWN;
+    }
+
+    return SSP_OK;
+}
+
+SSP_ERROR SSP_IOS_ConfigureAudioInterruptionNotification(bool enable) {
+    bool success = BASS_SetConfigPtr(BASS_CONFIG_IOS_NOTIFY, enable ? player_ios_notifyProc : NULL);
+    if(!success) {
+        bass_getError("BASS_SetConfigPtr(BASS_CONFIG_IOS_NOTIFY)");
+        return SSP_ERROR_UNKNOWN;
+    }
+
     return SSP_OK;
 }
 
@@ -212,7 +246,9 @@ SSP_ERROR SSP_Playlist_Clear() {
 void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item) {
     SSP_PLAYLISTITEM* localItem = playlist_getItemAt(sspPlayer->playlist, index);
     if(localItem != NULL) {
+        log_textf("SSP_Playlist_GetItemAt - index: %d - localItem->sampleRate: %d - localItem->length: %"PRIu64"\n", index, localItem->sampleRate, localItem->length);
         playlistitem_copy(localItem, item);
+        log_textf("SSP_Playlist_GetItemAt - index: %d - copy->sampleRate: %d - copy->length: %"PRIu64"\n", index, item->sampleRate, item->length);
     }
 }
 
@@ -261,10 +297,12 @@ SSP_ERROR SSP_GetPosition(SSP_POSITION* position) {
 }
 
 SSP_ERROR SSP_SetPosition(uint64_t position) {
+    log_textf("SSP_SetPosition - position: %"PRIu64"\n", position);
     return player_setPosition(sspPlayer, position);
 }
 
 SSP_ERROR SSP_SetPositionPercentage(float position) {
+    log_textf("SSP_SetPositionPercentage - position: %f\n", position);
     return player_setPositionPercentage(sspPlayer, position);
 }
 

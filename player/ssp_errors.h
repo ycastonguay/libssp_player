@@ -18,6 +18,8 @@
 #ifndef player_errors_h
 #define player_errors_h
 
+#define SSP_ERROR int
+
 #define SSP_OK                         0
 #define SSP_ERROR_UNKNOWN		       1
 #define SSP_ERROR_PLUGIN		       2
@@ -96,7 +98,5 @@
 #define SSP_ERROR_CAST_FAILEDTOINIT                             8101
 
 // TODO: Consider merging FAILEDTOSTOPCHANNEL, FAILEDTOFREESTREAM, etc.
-
-#define SSP_ERROR int
 
 #endif

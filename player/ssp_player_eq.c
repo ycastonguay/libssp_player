@@ -52,11 +52,12 @@ SSP_ERROR player_removeEQStage(SSP_PLAYER* player) {
 }
 
 SSP_ERROR player_updateEQBand(SSP_PLAYER* player, int band, float gain) {
-    if(player->handles->eqFX == 0) {
-        return SSP_ERROR_EQ_STAGE_DOESNOTEXIST;
-    }
+    player->eqPreset->bands[band].gain = gain;
 
-    //player->eqPreset->bands[band].gain = gain;
+    // Do not apply the new preset to the EQ stage as it doesn't exist
+    if(player->handles->eqFX == 0) {
+        return SSP_OK;
+    }
 
     SSP_ERROR error = player_removeBPMCallbacks(player);
     if(error != SSP_OK) {
@@ -86,6 +87,11 @@ SSP_ERROR player_updateEQBand(SSP_PLAYER* player, int band, float gain) {
 
 SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset) {
     eqpreset_copy(player->eqPreset, eqpreset);
+
+    // Do not apply the new preset to the EQ stage as it doesn't exist
+    if(player->handles->eqFX == 0) {
+        return SSP_OK;
+    }
 
     SSP_ERROR error = player_removeBPMCallbacks(player);
     if(error != SSP_OK) {

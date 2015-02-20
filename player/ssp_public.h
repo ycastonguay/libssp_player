@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 19
+#define SSP_VERSION 20
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -41,6 +41,10 @@ LIBRARY_API SSP_ERROR SSP_Init(const char* pathForPlugins);
 LIBRARY_API SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
 LIBRARY_API SSP_ERROR SSP_FreeDevice();
 LIBRARY_API SSP_ERROR SSP_Free();
+
+// iOS-only
+LIBRARY_API SSP_ERROR SSP_IOS_ConfigureAirPlay(bool enable);
+LIBRARY_API SSP_ERROR SSP_IOS_ConfigureAudioInterruptionNotification(bool enable);
 
 // Properties
 LIBRARY_API ssp_player_state_t SSP_GetState();

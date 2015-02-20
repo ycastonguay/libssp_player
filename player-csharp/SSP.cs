@@ -44,9 +44,15 @@ namespace org.sessionsapp.player
         [DllImport (DllImportValue)]
         public static extern SSPPlayerState SSP_GetState();
 
-        //[DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
+        // iOS-only
+        [DllImport (DllImportValue)]
+        public static extern int SSP_IOS_ConfigureAirPlay(bool enable);
+        [DllImport (DllImportValue)]
+        public static extern int SSP_IOS_ConfigureAudioInterruptionNotification(bool enable);
+
         [DllImport (DllImportValue)]
         public static extern void SSP_GetDevice(ref SSP_DEVICE device);
+        //[DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
         //public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
 
         [DllImport (DllImportValue)]
@@ -243,7 +249,7 @@ namespace org.sessionsapp.player
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void LoopPlaybackStoppedDelegate(IntPtr user);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void AudioInterruptedDelegate(IntPtr user);
+    public delegate void AudioInterruptedDelegate(IntPtr user, bool ended);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void BPMDetectedDelegate(IntPtr user, float bpm);
 

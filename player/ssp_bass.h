@@ -19,6 +19,8 @@
 #define __player__ssp_bass__
 
 #include <stdio.h>
+#include <stdbool.h>
+#include "../bass/bass.h"
 #include "ssp_errors.h"
 
 int bass_getError(char* message);
