@@ -3,6 +3,40 @@
 
 public partial class MainWindow
 {
+	private global::Gtk.VBox vboxMain;
+	
+	private global::Gtk.Label lblTitle;
+	
+	private global::Gtk.Label lblVersion;
+	
+	private global::Gtk.Fixed fixed1;
+	
+	private global::Gtk.Label lblState;
+	
+	private global::Gtk.Label lblPlaylist;
+	
+	private global::Gtk.Label lblFilePath;
+	
+	private global::Gtk.Label lblPosition;
+	
+	private global::Gtk.HBox hboxPlayerButtons;
+	
+	private global::Gtk.Button btnPlay;
+	
+	private global::Gtk.Button btnPause;
+	
+	private global::Gtk.Button btnStop;
+	
+	private global::Gtk.Button btnPrevious;
+	
+	private global::Gtk.Button btnNext;
+	
+	private global::Gtk.HBox hboxMainButtons;
+	
+	private global::Gtk.Button btnOpenAudioFiles;
+	
+	private global::Gtk.Button btnClose;
+
 	protected virtual void Build ()
 	{
 		global::Stetic.Gui.Initialize (this);
@@ -10,12 +44,190 @@ public partial class MainWindow
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+		// Container child MainWindow.Gtk.Container+ContainerChild
+		this.vboxMain = new global::Gtk.VBox ();
+		this.vboxMain.Name = "vboxMain";
+		this.vboxMain.Spacing = 6;
+		this.vboxMain.BorderWidth = ((uint)(8));
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.lblTitle = new global::Gtk.Label ();
+		this.lblTitle.Name = "lblTitle";
+		this.lblTitle.Xalign = 0F;
+		this.lblTitle.LabelProp = global::Mono.Unix.Catalog.GetString ("libssp_player - GTK# Sample");
+		this.vboxMain.Add (this.lblTitle);
+		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.lblTitle]));
+		w1.Position = 0;
+		w1.Expand = false;
+		w1.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.lblVersion = new global::Gtk.Label ();
+		this.lblVersion.Name = "lblVersion";
+		this.lblVersion.Xalign = 0F;
+		this.lblVersion.LabelProp = global::Mono.Unix.Catalog.GetString ("[Version]");
+		this.vboxMain.Add (this.lblVersion);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.lblVersion]));
+		w2.Position = 1;
+		w2.Expand = false;
+		w2.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.fixed1 = new global::Gtk.Fixed ();
+		this.fixed1.Name = "fixed1";
+		this.fixed1.HasWindow = false;
+		this.vboxMain.Add (this.fixed1);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.fixed1]));
+		w3.Position = 2;
+		w3.Expand = false;
+		w3.Fill = false;
+		w3.Padding = ((uint)(16));
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.lblState = new global::Gtk.Label ();
+		this.lblState.Name = "lblState";
+		this.lblState.Xalign = 0F;
+		this.lblState.LabelProp = global::Mono.Unix.Catalog.GetString ("[State]");
+		this.vboxMain.Add (this.lblState);
+		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.lblState]));
+		w4.Position = 3;
+		w4.Expand = false;
+		w4.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.lblPlaylist = new global::Gtk.Label ();
+		this.lblPlaylist.Name = "lblPlaylist";
+		this.lblPlaylist.Xalign = 0F;
+		this.lblPlaylist.LabelProp = global::Mono.Unix.Catalog.GetString ("[Playlist]");
+		this.vboxMain.Add (this.lblPlaylist);
+		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.lblPlaylist]));
+		w5.Position = 4;
+		w5.Expand = false;
+		w5.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.lblFilePath = new global::Gtk.Label ();
+		this.lblFilePath.Name = "lblFilePath";
+		this.lblFilePath.Xalign = 0F;
+		this.lblFilePath.LabelProp = global::Mono.Unix.Catalog.GetString ("[File path]");
+		this.vboxMain.Add (this.lblFilePath);
+		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.lblFilePath]));
+		w6.Position = 5;
+		w6.Expand = false;
+		w6.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.lblPosition = new global::Gtk.Label ();
+		this.lblPosition.Name = "lblPosition";
+		this.lblPosition.Xalign = 0F;
+		this.lblPosition.LabelProp = global::Mono.Unix.Catalog.GetString ("[Position]");
+		this.vboxMain.Add (this.lblPosition);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.lblPosition]));
+		w7.Position = 6;
+		w7.Expand = false;
+		w7.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.hboxPlayerButtons = new global::Gtk.HBox ();
+		this.hboxPlayerButtons.Name = "hboxPlayerButtons";
+		this.hboxPlayerButtons.Spacing = 6;
+		// Container child hboxPlayerButtons.Gtk.Box+BoxChild
+		this.btnPlay = new global::Gtk.Button ();
+		this.btnPlay.CanFocus = true;
+		this.btnPlay.Name = "btnPlay";
+		this.btnPlay.UseUnderline = true;
+		this.btnPlay.Label = global::Mono.Unix.Catalog.GetString ("Play");
+		this.hboxPlayerButtons.Add (this.btnPlay);
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hboxPlayerButtons [this.btnPlay]));
+		w8.Position = 0;
+		w8.Expand = false;
+		w8.Fill = false;
+		// Container child hboxPlayerButtons.Gtk.Box+BoxChild
+		this.btnPause = new global::Gtk.Button ();
+		this.btnPause.CanFocus = true;
+		this.btnPause.Name = "btnPause";
+		this.btnPause.UseUnderline = true;
+		this.btnPause.Label = global::Mono.Unix.Catalog.GetString ("Pause");
+		this.hboxPlayerButtons.Add (this.btnPause);
+		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hboxPlayerButtons [this.btnPause]));
+		w9.Position = 1;
+		w9.Expand = false;
+		w9.Fill = false;
+		// Container child hboxPlayerButtons.Gtk.Box+BoxChild
+		this.btnStop = new global::Gtk.Button ();
+		this.btnStop.CanFocus = true;
+		this.btnStop.Name = "btnStop";
+		this.btnStop.UseUnderline = true;
+		this.btnStop.Label = global::Mono.Unix.Catalog.GetString ("Stop");
+		this.hboxPlayerButtons.Add (this.btnStop);
+		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hboxPlayerButtons [this.btnStop]));
+		w10.Position = 2;
+		w10.Expand = false;
+		w10.Fill = false;
+		// Container child hboxPlayerButtons.Gtk.Box+BoxChild
+		this.btnPrevious = new global::Gtk.Button ();
+		this.btnPrevious.CanFocus = true;
+		this.btnPrevious.Name = "btnPrevious";
+		this.btnPrevious.UseUnderline = true;
+		this.btnPrevious.Label = global::Mono.Unix.Catalog.GetString ("Previous");
+		this.hboxPlayerButtons.Add (this.btnPrevious);
+		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hboxPlayerButtons [this.btnPrevious]));
+		w11.Position = 3;
+		w11.Expand = false;
+		w11.Fill = false;
+		// Container child hboxPlayerButtons.Gtk.Box+BoxChild
+		this.btnNext = new global::Gtk.Button ();
+		this.btnNext.CanFocus = true;
+		this.btnNext.Name = "btnNext";
+		this.btnNext.UseUnderline = true;
+		this.btnNext.Label = global::Mono.Unix.Catalog.GetString ("Next");
+		this.hboxPlayerButtons.Add (this.btnNext);
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hboxPlayerButtons [this.btnNext]));
+		w12.Position = 4;
+		w12.Expand = false;
+		w12.Fill = false;
+		this.vboxMain.Add (this.hboxPlayerButtons);
+		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.hboxPlayerButtons]));
+		w13.Position = 7;
+		w13.Expand = false;
+		w13.Fill = false;
+		// Container child vboxMain.Gtk.Box+BoxChild
+		this.hboxMainButtons = new global::Gtk.HBox ();
+		this.hboxMainButtons.Name = "hboxMainButtons";
+		this.hboxMainButtons.Spacing = 6;
+		// Container child hboxMainButtons.Gtk.Box+BoxChild
+		this.btnOpenAudioFiles = new global::Gtk.Button ();
+		this.btnOpenAudioFiles.CanFocus = true;
+		this.btnOpenAudioFiles.Name = "btnOpenAudioFiles";
+		this.btnOpenAudioFiles.UseUnderline = true;
+		this.btnOpenAudioFiles.Label = global::Mono.Unix.Catalog.GetString ("Open audio files...");
+		this.hboxMainButtons.Add (this.btnOpenAudioFiles);
+		global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.hboxMainButtons [this.btnOpenAudioFiles]));
+		w14.Position = 1;
+		w14.Expand = false;
+		w14.Fill = false;
+		// Container child hboxMainButtons.Gtk.Box+BoxChild
+		this.btnClose = new global::Gtk.Button ();
+		this.btnClose.CanFocus = true;
+		this.btnClose.Name = "btnClose";
+		this.btnClose.UseUnderline = true;
+		this.btnClose.Label = global::Mono.Unix.Catalog.GetString ("Close");
+		this.hboxMainButtons.Add (this.btnClose);
+		global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hboxMainButtons [this.btnClose]));
+		w15.Position = 2;
+		w15.Expand = false;
+		w15.Fill = false;
+		this.vboxMain.Add (this.hboxMainButtons);
+		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vboxMain [this.hboxMainButtons]));
+		w16.Position = 8;
+		w16.Expand = false;
+		w16.Fill = false;
+		this.Add (this.vboxMain);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 400;
+		this.DefaultWidth = 405;
 		this.DefaultHeight = 300;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.btnPlay.Clicked += new global::System.EventHandler (this.OnBtnPlayClicked);
+		this.btnPause.Clicked += new global::System.EventHandler (this.OnBtnPauseClicked);
+		this.btnStop.Clicked += new global::System.EventHandler (this.OnBtnStopClicked);
+		this.btnPrevious.Clicked += new global::System.EventHandler (this.OnBtnPreviousClicked);
+		this.btnNext.Clicked += new global::System.EventHandler (this.OnBtnNextClicked);
+		this.btnOpenAudioFiles.Clicked += new global::System.EventHandler (this.OnBtnOpenAudioFilesClicked);
+		this.btnClose.Clicked += new global::System.EventHandler (this.OnBtnCloseClicked);
 	}
 }
