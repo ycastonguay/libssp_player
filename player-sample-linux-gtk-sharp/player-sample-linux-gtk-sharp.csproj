@@ -65,6 +65,7 @@
     <Compile Include="..\player-csharp\SSP.cs">
       <Link>SSP.cs</Link>
     </Compile>
+    <Compile Include="BassWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
