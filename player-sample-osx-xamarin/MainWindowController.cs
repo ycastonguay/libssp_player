@@ -16,20 +16,21 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using org.sessionsapp.player;
 using System.IO;
 using System.Reflection;
 using System.Timers;
+using MonoMac.AppKit;
+using MonoMac.Foundation;
+using org.sessionsapp.player;
 
 namespace playersampleosxxamarin
 {
-    public partial class MainWindowController : MonoMac.AppKit.NSWindowController
+    public partial class MainWindowController : NSWindowController
     {
         private Timer _timerRefreshPosition;
+        private LogDelegate _logDelegate;
+        private StateChangedDelegate _stateChangedDelegate;
+        private PlaylistIndexChangedDelegate _playlistIndexChangedDelegate;
 
         //strongly typed window accessor
         public new MainWindow Window
@@ -105,9 +106,12 @@ namespace playersampleosxxamarin
                 return;
             }
 
-            SSP.SSP_SetLogCallback(HandleLog, IntPtr.Zero);
-            SSP.SSP_SetStateChangedCallback(HandleStateChanged, IntPtr.Zero);
-            SSP.SSP_SetPlaylistIndexChangedCallback(HandlePlaylistIndexChanged, IntPtr.Zero);
+            _logDelegate = new LogDelegate(HandleLog);
+            _stateChangedDelegate = new StateChangedDelegate(HandleStateChanged);
+            _playlistIndexChangedDelegate = new PlaylistIndexChangedDelegate(HandlePlaylistIndexChanged);
+            SSP.SSP_SetLogCallback(_logDelegate, IntPtr.Zero);
+            SSP.SSP_SetStateChangedCallback(_stateChangedDelegate, IntPtr.Zero);
+            SSP.SSP_SetPlaylistIndexChangedCallback(_playlistIndexChangedDelegate, IntPtr.Zero);
 
             error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);
             if (error != SSP.SSP_OK)
@@ -163,7 +167,8 @@ namespace playersampleosxxamarin
             if(_timerRefreshPosition.Enabled)
                 _timerRefreshPosition.Stop();
 
-            if(SSP.SSP_GetState() != SSPPlayerState.Stopped)
+            if(SSP.SSP_GetState() == SSPPlayerState.Playing || 
+               SSP.SSP_GetState() == SSPPlayerState.Paused)
                 SSP.SSP_Stop();
             
             SSP.SSP_Free();

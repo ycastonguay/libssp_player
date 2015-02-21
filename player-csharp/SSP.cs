@@ -28,7 +28,7 @@ namespace org.sessionsapp.player
         public const string DllImportValue = "libssp_player.so";
 #elif OSX || MACOSX
         public const string DllImportValue = "libssp_player.dylib";
-#elif WIN32
+#else
         public const string DllImportValue = "libssp_player.dll";
 #endif
 
