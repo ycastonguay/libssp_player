@@ -73,13 +73,10 @@ BOOL sampleApp::InitInstance()
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with OK
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with Cancel
+		if (SSP_GetState() == SSP_PLAYER_STATE_PLAYING || SSP_GetState() == SSP_PLAYER_STATE_PAUSED) {
+			SSP_Stop();
+		}
+		SSP_Free();
 	}
 	else if (nResponse == -1)
 	{

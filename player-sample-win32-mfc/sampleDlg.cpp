@@ -1,15 +1,25 @@
-
-// sampleDlg.cpp : implementation file
+// Copyright © 2011-2015 Yanick Castonguay
 //
+// This file is part of Sessions, a music player for musicians.
+//
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include "stdafx.h"
 #include "player-sample-win32-mfc.h"
 #include "sampleDlg.h"
 #include "afxdialogex.h"
-
-extern "C" {
 #include "../player/ssp_public.h"
-}
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,8 +55,6 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
-// sampleDlg dialog
-
 sampleDlg::sampleDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(sampleDlg::IDD, pParent)
 {
@@ -74,15 +82,12 @@ BEGIN_MESSAGE_MAP(sampleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTONPREVIOUS, &sampleDlg::OnBnClickedButtonprevious)
 	ON_BN_CLICKED(IDC_BUTTONNEXT, &sampleDlg::OnBnClickedButtonnext)
 	ON_BN_CLICKED(IDC_BUTTONOPEN, &sampleDlg::OnBnClickedButtonopen)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
-
-// sampleDlg message handlers
 
 BOOL sampleDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
-	// Add "About..." menu item to system menu.
 
 	// IDM_ABOUTBOX must be in the system command range.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
@@ -166,9 +171,37 @@ void logCallback(void *user, const char* str) {
 }
 
 void stateChangedCallback(void *user, ssp_player_state_t state) {	
+	sampleDlg *dlg = (sampleDlg*)user;
+	CString strState;
+	strState.Format(_T("State: %d"), state);
+	dlg->m_lblState.SetWindowTextW(strState);
 }
 
 void playlistIndexChangedCallback(void *user) {
+	sampleDlg *dlg = (sampleDlg*)user;
+
+	int currentIndex = SSP_Playlist_GetCurrentIndex();
+	int count = SSP_Playlist_GetCount();
+
+	SSP_PLAYLISTITEM item;
+	SSP_Playlist_GetItemAt(currentIndex, &item);
+
+	CString strPlaylist, strFilePath;
+	strPlaylist.Format(_T("Playlist [%d/%d]"), currentIndex + 1, count);
+	strFilePath.Format(_T("File path: %s"), CString(item.filePath));
+	dlg->m_lblPlaylist.SetWindowTextW(strPlaylist);
+	dlg->m_lblFilePath.SetWindowTextW(strFilePath);
+}
+
+void sampleDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	SSP_POSITION pos;
+	SSP_GetPosition(&pos);
+	CString strPosition;
+	strPosition.Format(_T("Position: %s"), CString(pos.str));
+	m_lblPosition.SetWindowTextW(strPosition);
+
+	CDialogEx::OnTimer(nIDEvent);
 }
 
 void sampleDlg::InitializePlayer()
@@ -186,9 +219,9 @@ void sampleDlg::InitializePlayer()
 	if (error != SSP_OK)
 		return;
 
-	SSP_SetLogCallback(logCallback, NULL);
-	SSP_SetStateChangedCallback(stateChangedCallback, NULL);
-	SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL);
+	SSP_SetLogCallback(logCallback, NULL);	
+	SSP_SetStateChangedCallback(stateChangedCallback, this);
+	SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, this);
 
 	error = CheckForError(SSP_InitDevice(-1, 44100, 1000, 100, true));
 	if (error != SSP_OK)
@@ -207,30 +240,68 @@ int sampleDlg::CheckForError(int error)
 
 void sampleDlg::OnBnClickedButtonplay()
 {
-	// TODO: Add your control notification handler code here
+	CheckForError(SSP_Play());
+	SetTimer(0, 100, NULL);
 }
 
 void sampleDlg::OnBnClickedButtonpause()
 {
-	// TODO: Add your control notification handler code here
+	CheckForError(SSP_Pause());
 }
 
 void sampleDlg::OnBnClickedButtonstop()
 {
-	// TODO: Add your control notification handler code here
+	CheckForError(SSP_Stop());
+	KillTimer(0);
 }
 
 void sampleDlg::OnBnClickedButtonprevious()
 {
-	// TODO: Add your control notification handler code here
+	CheckForError(SSP_Previous());
 }
 
 void sampleDlg::OnBnClickedButtonnext()
 {
-	// TODO: Add your control notification handler code here
+	CheckForError(SSP_Next());
 }
 
 void sampleDlg::OnBnClickedButtonopen()
 {
-	// TODO: Add your control notification handler code here
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT,
+		_T("Audio Files (*.mp3; *.flac)|*.mp3; *.flac||"), this);
+
+	dlg.m_pOFN->lpstrTitle = _T("Choose audio files to play");
+	dlg.m_pOFN->lpstrInitialDir = _T("c:");
+
+	const DWORD numberOfFileNames = 100;
+	const DWORD fileNameMaxLength = MAX_PATH + 1;
+	const DWORD bufferSize = (numberOfFileNames * fileNameMaxLength) + 1;
+	TCHAR* filenamesBuffer = new TCHAR[bufferSize];
+
+	filenamesBuffer[0] = NULL;
+	filenamesBuffer[bufferSize - 1] = NULL;
+
+	dlg.m_ofn.lpstrFile = filenamesBuffer;
+	dlg.m_ofn.nMaxFile = bufferSize;
+
+	SSP_Playlist_Clear();
+
+	if (dlg.DoModal() == IDOK)
+	{
+		POSITION fileNamesPosition = dlg.GetStartPosition();
+		int iCtr = 0;
+		while (fileNamesPosition != NULL)
+		{
+			CString filePath = dlg.GetNextPathName(fileNamesPosition);
+			const size_t newsizew = (filePath.GetLength() + 1) * 2;
+			char *nstringw = new char[newsizew];
+			size_t convertedCharsw = 0;
+			wcstombs_s(&convertedCharsw, nstringw, newsizew, filePath, _TRUNCATE);
+
+			SSP_Playlist_AddItem(nstringw);
+			iCtr++;
+		}
+	}
+
+	delete[] filenamesBuffer;
 }
