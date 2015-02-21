@@ -34,6 +34,8 @@ public:
     QPushButton *btnStop;
     QPushButton *btnPrevious;
     QPushButton *btnNext;
+    QLabel *lblTitle;
+    QLabel *lblVersion;
 
     void setupUi(QDialog *PlayerForm)
     {
@@ -47,19 +49,19 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         lblStatus = new QLabel(PlayerForm);
         lblStatus->setObjectName(QStringLiteral("lblStatus"));
-        lblStatus->setGeometry(QRect(10, 20, 381, 18));
+        lblStatus->setGeometry(QRect(10, 70, 381, 18));
         btnPlay = new QPushButton(PlayerForm);
         btnPlay->setObjectName(QStringLiteral("btnPlay"));
         btnPlay->setGeometry(QRect(10, 190, 85, 27));
         lblPlaylist = new QLabel(PlayerForm);
         lblPlaylist->setObjectName(QStringLiteral("lblPlaylist"));
-        lblPlaylist->setGeometry(QRect(10, 40, 381, 18));
+        lblPlaylist->setGeometry(QRect(10, 90, 381, 18));
         lblFilePath = new QLabel(PlayerForm);
         lblFilePath->setObjectName(QStringLiteral("lblFilePath"));
-        lblFilePath->setGeometry(QRect(10, 60, 381, 18));
+        lblFilePath->setGeometry(QRect(10, 110, 381, 18));
         lblPosition = new QLabel(PlayerForm);
         lblPosition->setObjectName(QStringLiteral("lblPosition"));
-        lblPosition->setGeometry(QRect(10, 80, 381, 18));
+        lblPosition->setGeometry(QRect(10, 130, 381, 18));
         btnPause = new QPushButton(PlayerForm);
         btnPause->setObjectName(QStringLiteral("btnPause"));
         btnPause->setGeometry(QRect(100, 190, 85, 27));
@@ -72,6 +74,12 @@ public:
         btnNext = new QPushButton(PlayerForm);
         btnNext->setObjectName(QStringLiteral("btnNext"));
         btnNext->setGeometry(QRect(370, 190, 85, 27));
+        lblTitle = new QLabel(PlayerForm);
+        lblTitle->setObjectName(QStringLiteral("lblTitle"));
+        lblTitle->setGeometry(QRect(10, 10, 381, 18));
+        lblVersion = new QLabel(PlayerForm);
+        lblVersion->setObjectName(QStringLiteral("lblVersion"));
+        lblVersion->setGeometry(QRect(10, 30, 381, 18));
 
         retranslateUi(PlayerForm);
         QObject::connect(buttonBox, SIGNAL(accepted()), PlayerForm, SLOT(accept()));
@@ -92,6 +100,8 @@ public:
         btnStop->setText(QApplication::translate("PlayerForm", "Stop", 0));
         btnPrevious->setText(QApplication::translate("PlayerForm", "Previous", 0));
         btnNext->setText(QApplication::translate("PlayerForm", "Next", 0));
+        lblTitle->setText(QApplication::translate("PlayerForm", "libssp_player - QT Sample", 0));
+        lblVersion->setText(QApplication::translate("PlayerForm", "[Version]", 0));
     } // retranslateUi
 
 };

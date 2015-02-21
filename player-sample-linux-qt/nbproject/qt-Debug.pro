@@ -20,5 +20,5 @@ UI_DIR =
 QMAKE_CC = gcc
 QMAKE_CXX = g++
 DEFINES += 
-INCLUDEPATH += /home/ycastonguay/Sources/libssp_player/player 
-LIBS += -L. -lssp_player -L../bass/linux -L../bass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc  
+INCLUDEPATH += 
+LIBS += -L../dist/Debug/GNU-Linux-x86 -L../bass/linux -L../bass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc -lssp_player -Wl,-rpath,/home/ycastonguay/Downloads/bass:/home/ycastonguay/Downloads/bass/x64:/home/ycastonguay/Sources/libssp_player/dist/Debug/GNU-Linux-x86  

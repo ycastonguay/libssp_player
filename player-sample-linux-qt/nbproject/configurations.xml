@@ -41,18 +41,11 @@
         <modules>core gui widgets</modules>
       </qt>
       <compileType>
-        <ccTool>
-          <incDir>
-            <pElem>/home/ycastonguay/Sources/libssp_player/player</pElem>
-          </incDir>
-          <incFile>
-            <pElem>/home/ycastonguay/Sources/libssp_player/player</pElem>
-          </incFile>
-        </ccTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerOptionItem>-L. -lssp_player</linkerOptionItem>
-            <linkerOptionItem>-L../bass/linux -L../bass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc</linkerOptionItem>
+            <linkerOptionItem>-L../dist/Debug/GNU-Linux-x86 -L../bass/linux -L../bass/linux/x64</linkerOptionItem>
+            <linkerOptionItem>-lbass -lbassmix -lbass_fx -lbassenc -lssp_player</linkerOptionItem>
+            <linkerOptionItem>-Wl,-rpath,/home/ycastonguay/Downloads/bass:/home/ycastonguay/Downloads/bass/x64:/home/ycastonguay/Sources/libssp_player/dist/Debug/GNU-Linux-x86</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
         <requiredProjects>

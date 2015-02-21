@@ -33,7 +33,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>20</y>
+     <y>70</y>
      <width>381</width>
      <height>18</height>
     </rect>
@@ -59,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
+     <y>90</y>
      <width>381</width>
      <height>18</height>
     </rect>
@@ -72,7 +72,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
+     <y>110</y>
      <width>381</width>
      <height>18</height>
     </rect>
@@ -85,7 +85,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>80</y>
+     <y>130</y>
      <width>381</width>
      <height>18</height>
     </rect>
@@ -144,6 +144,32 @@
    </property>
    <property name="text">
     <string>Next</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblTitle">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>libssp_player - QT Sample</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblVersion">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>381</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>[Version]</string>
    </property>
   </widget>
  </widget>

@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/qt/mkspecs/linux-g++ -Inbproject -I../player -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -I. -I.
+INCPATH       = -I/usr/lib/qt/mkspecs/linux-g++ -Inbproject -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -I. -I.
 QMAKE         = /usr/lib/qt/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = player-sample-linux-qt1.0.0
 DISTDIR = /home/ycastonguay/Sources/libssp_player/player-sample-linux-qt/nbproject/build/Debug/GNU-Linux-x86/player-sample-linux-qt1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -L. -lssp_player -L../bass/linux -L../bass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L../dist/Debug/GNU-Linux-x86 -L../bass/linux -L../bass/linux/x64 -lbass -lbassmix -lbass_fx -lbassenc -lssp_player -Wl,-rpath,/home/ycastonguay/Downloads/bass:/home/ycastonguay/Downloads/bass/x64:/home/ycastonguay/Sources/libssp_player/dist/Debug/GNU-Linux-x86 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -424,7 +424,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_PlayerForm.cpp
 moc_PlayerForm.cpp: ui_PlayerForm.h \
 		PlayerForm.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/ycastonguay/Sources/libssp_player/player-sample-linux-qt/nbproject -I/home/ycastonguay/Sources/libssp_player/player -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-unknown-linux-gnu -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include-fixed -I/usr/include PlayerForm.h -o moc_PlayerForm.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/ycastonguay/Sources/libssp_player/player-sample-linux-qt/nbproject -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-unknown-linux-gnu -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include-fixed -I/usr/include PlayerForm.h -o moc_PlayerForm.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:

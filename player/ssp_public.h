@@ -35,6 +35,10 @@
 #    define LIBRARY_API
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Initialization
 LIBRARY_API int SSP_GetVersion();
 LIBRARY_API SSP_ERROR SSP_Init(const char* pathForPlugins);
@@ -153,5 +157,9 @@ LIBRARY_API void SSP_RemoveAudioInterruptedCallback();
 
 LIBRARY_API void SSP_SetBPMDetectedCallback(player_bpmdetected_cb cb, void* user);
 LIBRARY_API void SSP_RemoveBPMDetectedCallback();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* defined(__player__ssp_public__) */
