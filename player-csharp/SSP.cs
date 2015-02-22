@@ -52,10 +52,10 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_IOS_ConfigureAudioInterruptionNotification(bool enable);
 
+        //[DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice", CallingConvention = CallingConvention.Cdecl)]
+        //public static extern void SSP_GetDevice([In, Out] ref SSP_DEVICE device);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetDevice(ref SSP_DEVICE device);
-        //[DllImport(DllImportValue, CharSet = CharSet.Ansi, EntryPoint = "SSP_GetDevice")]
-        //public static extern void SSP_GetDeviceNew([In, Out] SSP_DEVICE device);
 
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetMixer(ref SSP_MIXER mixer);
@@ -175,9 +175,9 @@ namespace org.sessionsapp.player
 
         // Playlist
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_Playlist_AddItem(string filePath);
+        public static extern int SSP_Playlist_AddItem([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_Playlist_InsertItemAt(string filePath, int index);
+        public static extern int SSP_Playlist_InsertItemAt([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath, int index);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_RemoveItemAt(int index);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
@@ -338,7 +338,10 @@ namespace org.sessionsapp.player
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_DEVICE
     {
-        public string name;
+        // doesn't work on Windows, works with Mono without the attribute
+        //[MarshalAsAttribute(UnmanagedType.LPStr)] 
+        //public string name;
+        public IntPtr name;
         public int deviceId;
         public bool isInitialized;
     }
