@@ -44,6 +44,7 @@ int bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool
 
     BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
     BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
+    BASS_SetConfig(BASS_CONFIG_MIXER_BUFFER, 4); // 2 == default
 
     return SSP_OK;
 }

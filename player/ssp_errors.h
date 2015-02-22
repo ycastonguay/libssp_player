@@ -20,10 +20,13 @@
 
 #define SSP_ERROR int
 
-#define SSP_OK                         0
-#define SSP_ERROR_UNKNOWN		       1
-#define SSP_ERROR_PLUGIN		       2
-#define SSP_ERROR_BASS_VERSION         3
+#define SSP_OK                                            0
+#define SSP_ERROR_UNKNOWN		                          1
+#define SSP_ERROR_BASS_VERSION                            2
+
+#define SSP_ERROR_SAMPLERATE_INVALID                     10
+#define SSP_ERROR_BUFFERSIZE_INVALID                     11
+#define SSP_ERROR_UPDATEPERIOD_INVALID                   12
 
 #define SSP_ERROR_CURRENTPLAYLISTITEMISNULL             100
 #define SSP_ERROR_FAILEDTOGETPOSITION                   101
