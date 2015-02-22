@@ -31,8 +31,9 @@ Release/
 **/*.userprefs
 **/*.suo
 **/*.sdf
-**/*.vcxproj.filters
-**/*.vcxproj.user
+**/*.opensdf
+#**/*.vcxproj.filters
+#**/*.vcxproj.user
 
 # CocoaPods
 #

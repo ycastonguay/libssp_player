@@ -27,10 +27,13 @@ typedef struct {
     HCHANNEL fxChannel;
     HCHANNEL mixerChannel;
 
-    HPLUGIN flacPlugin;
     HPLUGIN apePlugin;
-    HPLUGIN mpcPlugin;
+	HPLUGIN aacPlugin;
+	HPLUGIN alacPlugin;
+	HPLUGIN flacPlugin;
+	HPLUGIN mpcPlugin;
     HPLUGIN ttaPlugin;
+	HPLUGIN wmaPlugin;
     HPLUGIN wvPlugin;
 
     HFX eqFX;
