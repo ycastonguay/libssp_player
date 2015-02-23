@@ -8,6 +8,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/ycastonguay/Sources/libssp_player/player/ssp_public.h</file>
+            <file>file:/home/ycastonguay/Sources/libssp_player/player/ssp_errors.h</file>
+            <file>file:/home/ycastonguay/Sources/libssp_player/player/ssp_player_plugins.c</file>
         </group>
     </open-files>
 </project-private>

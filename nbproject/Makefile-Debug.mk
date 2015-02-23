@@ -51,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/player/ssp_player_loop.o \
 	${OBJECTDIR}/player/ssp_player_playback.o \
 	${OBJECTDIR}/player/ssp_player_playhead.o \
+	${OBJECTDIR}/player/ssp_player_plugins.o \
 	${OBJECTDIR}/player/ssp_player_seeking.o \
 	${OBJECTDIR}/player/ssp_player_stream.o \
 	${OBJECTDIR}/player/ssp_playerhandles.o \
@@ -164,6 +165,11 @@ ${OBJECTDIR}/player/ssp_player_playhead.o: player/ssp_player_playhead.c
 	${MKDIR} -p ${OBJECTDIR}/player
 	${RM} "$@.d"
 	$(COMPILE.c) -g -s -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_playhead.o player/ssp_player_playhead.c
+
+${OBJECTDIR}/player/ssp_player_plugins.o: player/ssp_player_plugins.c 
+	${MKDIR} -p ${OBJECTDIR}/player
+	${RM} "$@.d"
+	$(COMPILE.c) -g -s -DLINUX -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/player/ssp_player_plugins.o player/ssp_player_plugins.c
 
 ${OBJECTDIR}/player/ssp_player_seeking.o: player/ssp_player_seeking.c 
 	${MKDIR} -p ${OBJECTDIR}/player

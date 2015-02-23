@@ -42,6 +42,7 @@
       <itemPath>player/ssp_player_loop.c</itemPath>
       <itemPath>player/ssp_player_playback.c</itemPath>
       <itemPath>player/ssp_player_playhead.c</itemPath>
+      <itemPath>player/ssp_player_plugins.c</itemPath>
       <itemPath>player/ssp_player_seeking.c</itemPath>
       <itemPath>player/ssp_player_stream.c</itemPath>
       <itemPath>player/ssp_playerhandles.c</itemPath>
@@ -188,6 +189,8 @@
       </item>
       <item path="player/ssp_player_playhead.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="player/ssp_player_plugins.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="player/ssp_player_seeking.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_player_stream.c" ex="false" tool="0" flavor2="0">
@@ -308,6 +311,8 @@
       <item path="player/ssp_player_playback.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_player_playhead.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="player/ssp_player_plugins.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="player/ssp_player_seeking.c" ex="false" tool="0" flavor2="0">
       </item>

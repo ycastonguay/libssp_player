@@ -31,51 +31,94 @@ void player_getPathForPlugin(const char* dest, const char* pathForPlugins, const
 }
 
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
-#ifdef _WIN32 // Windows
+    // TODO: Add Android
+    #ifdef _WIN32
         player->handles->apePlugin = BASS_PluginLoad("bass_ape.dll", 0);
-		if (player->handles->apePlugin == 0) {
-			bass_getError("player_loadPlugins (APE)");
-			return SSP_ERROR_PLUGIN_APE_FAILEDTOLOAD;
-		}
-		player->handles->aacPlugin = BASS_PluginLoad("bass_aac.dll", 0);
-		if (player->handles->aacPlugin == 0) {
-			bass_getError("player_loadPlugins (AAC)");
-			return SSP_ERROR_PLUGIN_AAC_FAILEDTOLOAD;
-		}
-		player->handles->alacPlugin = BASS_PluginLoad("bass_alac.dll", 0);
-		if (player->handles->alacPlugin == 0) {
-			bass_getError("player_loadPlugins (ALAC)");
-			return SSP_ERROR_PLUGIN_ALAC_FAILEDTOLOAD;
-		}
-		player->handles->flacPlugin = BASS_PluginLoad("bassflac.dll", 0);
-		if (player->handles->flacPlugin == 0) {
-			bass_getError("player_loadPlugins (FLAC)");
-			return SSP_ERROR_PLUGIN_FLAC_FAILEDTOLOAD;
-		}
-		player->handles->mpcPlugin = BASS_PluginLoad("bass_mpc.dll", 0);
-		if (player->handles->mpcPlugin == 0) {
-			bass_getError("player_loadPlugins (MPC)");
-			return SSP_ERROR_PLUGIN_MPC_FAILEDTOLOAD;
-		}
-		player->handles->ttaPlugin = BASS_PluginLoad("bass_tta.dll", 0);
-		if (player->handles->ttaPlugin == 0) {
-			bass_getError("player_loadPlugins (TTA)");
-			return SSP_ERROR_PLUGIN_TTA_FAILEDTOLOAD;
-		}
-		player->handles->wmaPlugin = BASS_PluginLoad("basswma.dll", 0);
-		if (player->handles->wmaPlugin == 0) {
-			bass_getError("player_loadPlugins (WMA)");
-			return SSP_ERROR_PLUGIN_WMA_FAILEDTOLOAD;
-		}
-		player->handles->wvPlugin = BASS_PluginLoad("basswv.dll", 0);
-		if (player->handles->wvPlugin == 0) {
-			bass_getError("player_loadPlugins (WV)");
-			return SSP_ERROR_PLUGIN_WV_FAILEDTOLOAD;
-		}
-    #elif __linux__ // Linux
-        //BASS_PluginLoad("libbassflac.so", 0);
-        // TODO: Complete implementation
-    #elif TARGET_IOS // iOS
+        if (player->handles->apePlugin == 0) {
+                bass_getError("player_loadPlugins (APE)");
+                return SSP_ERROR_PLUGIN_APE_FAILEDTOLOAD;
+        }
+        player->handles->aacPlugin = BASS_PluginLoad("bass_aac.dll", 0);
+        if (player->handles->aacPlugin == 0) {
+                bass_getError("player_loadPlugins (AAC)");
+                return SSP_ERROR_PLUGIN_AAC_FAILEDTOLOAD;
+        }
+        player->handles->alacPlugin = BASS_PluginLoad("bass_alac.dll", 0);
+        if (player->handles->alacPlugin == 0) {
+                bass_getError("player_loadPlugins (ALAC)");
+                return SSP_ERROR_PLUGIN_ALAC_FAILEDTOLOAD;
+        }
+        player->handles->flacPlugin = BASS_PluginLoad("bassflac.dll", 0);
+        if (player->handles->flacPlugin == 0) {
+                bass_getError("player_loadPlugins (FLAC)");
+                return SSP_ERROR_PLUGIN_FLAC_FAILEDTOLOAD;
+        }
+        player->handles->mpcPlugin = BASS_PluginLoad("bass_mpc.dll", 0);
+        if (player->handles->mpcPlugin == 0) {
+                bass_getError("player_loadPlugins (MPC)");
+                return SSP_ERROR_PLUGIN_MPC_FAILEDTOLOAD;
+        }
+        player->handles->ttaPlugin = BASS_PluginLoad("bass_tta.dll", 0);
+        if (player->handles->ttaPlugin == 0) {
+                bass_getError("player_loadPlugins (TTA)");
+                return SSP_ERROR_PLUGIN_TTA_FAILEDTOLOAD;
+        }
+        player->handles->wmaPlugin = BASS_PluginLoad("basswma.dll", 0);
+        if (player->handles->wmaPlugin == 0) {
+                bass_getError("player_loadPlugins (WMA)");
+                return SSP_ERROR_PLUGIN_WMA_FAILEDTOLOAD;
+        }
+        player->handles->wvPlugin = BASS_PluginLoad("basswv.dll", 0);
+        if (player->handles->wvPlugin == 0) {
+                bass_getError("player_loadPlugins (WV)");
+                return SSP_ERROR_PLUGIN_WV_FAILEDTOLOAD;
+        }
+    #elif __linux__
+        char filePath[1024];
+
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_ape.so");
+        player->handles->apePlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->apePlugin == 0) {
+            bass_getError("player_loadPlugins (APE)");
+            return SSP_ERROR_PLUGIN_APE_FAILEDTOLOAD;
+        }
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_aac.so");
+        player->handles->aacPlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->aacPlugin == 0) {
+            bass_getError("player_loadPlugins (AAC)");
+            return SSP_ERROR_PLUGIN_AAC_FAILEDTOLOAD;
+        }
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_alac.so");
+        player->handles->alacPlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->alacPlugin == 0) {
+            bass_getError("player_loadPlugins (ALAC)");
+            return SSP_ERROR_PLUGIN_ALAC_FAILEDTOLOAD;
+        }
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbassflac.so");
+        player->handles->flacPlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->flacPlugin == 0) {
+            bass_getError("player_loadPlugins (FLAC)");
+            return SSP_ERROR_PLUGIN_FLAC_FAILEDTOLOAD;
+        }
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_mpc.so");
+        player->handles->mpcPlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->mpcPlugin == 0) {
+            bass_getError("player_loadPlugins (MPC)");
+            return SSP_ERROR_PLUGIN_MPC_FAILEDTOLOAD;
+        }
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_tta.so");
+        player->handles->ttaPlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->ttaPlugin == 0) {
+            bass_getError("player_loadPlugins (TTA)");
+            return SSP_ERROR_PLUGIN_TTA_FAILEDTOLOAD;
+        }
+        player_getPathForPlugin(filePath, player->pathForPlugins, "libbasswv.so");
+        player->handles->wvPlugin = BASS_PluginLoad(filePath, 0);
+        if(player->handles->wvPlugin == 0) {
+            bass_getError("player_loadPlugins (WV)");
+            return SSP_ERROR_PLUGIN_WV_FAILEDTOLOAD;
+        }
+    #elif TARGET_IOS
         extern void BASS_APEplugin, BASSFLACplugin, BASS_MPCplugin, BASSWVplugin;
         player->handles->apePlugin = BASS_PluginLoad(&BASS_APEplugin, 0);
         if(player->handles->apePlugin == 0) {
