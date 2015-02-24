@@ -4,7 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-//import org.sessionsapp.player;
+import org.sessionsapp.player.SSP;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -13,8 +13,18 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int error = SSP.SSP_Init();
-        //SSP.SSP_Init();
+        String path = getApplicationInfo().nativeLibraryDir;
+        int error = SSP.SSP_Init(path);
+        if(error != SSP.SSP_OK) {
+            // TODO: show message?
+            return;
+        }
+
+        error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);
+        if(error != SSP.SSP_OK) {
+            // TODO: show message?
+            return;
+        }
     }
 
     @Override
