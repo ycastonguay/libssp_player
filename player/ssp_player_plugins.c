@@ -31,7 +31,6 @@ void player_getPathForPlugin(const char* dest, const char* pathForPlugins, const
 }
 
 SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
-    // TODO: Add Android
     #ifdef _WIN32
         player->handles->apePlugin = BASS_PluginLoad("bass_ape.dll", 0);
         if (player->handles->apePlugin == 0) {
@@ -73,7 +72,7 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
                 bass_getError("player_loadPlugins (WV)");
                 return SSP_ERROR_PLUGIN_WV_FAILEDTOLOAD;
         }
-    #elif __linux__
+    #elif __linux__ // also android
         char filePath[1024];
 
         player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_ape.so");
@@ -106,12 +105,15 @@ SSP_ERROR player_loadPlugins(SSP_PLAYER* player) {
             bass_getError("player_loadPlugins (MPC)");
             return SSP_ERROR_PLUGIN_MPC_FAILEDTOLOAD;
         }
+        #if __ANDROID__
+        #else
         player_getPathForPlugin(filePath, player->pathForPlugins, "libbass_tta.so");
         player->handles->ttaPlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->ttaPlugin == 0) {
             bass_getError("player_loadPlugins (TTA)");
             return SSP_ERROR_PLUGIN_TTA_FAILEDTOLOAD;
         }
+        #endif
         player_getPathForPlugin(filePath, player->pathForPlugins, "libbasswv.so");
         player->handles->wvPlugin = BASS_PluginLoad(filePath, 0);
         if(player->handles->wvPlugin == 0) {
