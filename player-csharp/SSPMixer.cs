@@ -16,20 +16,35 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
 
-namespace playersampleosxxamarin
+namespace org.sessionsapp.player
 {
-    class MainClass
+    public class SSPMixer
     {
-        static void Main(string[] args)
+        internal SSP_MIXER Struct;
+
+        public int BufferSize
         {
-            NSApplication.Init();
-            NSApplication.Main(args);
+            get { return Struct.bufferSize; }
+            set { Struct.bufferSize = value; }
+        }
+
+        public int UpdatePeriod
+        {
+            get { return Struct.updatePeriod; }
+            set { Struct.updatePeriod = value; }
+        }
+
+        public int SampleRate
+        {
+            get { return Struct.sampleRate; }
+            set { Struct.sampleRate = value; }
+        }
+
+        public bool UseFloatingPoint
+        {
+            get { return Struct.useFloatingPoint; }
+            set { Struct.useFloatingPoint = value; }
         }
     }
 }
-

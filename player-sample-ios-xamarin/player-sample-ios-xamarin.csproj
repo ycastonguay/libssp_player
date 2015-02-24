@@ -122,6 +122,30 @@
     <Compile Include="..\player-csharp\SSP.cs">
       <Link>SSP.cs</Link>
     </Compile>
+    <Compile Include="..\player-csharp\SSPCastServer.cs">
+      <Link>SSPCastServer.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPDevice.cs">
+      <Link>SSPDevice.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPEQPreset.cs">
+      <Link>SSPEQPreset.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPEQPresetBand.cs">
+      <Link>SSPEQPresetBand.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPLoop.cs">
+      <Link>SSPLoop.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPMixer.cs">
+      <Link>SSPMixer.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPPlaylistItem.cs">
+      <Link>SSPPlaylistItem.cs</Link>
+    </Compile>
+    <Compile Include="..\player-csharp\SSPPosition.cs">
+      <Link>SSPPosition.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

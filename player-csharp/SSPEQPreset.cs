@@ -16,20 +16,36 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
 
-namespace playersampleosxxamarin
+namespace org.sessionsapp.player
 {
-    class MainClass
+    public class SSPEQPreset
     {
-        static void Main(string[] args)
+        internal SSP_EQPRESET Struct;
+
+        public Guid Id
         {
-            NSApplication.Init();
-            NSApplication.Main(args);
+            get { return new Guid(Struct.id); }
+            set { Struct.id = value.ToString(); }
+        }
+
+        public string Name
+        {
+            get { return Struct.name; }
+            set { Struct.name = value; }
+        }
+
+        public SSPEQPresetBand[] Bands
+        {
+            get
+            {
+                var array = new SSPEQPresetBand[Struct.bands.Length];
+                for (int a = 0; a < Struct.bands.Length; a++)
+                    array[a] = new SSPEQPresetBand(ref Struct.bands[a]);
+
+                return array;
+            }
+            private set { }
         }
     }
 }
-

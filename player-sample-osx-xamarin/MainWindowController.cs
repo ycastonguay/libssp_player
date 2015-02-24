@@ -70,11 +70,11 @@ namespace playersampleosxxamarin
 
         private void HandleTimerRefreshPositionElapsed(object sender, ElapsedEventArgs e)
         {
-            var position = new SSP_POSITION();
-            SSP.SSP_GetPosition(ref position);
+            var position = new SSPPosition();
+            SSP.SSP_GetPosition(ref position.Struct);
 
             InvokeOnMainThread(() => {
-                lblPosition.StringValue = string.Format("Position: {0}", position.str);
+                lblPosition.StringValue = string.Format("Position: {0}", position.Str);
             });
         }
 
@@ -120,8 +120,8 @@ namespace playersampleosxxamarin
                 return;
             }
 
-            var device = new SSP_DEVICE();
-            SSP.SSP_GetDevice(ref device);
+            var device = new SSPDevice();
+            SSP.SSP_GetDevice(ref device.Struct);
 
             Console.WriteLine("libssp_player init successful!");
         }
@@ -149,16 +149,16 @@ namespace playersampleosxxamarin
 
         private void HandlePlaylistIndexChanged(IntPtr user)
         {
-            var item = new SSP_PLAYLISTITEM();
             int index = SSP.SSP_Playlist_GetCurrentIndex();
             int count = SSP.SSP_Playlist_GetCount();
-            SSP.SSP_Playlist_GetItemAt(index, ref item);
+            var item = new SSPPlaylistItem();
+            SSP.SSP_Playlist_GetItemAt(index, ref item.Struct);
 
             InvokeOnMainThread(() => {
                 if(lblPlaylist != null)
                     lblPlaylist.StringValue = string.Format("Playlist [{0}/{1}]", index+1, count);
                 if(lblFilePath != null)
-                    lblFilePath.StringValue = string.Format("File path: {0}", item.filePath);
+                    lblFilePath.StringValue = string.Format("File path: {0}", item.FilePath);
             });
         }
 
@@ -182,7 +182,7 @@ namespace playersampleosxxamarin
             panel.CanChooseDirectories = false;
             panel.CanChooseFiles = true;
             panel.FloatingPanel = true;
-            panel.AllowedFileTypes = new string[3] { "mp3", "wav", "flac" };
+            panel.AllowedFileTypes = new string[8] { "mp3", "wav", "flac", "ogg", "ape", "wv", "tta", "mpc" };           
 
             SSP.SSP_Playlist_Clear();
 

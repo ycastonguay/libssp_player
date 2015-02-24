@@ -16,20 +16,35 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
 
-namespace playersampleosxxamarin
+namespace org.sessionsapp.player
 {
-    class MainClass
+    public class SSPPosition
     {
-        static void Main(string[] args)
+        internal SSP_POSITION Struct;
+
+        public long Bytes
         {
-            NSApplication.Init();
-            NSApplication.Main(args);
+            get { return Struct.bytes; }
+            set { Struct.bytes = value; }
+        }
+
+        public long MS
+        {
+            get { return Struct.ms; }
+            set { Struct.ms = value; }
+        }
+
+        public long Samples
+        {
+            get { return Struct.samples; }
+            set { Struct.samples = value; }
+        }
+
+        public string Str
+        {
+            get { return Struct.str; }
+            set { Struct.str = value; }
         }
     }
 }
-

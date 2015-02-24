@@ -271,7 +271,7 @@ namespace org.sessionsapp.player
         Song = 2
     }
 
-    public enum SSPEncoderType 
+    public enum SSPEncoderType
     {
         OGG = 0,
         AAC = 1,
@@ -281,9 +281,9 @@ namespace org.sessionsapp.player
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_CAST_SERVER
     {
-        public string name;
-        public string url;
-        public string password;
+        public IntPtr name;
+        public IntPtr url;
+        public IntPtr password;
         public int bitrate;
     }
 
@@ -295,7 +295,7 @@ namespace org.sessionsapp.player
         public int updatePeriod;
         public bool useFloatingPoint;
     }
-        
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_EQPRESETBAND
     {
@@ -334,7 +334,7 @@ namespace org.sessionsapp.player
         public long ms;
         public long samples;
     }
-        
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_DEVICE
     {
@@ -350,7 +350,7 @@ namespace org.sessionsapp.player
     public struct SSP_PLAYLISTITEM
     {
         public bool isLoaded;
-        public string filePath;
+        public IntPtr filePath;
         public int sampleRate;
         public int numberOfChannels;
         public int bitsPerSample;

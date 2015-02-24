@@ -16,20 +16,27 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
 
-namespace playersampleosxxamarin
+namespace org.sessionsapp.player
 {
-    class MainClass
+    public class SSPLoop
     {
-        static void Main(string[] args)
+        internal SSP_LOOP Struct;
+
+        // Add properties that are not contained in the C library
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+
+        public long StartPosition
         {
-            NSApplication.Init();
-            NSApplication.Main(args);
+            get { return Struct.startPosition; }
+            set { Struct.startPosition = value; }
+        }
+
+        public long EndPosition
+        {
+            get { return Struct.endPosition; }
+            set { Struct.endPosition = value; }
         }
     }
 }
-

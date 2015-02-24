@@ -16,20 +16,30 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
+using System.Runtime.InteropServices;
 
-namespace playersampleosxxamarin
+namespace org.sessionsapp.player
 {
-    class MainClass
+    public class SSPDevice
     {
-        static void Main(string[] args)
+        internal SSP_DEVICE Struct;
+
+        public string Name
         {
-            NSApplication.Init();
-            NSApplication.Main(args);
+            get { return Marshal.PtrToStringAnsi(Struct.name); }
+            set { Struct.name = Marshal.StringToHGlobalAnsi(value); }
+        }
+
+        public int DeviceId
+        {
+            get { return Struct.deviceId; }
+            set { Struct.deviceId = value; }
+        }
+
+        public bool IsInitialized
+        {
+            get { return Struct.isInitialized; }
+            set { Struct.isInitialized = value; }
         }
     }
 }
-

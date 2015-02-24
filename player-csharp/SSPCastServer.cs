@@ -16,26 +16,36 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
+using System.Runtime.InteropServices;
 
-namespace playersampleosxxamarin
+namespace org.sessionsapp.player
 {
-    public partial class AppDelegate : NSApplicationDelegate
+    public class SSPCastServer
     {
-        MainWindowController mainWindowController;
+        internal SSP_CAST_SERVER Struct;
 
-        public AppDelegate()
+        public string Name
         {
+            get { return Marshal.PtrToStringAnsi(Struct.name); }
+            set { Struct.name = Marshal.StringToHGlobalAnsi(value); }
         }
 
-        public override void FinishedLaunching(NSObject notification)
+        public string Url
         {
-            mainWindowController = new MainWindowController();
-            mainWindowController.Window.MakeKeyAndOrderFront(this);
+            get { return Marshal.PtrToStringAnsi(Struct.url); }
+            set { Struct.url = Marshal.StringToHGlobalAnsi(value); }
+        }
+
+        public string Password
+        {
+            get { return Marshal.PtrToStringAnsi(Struct.password); }
+            set { Struct.password = Marshal.StringToHGlobalAnsi(value); }
+        }
+
+        public int Bitrate
+        {
+            get { return Struct.bitrate; }
+            set { Struct.bitrate = value; }
         }
     }
 }
-

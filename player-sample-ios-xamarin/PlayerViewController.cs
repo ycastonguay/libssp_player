@@ -1,17 +1,34 @@
-﻿using System;
+﻿// Copyright © 2011-2015 Yanick Castonguay
+//
+// This file is part of Sessions, a music player for musicians.
+//
+// Sessions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Sessions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Sessions. If not, see <http://www.gnu.org/licenses/>.
+
+using System;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using ObjCRuntime;
-using UIKit;
 using org.sessionsapp.player;
-using System.Linq;
+using UIKit;
 
 namespace playersampleiosxamarin
 {
     public partial class PlayerViewController : UIViewController
     {
         private Timer _timerRefreshPosition;
-        private static SSP_POSITION _length;
+        private static SSPPosition _length;
 
         private LogDelegate _logDelegate;
         private StateChangedDelegate _stateChangedDelegate;
@@ -92,11 +109,11 @@ namespace playersampleiosxamarin
 
         private void HandleTimerRefreshPositionElapsed(object sender, ElapsedEventArgs e)
         {
-            var position = new SSP_POSITION();
-            SSP.SSP_GetPosition(ref position);
+            var position = new SSPPosition();
+            SSP.SSP_GetPosition(ref position.Struct);
 
             InvokeOnMainThread(() => {
-                lblPosition.Text = string.Format("Position: {0} / {1}", position.str, _length.str);
+                lblPosition.Text = string.Format("Position: {0} / {1}", position.Str, _length.Str);
             });
         }
 
@@ -117,18 +134,18 @@ namespace playersampleiosxamarin
         [MonoPInvokeCallback(typeof(PlaylistIndexChangedDelegate))]
         private static void HandlePlaylistIndexChanged(IntPtr user)
         {
-            var item = new SSP_PLAYLISTITEM();
+            var item = new SSPPlaylistItem();
             int index = SSP.SSP_Playlist_GetCurrentIndex();
             int count = SSP.SSP_Playlist_GetCount();
-            SSP.SSP_Playlist_GetItemAt(index, ref item);
+            SSP.SSP_Playlist_GetItemAt(index, ref item.Struct);
 
-            var length = new SSP_POSITION();
-            SSP.SSP_GetPositionFromBytes(item.length, ref length);
+            var length = new SSPPosition();
+            SSP.SSP_GetPositionFromBytes(item.Length, ref length.Struct);
             _length = length;
 
             CurrentViewController.InvokeOnMainThread(() => {
                 CurrentViewController.lblPlaylist.Text = string.Format("Playlist [{0}/{1}]", index+1, count);
-                CurrentViewController.lblFilePath.Text = string.Format("File path: {0}", item.filePath);
+                CurrentViewController.lblFilePath.Text = string.Format("File path: {0}", item.FilePath);
             });
         }
 
@@ -143,7 +160,7 @@ namespace playersampleiosxamarin
             SSP.SSP_Playlist_Clear();
 
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string[] extensions = { ".mp3", ".flac", ".ape", ".wav" };
+            string[] extensions = { ".mp3", ".flac", ".ape", ".wav", ".ogg", ".mpc", ".wv" };
             foreach (string file in Directory.EnumerateFiles(documents, "*.*", SearchOption.AllDirectories)
                 .Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
             {
