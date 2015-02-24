@@ -44,13 +44,13 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\player-csharp\SSP.cs">
       <Link>SSP.cs</Link>
     </Compile>
     <Compile Include="BassWrapper.cs" />
+    <Compile Include="MainActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -82,5 +82,26 @@
     <AndroidNativeLibrary Include="lib\x86\libbass_fx.so" />
     <AndroidNativeLibrary Include="lib\x86\libbassmix.so" />
     <AndroidNativeLibrary Include="lib\x86\libssp_player.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbassenc.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbassenc.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbassenc.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbass_aac.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbass_alac.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbass_ape.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbass_mpc.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbassflac.so" />
+    <AndroidNativeLibrary Include="lib\armeabi\libbasswv.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbass_aac.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbass_alac.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbass_ape.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbass_mpc.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbassflac.so" />
+    <AndroidNativeLibrary Include="lib\armeabi-v7a\libbasswv.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbass_aac.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbass_alac.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbass_ape.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbass_mpc.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbassflac.so" />
+    <AndroidNativeLibrary Include="lib\x86\libbasswv.so" />
   </ItemGroup>
 </Project>
