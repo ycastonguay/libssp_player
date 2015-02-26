@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':org.sessionsapp.player'
 //include ':player-java'
 
 //project(":player-java").projectDir = file("../player-java")
