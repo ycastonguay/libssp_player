@@ -23,7 +23,6 @@ namespace org.sessionsapp.player
     {
         internal SSP_LOOP Struct;
 
-        // Add properties that are not contained in the C library
         public Guid Id { get; set; }
         public string Name { get; set; }
 
@@ -38,5 +37,13 @@ namespace org.sessionsapp.player
             get { return Struct.endPosition; }
             set { Struct.endPosition = value; }
         }
+
+        public long StartPositionMS { get; set; }
+        public long StartPositionSamples { get; set; }
+        public string StartPositionStr { get; set; }
+
+        public long EndPositionMS { get; set; }
+        public long EndPositionSamples { get; set; }
+        public string EndPositionStr { get; set; }
     }
 }

@@ -46,5 +46,7 @@ namespace org.sessionsapp.player
             get { return Struct.str; }
             set { Struct.str = value; }
         }
+
+        public static SSPPosition Empty = new SSPPosition() { Bytes = 0, MS = 0, Samples = 0, Str = "0:00.000" };
     }
 }

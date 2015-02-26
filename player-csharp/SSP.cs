@@ -233,9 +233,6 @@ namespace org.sessionsapp.player
         // Errors
         public static int SSP_OK = 0;
         public static int SSP_ERROR_UNKNOWN = 1;
-
-        // Extra
-        public static SSP_POSITION EmptyPosition = new SSP_POSITION() { bytes = 0, ms = 0, samples = 0, str = "0:00.000" };
     }
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

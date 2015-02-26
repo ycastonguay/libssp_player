@@ -59,6 +59,7 @@ There are samples for just about every platform and language available:
 +  __Android__ / Xamarin: [`player-sample-android-xamarin`](player-sample-android-xamarin)
 +  __Linux__ / QT: [`player-sample-linux-qt`](player-sample-linux-qt)
 +  __Linux__ / GTK#: [`player-sample-linux-gtk-sharp`](player-sample-linux-gtk-sharp)
++  __Windows__ / MFC: [`player-sample-win32-mfc`](player-sample-win32-mfc)
 +  __Windows__ / WPF: [`player-sample-win32-wpf`](player-sample-win32-wpf)
 +  __Console__ / C: [`player-sample-console`](player-sample-console)
 
