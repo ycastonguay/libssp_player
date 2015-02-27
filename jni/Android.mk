@@ -45,7 +45,7 @@ VECTOR_FILES  := $(VECTOR_FILES:$(LOCAL_PATH)/%=%)
 PLAYER_FILES  := $(wildcard $(LOCAL_PATH)/../player/*.c)
 PLAYER_FILES  := $(PLAYER_FILES:$(LOCAL_PATH)/%=%)
 
-JNI_FILES  := $(wildcard $(LOCAL_PATH)/../player-java/*.c)
+JNI_FILES  := $(wildcard $(LOCAL_PATH)/../jni/*.c)
 JNI_FILES  := $(JNI_FILES:$(LOCAL_PATH)/%=%)
 
 LOCAL_SRC_FILES := $(VECTOR_FILES)
