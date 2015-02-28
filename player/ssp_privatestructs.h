@@ -45,8 +45,7 @@ typedef struct {
     STREAMPROC* streamProc;
     SYNCPROC* syncProc;
 
-    int syncProcHandles[100];
-    int syncProcCount;
+    void* syncProcHandles;
 } SSP_PLAYER_HANDLES;
 
 typedef struct {

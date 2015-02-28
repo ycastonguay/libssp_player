@@ -24,6 +24,7 @@
 #include "ssp_bass.h"
 #include "ssp_log.h"
 #include "ssp_playlistitem.h"
+#include "vector.h"
 
 SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
     log_text("player_setSyncCallbackAfterChangingPlaylistItem\n");
@@ -221,8 +222,10 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
         return;
     }
 
-    // TODO: Remove sync callback correctly
-//    RemoveSyncCallback(handle);
+    SSP_ERROR error = player_removeSyncCallback(player, handle);
+    if(error != SSP_OK) {
+        return;
+    }
 
     // Is this the last song?
     if(player->playlist->currentIndex == playlist_getCount(player->playlist) - 1) {
@@ -235,63 +238,12 @@ void CALLBACK player_playerSyncProc(HSYNC handle, DWORD channel, DWORD data, voi
     }
 
     if(playbackStopped) {
-
-        // TODO: Why not replace this with player_stop()?
-//            if (IsEQEnabled)
-//                RemoveEQ();
-
-        SSP_ERROR error = playlist_disposeChannels(player->playlist);
-        if(error != SSP_OK) {
-            return;
-        }
-
-        player_updateState(player, SSP_PLAYER_STATE_STOPPED);
+        player_stop(player);
     }
 
     if(player->playlist->callbackPlaylistIndexChanged != NULL) {
-        log_text("player_playerSyncProc - Calling callbackPlaylistIndexChanged...\n");
         player->playlist->callbackPlaylistIndexChanged(player->playlist->callbackPlaylistIndexChangedUser);
     }
-
-    log_text("player_playerSyncProc (END)\n");
-
-//        // Create data
-//        PlayerPlaylistIndexChangedData eventData = new PlayerPlaylistIndexChangedData();
-//        eventData.IsPlaybackStopped = playbackStopped;
-//        eventData.PlaylistName = "New playlist 1";
-//        eventData.PlaylistCount = Playlist.Items.Count;
-//        eventData.PlaylistIndex = Playlist.CurrentItemIndex;
-//
-//        // If the playback hasn't stopped, fill more event data
-//        if (playbackStopped)
-//        {
-//            // Set event data
-//            eventData.AudioFileStarted = null;
-//            eventData.AudioFileEnded = Playlist.CurrentItem.AudioFile;
-//        }
-//        else
-//        {
-//            // Set event data
-//            eventData.AudioFileStarted = Playlist.CurrentItem.AudioFile;
-//            if (Playlist.CurrentItemIndex < Playlist.Items.Count - 2)
-//                eventData.NextAudioFile = Playlist.Items[Playlist.CurrentItemIndex + 1].AudioFile;
-//
-//            // Is this the first item, and did the last song of the playlist just play?
-//            if (Playlist.CurrentItemIndex == 0 && playlistBackToStart)
-//            {
-//                // The audio file that just finished was the last of the playlist
-//                eventData.AudioFileEnded = Playlist.Items[Playlist.Items.Count - 1].AudioFile;
-//            }
-//                // Make sure this is not the first item
-//            else if (Playlist.CurrentItemIndex > 0)
-//            {
-//                // The audio file that just finished was the last one
-//                eventData.AudioFileEnded = Playlist.Items[Playlist.CurrentItemIndex - 1].AudioFile;
-//            }
-//        }
-//
-//        // Raise event
-//        OnPlaylistIndexChanged(eventData);
 }
 
 SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
@@ -303,21 +255,60 @@ SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
         return SSP_ERROR_UNKNOWN;
     }
 
-    player->handles->syncProcCount++;
-    player->handles->syncProcHandles[player->handles->syncProcCount-1] = sync;
+    // Allocate some memory for the value on the heap (TODO: check if this is the right thing to do)
+    HSYNC*syncHeap = malloc(sizeof(HSYNC));
+    *syncHeap = sync;
+    vector_add(player->handles->syncProcHandles, syncHeap);
 
     return SSP_OK;
 }
 
 SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
-    for(int a = 0; a < player->handles->syncProcCount; a++) {
-        bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, player->handles->syncProcHandles[a]);
+    for(int a = 0; a < vector_total(player->handles->syncProcHandles); a++) {
+        HSYNC* handle = (HSYNC*)vector_get(player->handles->syncProcHandles, a);
+        bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, *handle);
         if(!success) {
             return bass_getError("player_removeSyncCallbacks");
         }
+
+        // Don't forget to free the item from the heap
+        free(handle);
     }
 
-    player->handles->syncProcCount = 0;
+    // Empty vector
+    vector_free(player->handles->syncProcHandles);
+    free(player->handles->syncProcHandles);
+    player->handles->syncProcHandles = NULL;
+
+    // Initialize vector
+    player->handles->syncProcHandles = malloc(sizeof(vector));
+    vector_init(player->handles->syncProcHandles);
+
+    return SSP_OK;
+}
+
+SSP_ERROR player_removeSyncCallback(SSP_PLAYER* player, uint32_t handle) {
+    bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, handle);
+    if(!success) {
+        return bass_getError("player_removeSyncCallback");
+    }
+
+    int index = -1;
+    HSYNC* currentHandle = NULL;
+    for(int a = 0; a < vector_total(player->handles->syncProcHandles); a++) {
+        currentHandle = (HSYNC*)vector_get(player->handles->syncProcHandles, a);
+        if(*currentHandle == handle) {
+            index = a;
+            break;
+        }
+    }
+
+    if(index >= 0) {
+        vector_delete(player->handles->syncProcHandles, index);
+
+        // Don't forget to free the item from the heap
+        free(currentHandle);
+    }
 
     return SSP_OK;
 }

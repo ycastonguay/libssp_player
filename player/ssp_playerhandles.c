@@ -17,16 +17,24 @@
 
 #include <stdlib.h>
 #include "ssp_playerhandles.h"
-#include "ssp_privatestructs.h"
+#include "vector.h"
 
 SSP_PLAYER_HANDLES *playerHandles_create() {
     SSP_PLAYER_HANDLES *handles = malloc(sizeof(SSP_PLAYER_HANDLES));
     playerHandles_reset(handles);
+
+    handles->syncProcHandles = malloc(sizeof(vector));
+    vector_init(handles->syncProcHandles);
+
     return handles;
 }
 
 void playerHandles_free(SSP_PLAYER_HANDLES *handles) {
-    // Nothing to free
+    if(handles->syncProcHandles) {
+        vector_free(handles->syncProcHandles);
+        free(handles->syncProcHandles);
+        handles->syncProcHandles = NULL;
+    }
 }
 
 void playerHandles_reset(SSP_PLAYER_HANDLES *handles) {
@@ -48,5 +56,6 @@ void playerHandles_reset(SSP_PLAYER_HANDLES *handles) {
 
     handles->streamProc = NULL;
     handles->syncProc = NULL;
-    handles->syncProcCount = 0;
+
+    handles->syncProcHandles = NULL;
 }
