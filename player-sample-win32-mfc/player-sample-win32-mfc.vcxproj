@@ -60,8 +60,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libssp_player.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -127,11 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\player-sample-win32-mfc.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\libssp_player.vcxproj">
-      <Project>{f534062b-dd66-453b-b08b-87ae6741179d}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

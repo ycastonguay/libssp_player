@@ -16,7 +16,6 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Sessions.Core.Attributes;
 
 namespace org.sessionsapp.player
 {
@@ -27,8 +26,7 @@ namespace org.sessionsapp.player
         public Guid LoopId { get; set; }
         public Guid AudioFileId { get; set; }
         public string Name { get; set; }
-
-        [DatabaseField(false)]
+        
         public string Index { get; set; }
 
         public long StartPosition

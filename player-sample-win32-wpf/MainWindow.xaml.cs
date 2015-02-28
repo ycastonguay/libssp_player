@@ -55,13 +55,7 @@ namespace player_sample_win32_wpf
                 var mixer = new SSP_MIXER();
                 SSP.SSP_GetMixer(ref mixer);
 
-                // crashes, probably because of the const char*
-                //var device = new SSP_DEVICE();
-                //device.name = "hello";
-                //SSP.SSP_GetDevice(ref device);
-                //string test = Marshal.PtrToStringAnsi(device.name);
                 var device = new SSPDevice();
-                //device.Struct.name = "testy";
                 device.Name = "hello";
                 SSP.SSP_GetDevice(ref device.Struct);
                 Console.WriteLine("Device is {0}", device.Name);
@@ -85,12 +79,12 @@ namespace player_sample_win32_wpf
 
         private void HandleTimerRefreshPositionElapsed(object sender, ElapsedEventArgs e)
         {
-            var position = new SSP_POSITION();
-            SSP.SSP_GetPosition(ref position);
+            var position = new SSPPosition();
+            SSP.SSP_GetPosition(ref position.Struct);
 
             Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
-                lblPosition.Content = string.Format("Position: {0}", position.str);
+                lblPosition.Content = string.Format("Position: {0}", position.Str);
             }));
         }
 
@@ -110,19 +104,18 @@ namespace player_sample_win32_wpf
 
         private void HandlePlaylistIndexChanged(IntPtr user)
         {
-            // crashes, probably because of const char *
-            //var item = new SSP_PLAYLISTITEM();
-            //int index = SSP.SSP_Playlist_GetCurrentIndex();
-            //int count = SSP.SSP_Playlist_GetCount();
-            //SSP.SSP_Playlist_GetItemAt(index, ref item);
+            int index = SSP.SSP_Playlist_GetCurrentIndex();
+            int count = SSP.SSP_Playlist_GetCount();
+            var item = new SSPPlaylistItem();
+            SSP.SSP_Playlist_GetItemAt(index, ref item.Struct);
 
-            //Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
-            //{
-            //    if (lblPlaylist != null)
-            //        lblPlaylist.Content = string.Format("Playlist [{0}/{1}]", index + 1, count);
-            //    if (lblFilePath != null)
-            //        lblFilePath.Content = string.Format("File path: {0}", item.filePath);
-            //}));
+            Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            {
+                if (lblPlaylist != null)
+                    lblPlaylist.Content = string.Format("Playlist [{0}/{1}]", index + 1, count);
+                if (lblFilePath != null)
+                    lblFilePath.Content = string.Format("File path: {0}", item.FilePath);
+            }));
         }
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
@@ -148,7 +141,7 @@ namespace player_sample_win32_wpf
                 _timerRefreshPosition.Stop();
 
             if (SSP.SSP_GetState() == SSPPlayerState.Playing ||
-               SSP.SSP_GetState() == SSPPlayerState.Paused)
+                SSP.SSP_GetState() == SSPPlayerState.Paused)
                 SSP.SSP_Stop();
 
             SSP.SSP_Free();
