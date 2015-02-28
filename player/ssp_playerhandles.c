@@ -16,8 +16,8 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdlib.h>
+#include "../vector/vector.h"
 #include "ssp_playerhandles.h"
-#include "vector.h"
 
 SSP_PLAYER_HANDLES *playerHandles_create() {
     SSP_PLAYER_HANDLES *handles = malloc(sizeof(SSP_PLAYER_HANDLES));

@@ -21,7 +21,7 @@
 #include "ssp_player.h"
 #include "ssp_bass.h"
 
-void player_getPathForPlugin(const char* dest, const char* pathForPlugins, const char* pluginFileName) {
+void player_getPathForPlugin(char* dest, const char* pathForPlugins, const char* pluginFileName) {
     if(pathForPlugins != NULL) {
         sprintf(dest, "%s/%s", pathForPlugins, pluginFileName);
     }

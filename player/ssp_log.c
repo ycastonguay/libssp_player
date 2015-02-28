@@ -42,7 +42,7 @@ void log_textf(const char* format, ...) {
     va_list ap;
     va_start(ap, format);
     char result[1024];
-    vsprintf(&result, format, ap);
+    vsnprintf(result, 1024, format, ap);
 
     if(log_cb != NULL) {
         log_cb(log_cb_user, result);

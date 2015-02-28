@@ -105,6 +105,7 @@ SSP_ERROR player_getBassVersions() {
     uint32_t bassFXVersion = BASS_FX_GetVersion();
     uint32_t bassMixVersion = BASS_Mixer_GetVersion();
     uint32_t bassEncVersion = BASS_Encode_GetVersion();
+    log_textf("libbass version %d || libbass_fx version %d || libbassmix version %d || libbassenc version %d\n", bassVersion, bassFXVersion, bassMixVersion, bassEncVersion);
 
     return SSP_OK;
 }

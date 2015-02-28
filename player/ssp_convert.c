@@ -51,7 +51,7 @@ void convert_toStringFromMS(uint64_t milliseconds, char *str) {
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
-    uint64_t ms = 0;
+    int ms = 0;
 
     if (pos >= 3600000)
     {
@@ -68,7 +68,7 @@ void convert_toStringFromMS(uint64_t milliseconds, char *str) {
         seconds = (int)pos / 1000;
         pos %= 1000;
     }
-    ms = pos;
+    ms = (int)pos;
 
     if(hours > 0) {
         sprintf(str, "%01d:%02d:%02d.%03d", hours, minutes, seconds, ms);

@@ -19,12 +19,62 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include "../bass/bassmix.h"
+#include "../vector/vector.h"
 #include "ssp_player.h"
 #include "ssp_playlist.h"
 #include "ssp_bass.h"
 #include "ssp_log.h"
 #include "ssp_playlistitem.h"
-#include "vector.h"
+
+SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
+    for(int a = 0; a < vector_total(player->handles->syncProcHandles); a++) {
+        HSYNC* handle = (HSYNC*)vector_get(player->handles->syncProcHandles, a);
+        bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, *handle);
+        if(!success) {
+            return bass_getError("player_removeSyncCallbacks");
+        }
+
+        // Don't forget to free the item from the heap
+        free(handle);
+    }
+
+    // Empty vector
+    vector_free(player->handles->syncProcHandles);
+    free(player->handles->syncProcHandles);
+    player->handles->syncProcHandles = NULL;
+
+    // Initialize vector
+    player->handles->syncProcHandles = malloc(sizeof(vector));
+    vector_init(player->handles->syncProcHandles);
+
+    return SSP_OK;
+}
+
+SSP_ERROR player_removeSyncCallback(SSP_PLAYER* player, uint32_t handle) {
+    bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, handle);
+    if(!success) {
+        return bass_getError("player_removeSyncCallback");
+    }
+
+    int index = -1;
+    HSYNC* currentHandle = NULL;
+    for(int a = 0; a < vector_total(player->handles->syncProcHandles); a++) {
+        currentHandle = (HSYNC*)vector_get(player->handles->syncProcHandles, a);
+        if(*currentHandle == handle) {
+            index = a;
+            break;
+        }
+    }
+
+    if(index >= 0) {
+        vector_delete(player->handles->syncProcHandles, index);
+
+        // Don't forget to free the item from the heap
+        free(currentHandle);
+    }
+
+    return SSP_OK;
+}
 
 SSP_ERROR player_setSyncCallbackAfterChangingPlaylistItem(SSP_PLAYER *player) {
     log_text("player_setSyncCallbackAfterChangingPlaylistItem\n");
@@ -256,59 +306,9 @@ SSP_ERROR player_setSyncCallback(SSP_PLAYER* player, uint64_t position) {
     }
 
     // Allocate some memory for the value on the heap (TODO: check if this is the right thing to do)
-    HSYNC*syncHeap = malloc(sizeof(HSYNC));
+    HSYNC* syncHeap = malloc(sizeof(HSYNC));
     *syncHeap = sync;
     vector_add(player->handles->syncProcHandles, syncHeap);
-
-    return SSP_OK;
-}
-
-SSP_ERROR player_removeSyncCallbacks(SSP_PLAYER* player) {
-    for(int a = 0; a < vector_total(player->handles->syncProcHandles); a++) {
-        HSYNC* handle = (HSYNC*)vector_get(player->handles->syncProcHandles, a);
-        bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, *handle);
-        if(!success) {
-            return bass_getError("player_removeSyncCallbacks");
-        }
-
-        // Don't forget to free the item from the heap
-        free(handle);
-    }
-
-    // Empty vector
-    vector_free(player->handles->syncProcHandles);
-    free(player->handles->syncProcHandles);
-    player->handles->syncProcHandles = NULL;
-
-    // Initialize vector
-    player->handles->syncProcHandles = malloc(sizeof(vector));
-    vector_init(player->handles->syncProcHandles);
-
-    return SSP_OK;
-}
-
-SSP_ERROR player_removeSyncCallback(SSP_PLAYER* player, uint32_t handle) {
-    bool success = BASS_Mixer_ChannelRemoveSync(player->handles->fxChannel, handle);
-    if(!success) {
-        return bass_getError("player_removeSyncCallback");
-    }
-
-    int index = -1;
-    HSYNC* currentHandle = NULL;
-    for(int a = 0; a < vector_total(player->handles->syncProcHandles); a++) {
-        currentHandle = (HSYNC*)vector_get(player->handles->syncProcHandles, a);
-        if(*currentHandle == handle) {
-            index = a;
-            break;
-        }
-    }
-
-    if(index >= 0) {
-        vector_delete(player->handles->syncProcHandles, index);
-
-        // Don't forget to free the item from the heap
-        free(currentHandle);
-    }
 
     return SSP_OK;
 }
