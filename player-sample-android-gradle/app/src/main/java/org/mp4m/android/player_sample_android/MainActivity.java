@@ -20,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
 
-        error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, true);
+        error = SSP.SSP_InitDevice(-1, 44100, 1000, 100, false);
         if(error != SSP.SSP_OK) {
             // TODO: show message?
             return;

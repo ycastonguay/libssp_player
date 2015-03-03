@@ -12,6 +12,10 @@ public class SSP
     public static native int SSP_Free();
 
     static {
+    	System.loadLibrary("bass");
+    	System.loadLibrary("bass_fx");
+    	System.loadLibrary("bassmix");
+    	System.loadLibrary("bassenc");
         System.loadLibrary("ssp_player");
     }
 }
