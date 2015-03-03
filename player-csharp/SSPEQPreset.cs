@@ -41,7 +41,7 @@ namespace org.sessionsapp.player
             {
                 var array = new SSPEQPresetBand[Struct.bands.Length];
                 for (int a = 0; a < Struct.bands.Length; a++)
-                    array[a] = new SSPEQPresetBand(ref Struct.bands[a]);
+                    array[a] = new SSPEQPresetBand(this, a);
 
                 return array;
             }
@@ -68,10 +68,15 @@ namespace org.sessionsapp.player
         public float Gain16 { get { return Bands[16].Gain; } set { Bands[16].Gain = value; } }
         public float Gain17 { get { return Bands[17].Gain; } set { Bands[17].Gain = value; } }
 
+        public SSPEQPreset()
+        {
+            Struct.bands = new SSP_EQPRESETBAND[18];
+            Reset();
+        }
+
         public void Reset()
         {
-            foreach (var band in Bands)
-                band.Gain = 0;
+            SSP.SSP_ResetEQPreset(ref Struct);
         }
     }
 }

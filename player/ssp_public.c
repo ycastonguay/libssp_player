@@ -274,6 +274,11 @@ SSP_ERROR SSP_SetEQPresetBand(int band, float gain) {
     return player_updateEQBand(sspPlayer, band, gain);
 }
 
+SSP_ERROR SSP_ResetEQPreset(SSP_EQPRESET* preset) {
+    eqpreset_reset(preset);
+    return SSP_OK;
+}
+
 bool SSP_GetEQEnabled() {
     return sspPlayer->playhead->isEQEnabled;
 }

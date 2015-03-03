@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 20
+#define SSP_VERSION 21
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -63,6 +63,7 @@ LIBRARY_API SSP_ERROR SSP_SetUpdatePeriod(int updatePeriod);
 LIBRARY_API void SSP_GetEQPreset(SSP_EQPRESET* preset);
 LIBRARY_API SSP_ERROR SSP_SetEQPreset(SSP_EQPRESET* preset);
 LIBRARY_API SSP_ERROR SSP_SetEQPresetBand(int band, float gain);
+LIBRARY_API SSP_ERROR SSP_ResetEQPreset(SSP_EQPRESET* preset);
 
 LIBRARY_API bool SSP_GetEQEnabled();
 LIBRARY_API SSP_ERROR SSP_SetEQEnabled(bool enabled);
