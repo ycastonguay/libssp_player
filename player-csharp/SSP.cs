@@ -68,7 +68,7 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SSP_GetEQPreset(ref SSP_EQPRESET preset);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_SetEQPreset(SSP_EQPRESET preset);
+        public static extern int SSP_SetEQPreset(ref SSP_EQPRESET preset);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetEQPresetBand(int band, float gain);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]

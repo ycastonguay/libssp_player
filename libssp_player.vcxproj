@@ -92,6 +92,7 @@
     <ClCompile Include="player\ssp_player_loop.c" />
     <ClCompile Include="player\ssp_player_playback.c" />
     <ClCompile Include="player\ssp_player_playhead.c" />
+    <ClCompile Include="player\ssp_player_plugins.c" />
     <ClCompile Include="player\ssp_player_seeking.c" />
     <ClCompile Include="player\ssp_player_stream.c" />
     <ClCompile Include="player\ssp_playhead.c" />
