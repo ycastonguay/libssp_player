@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 21
+#define SSP_VERSION 22
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -133,6 +133,16 @@ LIBRARY_API SSP_ERROR SSP_Playlist_Clear();
 LIBRARY_API void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item);
 LIBRARY_API int SSP_Playlist_GetCount();
 LIBRARY_API int SSP_Playlist_GetCurrentIndex();
+
+// Decoder (useful for peak file generation)
+LIBRARY_API uint32_t SSP_Decoder_CreateStream(char* filePath, bool useFloatingPoint);
+LIBRARY_API SSP_ERROR SSP_Decoder_FreeStream(uint32_t handle);
+LIBRARY_API uint64_t SSP_Decoder_GetLength(uint32_t handle);
+LIBRARY_API uint64_t SSP_Decoder_GetData(uint32_t handle, void* buffer, int length);
+
+// Device detection
+LIBRARY_API int SSP_GetOutputDeviceCount();
+LIBRARY_API bool SSP_GetOutputDevice(int index, SSP_DEVICE *device);
 
 // Callbacks
 LIBRARY_API void SSP_SetPlaylistIndexChangedCallback(player_playlistindexchanged_cb cb, void* user);

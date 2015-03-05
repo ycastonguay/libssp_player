@@ -32,6 +32,7 @@ namespace org.sessionsapp.player
         public const string DllImportValue = "libssp_player.dll";
 #endif
 
+        // TODO: Check for usage of uint16_t, uint32_t and uint64_t and make sure the types are unsigned in this class
         // Initialization
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetVersion();
@@ -86,9 +87,9 @@ namespace org.sessionsapp.player
 
         // Loops
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_StartLoop(SSP_LOOP loop);
+        public static extern int SSP_StartLoop(ref SSP_LOOP loop);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_UpdateLoop(SSP_LOOP loop);
+        public static extern int SSP_UpdateLoop(ref SSP_LOOP loop);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StopLoop();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
@@ -175,6 +176,12 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_StopCast();
 
+        // Device detection
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SSP_GetOutputDeviceCount();
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool SSP_GetOutputDevice(int index, ref SSP_DEVICE device);
+
         // Playlist
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_AddItem([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath);
@@ -190,6 +197,18 @@ namespace org.sessionsapp.player
         public static extern int SSP_Playlist_GetCount();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetCurrentIndex();
+
+        // Decoder
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern UInt32 SSP_Decoder_CreateStream([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath, bool useFloatingPoint);
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SSP_Decoder_FreeStream(UInt32 handle);
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern ulong SSP_Decoder_GetLength(UInt32 handle);
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern ulong SSP_Decoder_GetData(float[] buffer, int length);
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern ulong SSP_Decoder_GetData(int[] buffer, int length);
 
         // Callbacks
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
@@ -337,12 +356,11 @@ namespace org.sessionsapp.player
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_DEVICE
     {
-        // doesn't work on Windows, works with Mono without the attribute
-        //[MarshalAsAttribute(UnmanagedType.LPStr)] 
-        //public string name;
         public IntPtr name;
+        public IntPtr driver;
         public int deviceId;
         public bool isInitialized;
+        public bool isDefault;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]

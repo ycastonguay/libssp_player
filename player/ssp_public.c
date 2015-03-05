@@ -30,6 +30,7 @@
 #include "ssp_loop.h"
 #include "ssp_mixer.h"
 #include "ssp_structs.h"
+#include "ssp_decoder.h"
 
 static SSP_PLAYER* sspPlayer = NULL;
 
@@ -433,4 +434,32 @@ SSP_ERROR SSP_StopLoop() {
 
 void SSP_GetLoop(SSP_LOOP* loop) {
     loop_copy(loop, sspPlayer->loop);
+}
+
+#pragma mark Decoder
+
+uint32_t SSP_Decoder_CreateStream(char* filePath, bool useFloatingPoint) {
+    return decoder_createStream(filePath, useFloatingPoint);
+}
+
+SSP_ERROR SSP_Decoder_FreeStream(uint32_t handle) {
+    return decoder_freeStream(handle);
+}
+
+uint64_t SSP_Decoder_GetLength(uint32_t handle) {
+    return decoder_getLength(handle);
+}
+
+uint64_t SSP_Decoder_GetData(uint32_t handle, void* buffer, int length) {
+    return decoder_getData(handle, buffer, length);
+}
+
+#pragma mark Device Detection
+
+int SSP_GetOutputDeviceCount() {
+    return device_getOutputDeviceCount();
+}
+
+bool SSP_GetOutputDevice(int index, SSP_DEVICE *device) {
+    return device_getOutputDevice(index, device);
 }

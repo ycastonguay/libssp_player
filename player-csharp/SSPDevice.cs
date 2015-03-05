@@ -30,6 +30,12 @@ namespace org.sessionsapp.player
             set { Struct.name = Marshal.StringToHGlobalAnsi(value); }
         }
 
+        public string Driver
+        {
+            get { return Marshal.PtrToStringAnsi(Struct.driver); }
+            set { Struct.driver = Marshal.StringToHGlobalAnsi(value); }
+        }
+
         public int DeviceId
         {
             get { return Struct.deviceId; }
@@ -40,6 +46,12 @@ namespace org.sessionsapp.player
         {
             get { return Struct.isInitialized; }
             set { Struct.isInitialized = value; }
+        }
+
+        public bool IsDefault
+        {
+            get { return Struct.isDefault; }
+            set { Struct.isDefault = value; }
         }
     }
 }

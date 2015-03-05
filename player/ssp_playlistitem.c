@@ -67,7 +67,7 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->filePath);
     item->channel = bass_createDecodeStream(item->filePath, useFloatingPoint);
     if(item->channel == 0) {
-        return SSP_ERROR_PLAYLISTITEM_LOAD_FAILEDTOCREATEDECODESTREAM;
+        return SSP_ERROR_FAILEDTOCREATEDECODESTREAM;
     }
 
     BASS_CHANNELINFO info;
@@ -80,7 +80,7 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
 
     item->length = BASS_ChannelGetLength(item->channel, BASS_POS_BYTE);
     if(item->length == -1) {
-        return SSP_ERROR_PLAYLISTITEM_LOAD_FAILEDTOGETLENGTH;
+        return SSP_ERROR_FAILEDTOGETLENGTH;
     }
 
     log_textf("playlistitem_load - Load successful; length: %"PRIu64" sampleRate: %d \n", item->length, item->sampleRate);

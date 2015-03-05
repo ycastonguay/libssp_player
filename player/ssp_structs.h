@@ -39,8 +39,10 @@ typedef struct {
 
 typedef struct {
     const char* name;
+    const char* driver;
     int deviceId;
     bool isInitialized;
+    bool isDefault;
 } SSP_DEVICE;
 
 typedef struct {

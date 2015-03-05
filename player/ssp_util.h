@@ -15,19 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __player__ssp_device__
-#define __player__ssp_device__
+#ifndef __player__ssp_util__
+#define __player__ssp_util__
 
 #include <stdio.h>
-#include "ssp_structs.h"
-#include "ssp_errors.h"
+#include <string.h>
+#include <stdlib.h>
 
-SSP_DEVICE* device_create();
-void device_free(SSP_DEVICE *device);
-void device_reset(SSP_DEVICE *device);
-void device_copy(SSP_DEVICE *dest, SSP_DEVICE *src);
+char* copystr(char* dest, const char* src);
 
-int device_getOutputDeviceCount();
-bool device_getOutputDevice(int index, SSP_DEVICE *device);
-
-#endif /* defined(__player__ssp_device__) */
+#endif /* defined(__player__ssp_util__) */

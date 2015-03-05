@@ -17,8 +17,9 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "../bass/bass.h"
 #include "ssp_device.h"
-#include "ssp_structs.h"
+#include "ssp_util.h"
 
 SSP_DEVICE* device_create() {
     SSP_DEVICE* device = malloc(sizeof(SSP_DEVICE));
@@ -37,15 +38,54 @@ void device_free(SSP_DEVICE *device) {
 
 void device_reset(SSP_DEVICE* device) {
     device->isInitialized = false;
+    device->isDefault = false;
     device->deviceId = -1;
     device->name = "Default device";
+    device->driver = NULL;
 }
 
 void device_copy(SSP_DEVICE* dest, SSP_DEVICE* src) {
     dest->deviceId = src->deviceId;
+    dest->isDefault = src->isDefault;
     dest->isInitialized = src->isInitialized;
+    dest->name = copystr((char *)dest->name, src->name);
+    dest->driver = copystr((char *)dest->driver, src->driver);
+}
 
-    size_t len = strlen(src->name) + 1;
-    dest->name = malloc(len);
-    memcpy(dest->name, src->name, len);
+int device_getOutputDeviceCount() {
+    int a = 0;
+    int count = 0;
+    BASS_DEVICEINFO info;
+    for (a=0; BASS_GetDeviceInfo(a, &info); a++) {
+        if (info.flags & BASS_DEVICE_ENABLED) {
+            count++;
+        }
+    }
+    return count;
+}
+
+bool device_getOutputDevice(int index, SSP_DEVICE *device) {
+    int a = 0;
+    int count = 0;
+    BASS_DEVICEINFO info;
+    for (a=0; BASS_GetDeviceInfo(a, &info); a++) {
+        if (info.flags & BASS_DEVICE_ENABLED) {
+            count++;
+
+            if(index == count - 1) {
+                device->deviceId = a;
+                device->isDefault = (bool) (info.flags & BASS_DEVICE_DEFAULT);
+
+                device->name = copystr((char *) device->name, info.name);
+                device->driver = copystr((char *) device->driver, info.driver);
+
+//            if (device.Name.ToUpper() != "NO SOUND")
+//                devices.Add(device);
+
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

@@ -17,6 +17,7 @@
 
 #import "DesktopViewController.h"
 #import "ssp_public.h"
+#import "ssp_structs.h"
 
 // Evil way to make the view controller available to C callback methods, not trying to do anything fancy here
 static DesktopViewController* mainViewController = nil;
@@ -100,6 +101,17 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     SSP_SetPlaylistIndexChangedCallback(playlistIndexChangedCallback, NULL);
     SSP_SetPlaylistEndedCallback(playlistEndedCallback, NULL);
     SSP_SetStateChangedCallback(stateChangedCallback, NULL);
+
+    int deviceCount = SSP_GetOutputDeviceCount();
+    SSP_DEVICE** devices = malloc(sizeof(SSP_DEVICE*) * deviceCount);
+    for(int a = 0; a < deviceCount; a++) {
+//        SSP_DEVICE tempDevice;
+//        SSP_GetOutputDevice(a, &tempDevice);
+//        NSLog(@"Detected device --> id: %d name: %s driver: %s isDefault: %d isInitialized: %d", tempDevice.deviceId, tempDevice.name, tempDevice.driver, tempDevice.isDefault, tempDevice.isInitialized);
+
+        devices[a] = malloc(sizeof(SSP_DEVICE));
+        SSP_GetOutputDevice(a, devices[a]);
+    }
 
     error = SSP_InitDevice(-1, 44100, 1000, 100, true);
     [self checkForError:error str:@"SSP_InitDevice"];

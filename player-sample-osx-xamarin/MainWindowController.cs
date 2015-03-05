@@ -22,6 +22,7 @@ using System.Timers;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 using org.sessionsapp.player;
+using System.Collections.Generic;
 
 namespace playersampleosxxamarin
 {
@@ -94,7 +95,7 @@ namespace playersampleosxxamarin
             // Try to get the plugins in the current path
             string exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string pluginPath = exePath.Replace("MonoBundle", "Resources");
-            if(!File.Exists(pluginPath + "/libbassflac.dylib"))
+            if (!File.Exists(pluginPath + "/libbassflac.dylib"))
             {
                 throw new Exception("The BASS plugins could not be found in the current directory!");
             }
@@ -122,6 +123,15 @@ namespace playersampleosxxamarin
 
             var device = new SSPDevice();
             SSP.SSP_GetDevice(ref device.Struct);
+
+            int deviceCount = SSP.SSP_GetOutputDeviceCount();
+            var devices = new List<SSPDevice>();
+            for (int a = 0; a < deviceCount; a++)
+            {
+                var newDevice = new SSPDevice();
+                SSP.SSP_GetOutputDevice(a, ref newDevice.Struct);
+                devices.Add(newDevice);
+            }
 
             Console.WriteLine("libssp_player init successful!");
         }

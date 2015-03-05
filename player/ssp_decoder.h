@@ -1,4 +1,4 @@
-// Copyright © 2011-2015 Yanick Castonguay
+#include "ssp_errors.h"// Copyright © 2011-2015 Yanick Castonguay
 //
 // This file is part of Sessions, a music player for musicians.
 //
@@ -15,19 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __player__ssp_device__
-#define __player__ssp_device__
+#ifndef __player__ssp_decoder__
+#define __player__ssp_decoder__
 
 #include <stdio.h>
-#include "ssp_structs.h"
+#include <stdbool.h>
+#include <stdint.h>
 #include "ssp_errors.h"
 
-SSP_DEVICE* device_create();
-void device_free(SSP_DEVICE *device);
-void device_reset(SSP_DEVICE *device);
-void device_copy(SSP_DEVICE *dest, SSP_DEVICE *src);
+uint32_t decoder_createStream(char* filePath, bool useFloatingPoint);
+SSP_ERROR decoder_freeStream(uint32_t handle);
+uint64_t decoder_getLength(uint32_t handle);
+uint64_t decoder_getData(uint32_t handle, void* buffer, int length);
 
-int device_getOutputDeviceCount();
-bool device_getOutputDevice(int index, SSP_DEVICE *device);
-
-#endif /* defined(__player__ssp_device__) */
+#endif /* defined(__player__ssp_decoder__) */
