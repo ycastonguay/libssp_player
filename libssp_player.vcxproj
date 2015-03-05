@@ -77,6 +77,7 @@
   <ItemGroup>
     <ClCompile Include="player\ssp_bass.c" />
     <ClCompile Include="player\ssp_convert.c" />
+    <ClCompile Include="player\ssp_decoder.c" />
     <ClCompile Include="player\ssp_device.c" />
     <ClCompile Include="player\ssp_eqpreset.c" />
     <ClCompile Include="player\ssp_log.c" />
@@ -99,12 +100,14 @@
     <ClCompile Include="player\ssp_playlist.c" />
     <ClCompile Include="player\ssp_playlistitem.c" />
     <ClCompile Include="player\ssp_public.c" />
+    <ClCompile Include="player\ssp_util.c" />
     <ClCompile Include="vector\vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player\ssp_bass.h" />
     <ClInclude Include="player\ssp_callbacks.h" />
     <ClInclude Include="player\ssp_convert.h" />
+    <ClInclude Include="player\ssp_decoder.h" />
     <ClInclude Include="player\ssp_device.h" />
     <ClInclude Include="player\ssp_enums.h" />
     <ClInclude Include="player\ssp_eqpreset.h" />
@@ -122,6 +125,7 @@
     <ClInclude Include="player\ssp_privatestructs.h" />
     <ClInclude Include="player\ssp_public.h" />
     <ClInclude Include="player\ssp_structs.h" />
+    <ClInclude Include="player\ssp_util.h" />
     <ClInclude Include="vector\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
