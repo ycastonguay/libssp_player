@@ -53,5 +53,13 @@ namespace org.sessionsapp.player
             get { return Struct.isDefault; }
             set { Struct.isDefault = value; }
         }
+
+        public SSPDevice()
+        {
+            IsDefault = true;
+            DeviceId = -1; // default id for default device in BASS
+            Name = "Default device";
+            Driver = string.Empty;
+        }
     }
 }

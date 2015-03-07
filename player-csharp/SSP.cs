@@ -204,11 +204,11 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Decoder_FreeStream(UInt32 handle);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ulong SSP_Decoder_GetLength(UInt32 handle);
+        public static extern int SSP_Decoder_GetLength(UInt32 handle);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ulong SSP_Decoder_GetData(float[] buffer, int length);
+        public static extern int SSP_Decoder_GetData(UInt32 handle, float[] buffer, int length);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ulong SSP_Decoder_GetData(int[] buffer, int length);
+        public static extern int SSP_Decoder_GetData(UInt32 handle, int[] buffer, int length);
 
         // Callbacks
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
