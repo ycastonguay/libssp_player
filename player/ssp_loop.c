@@ -30,13 +30,13 @@ void loop_free(SSP_LOOP *loop) {
 }
 
 void loop_reset(SSP_LOOP* loop) {
-    loop->startPosition = 0;
-    loop->endPosition = 0;
+	loop->startPositionBytes = 0;
+	loop->endPositionBytes = 0;
 }
 
 void loop_copy(SSP_LOOP *dest, SSP_LOOP *src) {
-    dest->startPosition = src->startPosition;
-    dest->endPosition = src->endPosition;
+	dest->startPositionBytes = src->startPositionBytes;
+	dest->endPositionBytes = src->endPositionBytes;
 }
 
 SSP_ERROR loop_validate(SSP_LOOP* loop) {
@@ -44,7 +44,7 @@ SSP_ERROR loop_validate(SSP_LOOP* loop) {
         return SSP_ERROR_LOOP_INVALID;
     }
 
-    if(loop->endPosition <= loop->startPosition) {
+	if (loop->endPositionBytes <= loop->startPositionBytes) {
         return SSP_ERROR_LOOP_INVALID;
     }
 

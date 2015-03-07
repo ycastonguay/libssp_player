@@ -31,8 +31,10 @@ SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int inde
 SSP_ERROR playlist_removeItemAt(SSP_PLAYLIST *playlist, int index);
 SSP_ERROR playlist_clear(SSP_PLAYLIST *playlist);
 SSP_PLAYLISTITEM* playlist_getItemAt(SSP_PLAYLIST *playlist, int index);
+SSP_PLAYLISTITEM* playlist_getItemFromId(SSP_PLAYLIST *playlist, int id);
 SSP_PLAYLISTITEM* playlist_getCurrentItem(SSP_PLAYLIST *playlist);
 SSP_PLAYLISTITEM* playlist_getCurrentMixerItem(SSP_PLAYLIST *playlist);
+int playlist_getIndexFromId(int id);
 int playlist_getCount(SSP_PLAYLIST *playlist);
 
 #endif

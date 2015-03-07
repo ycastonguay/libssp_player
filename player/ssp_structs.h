@@ -23,7 +23,6 @@
 #include "ssp_callbacks.h"
 
 typedef struct {
-    //const char* str;
     char str[32];
     uint64_t bytes;
     uint64_t ms;
@@ -63,21 +62,18 @@ typedef struct {
 typedef struct {
     char id[38];
     char name[128];
-//    const char* id;
-//    const char* name;
     SSP_EQPRESETBAND bands[18];
 } SSP_EQPRESET;
 
 typedef struct {
-    // does it need an id?
-    uint64_t startPosition;
-    uint64_t endPosition;
+    uint64_t startPositionBytes;
+    uint64_t endPositionBytes;
 } SSP_LOOP;
 
 typedef struct {
-    //char filePath[1024]; // consider using a static array
     bool isLoaded;
     const char* filePath;
+	int id;
     int sampleRate;
     int numberOfChannels;
     int bitsPerSample;

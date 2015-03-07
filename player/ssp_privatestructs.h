@@ -49,7 +49,9 @@ typedef struct {
 } SSP_PLAYER_HANDLES;
 
 typedef struct {
-    void* items;
+    void* items; // vector
+	int nextId; // simple counter to assign unique ids to new items
+
     const char* name;
     int currentIndex;
     int currentMixerIndex;

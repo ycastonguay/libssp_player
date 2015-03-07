@@ -131,6 +131,8 @@ LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index);
 LIBRARY_API SSP_ERROR SSP_Playlist_RemoveItemAt(int index);
 LIBRARY_API SSP_ERROR SSP_Playlist_Clear();
 LIBRARY_API void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item);
+LIBRARY_API void SSP_Playlist_GetItemFromId(int id, SSP_PLAYLISTITEM* item);
+LIBRARY_API int SSP_Playlist_GetIndexFromId(int id);
 LIBRARY_API int SSP_Playlist_GetCount();
 LIBRARY_API int SSP_Playlist_GetCurrentIndex();
 

@@ -98,7 +98,7 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     if(player->playhead->isPlayingLoop) {
         if(player->loop != NULL) {
             // If the new position is outside the current loop, stop the loop playback
-            if(position < player->loop->startPosition || position >= player->loop->endPosition) {
+			if (position < player->loop->startPositionBytes || position >= player->loop->endPositionBytes) {
                 player_stopLoop(player);
             }
         }

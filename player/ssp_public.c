@@ -247,10 +247,19 @@ SSP_ERROR SSP_Playlist_Clear() {
 void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item) {
     SSP_PLAYLISTITEM* localItem = playlist_getItemAt(sspPlayer->playlist, index);
     if(localItem != NULL) {
-        log_textf("SSP_Playlist_GetItemAt - index: %d - localItem->sampleRate: %d - localItem->length: %"PRIu64"\n", index, localItem->sampleRate, localItem->length);
         playlistitem_copy(localItem, item);
-        log_textf("SSP_Playlist_GetItemAt - index: %d - copy->sampleRate: %d - copy->length: %"PRIu64"\n", index, item->sampleRate, item->length);
     }
+}
+
+void SSP_Playlist_GetItemFromId(int id, SSP_PLAYLISTITEM* item) {
+	SSP_PLAYLISTITEM* localItem = playlist_getItemFromId(sspPlayer->playlist, id);
+	if (localItem != NULL) {
+		playlistitem_copy(localItem, item);
+	}
+}
+
+int SSP_Playlist_GetIndexFromId(int id) {
+	return playlist_getIndexFromId(id);
 }
 
 int SSP_Playlist_GetCount() {

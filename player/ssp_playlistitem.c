@@ -37,7 +37,8 @@ void playlistitem_free(SSP_PLAYLISTITEM *item) {
 }
 
 void playlistitem_reset(SSP_PLAYLISTITEM *item) {
-    item->isLoaded = false;
+	item->id = -1;
+	item->isLoaded = false;	
     item->channel = 0;
     item->length = 0;
     item->numberOfChannels = 0;

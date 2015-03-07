@@ -32,6 +32,7 @@ SSP_PLAYLIST* playlist_create() {
     playlist->items = malloc(sizeof(vector));
     vector_init(playlist->items);
 
+	playlist->nextId = -1;
     playlist->currentIndex = 0;
     playlist->currentMixerIndex = 0;
     playlist->name = NULL;
@@ -72,7 +73,6 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
         return SSP_ERROR_PLAYLISTITEM_DISPOSE_FAILEDTOFREESTREAM;
     }
 
-    //playlistitem_reset(item); // is this really what we want? we don't necessary want to remove the file path, just reset the loaded status
     item->isLoaded = false;
     item->channel = 0;
     item->length = 0;
@@ -83,8 +83,8 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
 }
 
 SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
-    log_textf("playlist_addItem - filePath: %s\n", filePath);
     SSP_PLAYLISTITEM *item = playlistitem_create();
+	item->id = playlist->nextId++;
     item->filePath = malloc(strlen(filePath));
     strcpy(item->filePath, filePath);
     vector_add(playlist->items, item);
@@ -95,6 +95,7 @@ SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
 SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index) {
     SSP_PLAYLISTITEM *item = playlistitem_create();
     item->filePath = malloc(strlen(filePath));
+	item->id = playlist->nextId++;
     strcpy(item->filePath, filePath);
     vector_insert(playlist->items, index, item);
 
@@ -131,12 +132,34 @@ SSP_PLAYLISTITEM* playlist_getItemAt(SSP_PLAYLIST *playlist, int index) {
     return vector_get(playlist->items, index);
 }
 
+SSP_PLAYLISTITEM* playlist_getItemFromId(SSP_PLAYLIST *playlist, int id) {
+	for (int a = 0; a < playlist_getCount(playlist); a++) {
+		SSP_PLAYLISTITEM* item = playlist_getItemAt(playlist, a);
+		if (item->id == id) {
+			return item;
+		}
+	}
+
+	return NULL;
+}
+
 SSP_PLAYLISTITEM* playlist_getCurrentItem(SSP_PLAYLIST *playlist) {
     return playlist_getItemAt(playlist, playlist->currentIndex);
 }
 
 SSP_PLAYLISTITEM* playlist_getCurrentMixerItem(SSP_PLAYLIST *playlist) {
     return playlist_getItemAt(playlist, playlist->currentMixerIndex);
+}
+
+int playlist_getIndexFromId(SSP_PLAYLIST *playlist, int id) {
+	for (int a = 0; a < playlist_getCount(playlist); a++) {
+		SSP_PLAYLISTITEM* item = playlist_getItemAt(playlist, a);
+		if (item->id == id) {
+			return a;
+		}
+	}
+
+	return -1;
 }
 
 int playlist_getCount(SSP_PLAYLIST *playlist) {

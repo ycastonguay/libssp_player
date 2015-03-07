@@ -22,7 +22,13 @@ namespace org.sessionsapp.player
     public class SSPPlaylistItem
     {
         internal SSP_PLAYLISTITEM Struct;
-    
+
+        public int Id
+        {
+            get { return Struct.id; }
+            set { Struct.id = value; }
+        }    
+
         public int BitsPerSample
         {
             get { return Struct.bitsPerSample; }

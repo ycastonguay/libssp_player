@@ -194,6 +194,10 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetItemAt(int index, ref SSP_PLAYLISTITEM item);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SSP_Playlist_GetItemFromId(int id, ref SSP_PLAYLISTITEM item);
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SSP_Playlist_GetIndexFromId(int id);
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetCount();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_GetCurrentIndex();
@@ -339,8 +343,8 @@ namespace org.sessionsapp.player
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_LOOP
     {
-        public long startPosition;
-        public long endPosition;
+        public long startPositionBytes;
+        public long endPositionBytes;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -368,6 +372,7 @@ namespace org.sessionsapp.player
     {
         public bool isLoaded;
         public IntPtr filePath;
+        public int id;
         public int sampleRate;
         public int numberOfChannels;
         public int bitsPerSample;

@@ -27,26 +27,49 @@ namespace org.sessionsapp.player
         public Guid AudioFileId { get; set; }
         public string Name { get; set; }
         
-        public string Index { get; set; }
+        // database false
+        //public string Index { get; set; }
 
-        public long StartPosition
+        public long StartPositionBytes
         {
-            get { return Struct.startPosition; }
-            set { Struct.startPosition = value; }
+            get { return Struct.startPositionBytes; }
+            set { Struct.startPositionBytes = value; }
         }
 
-        public long EndPosition
+        public long EndPositionBytes
         {
-            get { return Struct.endPosition; }
-            set { Struct.endPosition = value; }
+            get { return Struct.endPositionBytes; }
+            set { Struct.endPositionBytes = value; }
         }
 
         public long StartPositionMS { get; set; }
         public long StartPositionSamples { get; set; }
-        public string StartPositionStr { get; set; }
+        public string StartPosition { get; set; }
 
         public long EndPositionMS { get; set; }
         public long EndPositionSamples { get; set; }
-        public string EndPositionStr { get; set; }
+        public string EndPosition { get; set; }
+
+        public long LengthBytes { get; set; }
+        public long LengthMS { get; set; }
+        public long LengthSamples { get; set; }
+        public string Length { get; set; }
+
+        public SSPLoop()
+        {
+            LoopId = Guid.NewGuid();
+            StartPositionBytes = 0;
+            StartPositionMS = 0;
+            StartPositionSamples = 0;
+            StartPosition = "0:00.000";
+            EndPositionBytes = 0;
+            EndPositionMS = 0;
+            EndPositionSamples = 0;
+            EndPosition = "0:00.000";
+            LengthBytes = 0;
+            LengthMS = 0;
+            LengthSamples = 0;
+            Length = "0:00.000";
+        }
     }
 }

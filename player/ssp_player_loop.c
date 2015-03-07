@@ -51,7 +51,7 @@ void CALLBACK player_loopSyncProc(HSYNC handle, DWORD channel, DWORD data, void 
 //    }
 
     // Set position for the decode channel (needs to be in floating point)
-    uint64_t bytes = player->loop->startPosition;
+	uint64_t bytes = player->loop->startPositionBytes;
     success = BASS_ChannelSetPosition(currentItem->channel, bytes * 2, BASS_POS_BYTE);
     if(!success) {
         bass_getError("BASS_ChannelSetPosition");
@@ -165,7 +165,7 @@ SSP_ERROR player_startLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
 //        positionBytes = (long)((float)positionBytes / 1.5f);
 //    }
 
-    error = player_setLoopSyncPoint(player, loop->startPosition, loop->endPosition, true);
+	error = player_setLoopSyncPoint(player, loop->startPositionBytes, loop->endPositionBytes, true);
     if(error != SSP_OK) {
         return error;
     }
@@ -193,10 +193,10 @@ SSP_ERROR player_updateLoop(SSP_PLAYER* player, SSP_LOOP* loop) {
     }
 
     uint64_t currentPosition = player_getPosition(player);
-    uint64_t startPosition = player->loop->startPosition;
-    uint64_t endPosition = player->loop->endPosition;
-    uint64_t newStartPosition = loop->startPosition;
-    uint64_t newEndPosition = loop->endPosition;
+	uint64_t startPosition = player->loop->startPositionBytes;
+	uint64_t endPosition = player->loop->endPositionBytes;
+	uint64_t newStartPosition = loop->startPositionBytes;
+	uint64_t newEndPosition = loop->endPositionBytes;
     bool restartLoop = false;
 
     // Check if the start position has changed
