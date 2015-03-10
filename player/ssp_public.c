@@ -259,7 +259,7 @@ void SSP_Playlist_GetItemFromId(int id, SSP_PLAYLISTITEM* item) {
 }
 
 int SSP_Playlist_GetIndexFromId(int id) {
-	return playlist_getIndexFromId(id);
+	return playlist_getIndexFromId(sspPlayer->playlist, id);
 }
 
 int SSP_Playlist_GetCount() {
