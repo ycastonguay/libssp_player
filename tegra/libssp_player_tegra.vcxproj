@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="NsightTegraProject">
+    <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Tegra-Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Tegra-Android">
+      <Configuration>Release</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\com\example\hellojni\HelloJni.java" />
+    <JCompile Include="src\org\sessionsapp\player\SSP.java" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\HelloJni.cpp" />
+    <ClCompile Include="jni\ssp_java.c" />
+    <ClCompile Include="player\ssp_bass.c" />
+    <ClCompile Include="player\ssp_convert.c" />
+    <ClCompile Include="player\ssp_decoder.c" />
+    <ClCompile Include="player\ssp_device.c" />
+    <ClCompile Include="player\ssp_eqpreset.c" />
+    <ClCompile Include="player\ssp_log.c" />
+    <ClCompile Include="player\ssp_loop.c" />
+    <ClCompile Include="player\ssp_mixer.c" />
+    <ClCompile Include="player\ssp_player.c" />
+    <ClCompile Include="player\ssp_playerhandles.c" />
+    <ClCompile Include="player\ssp_player_bpm.c" />
+    <ClCompile Include="player\ssp_player_callbacks.c" />
+    <ClCompile Include="player\ssp_player_data.c" />
+    <ClCompile Include="player\ssp_player_encoder.c" />
+    <ClCompile Include="player\ssp_player_eq.c" />
+    <ClCompile Include="player\ssp_player_loop.c" />
+    <ClCompile Include="player\ssp_player_playback.c" />
+    <ClCompile Include="player\ssp_player_playhead.c" />
+    <ClCompile Include="player\ssp_player_plugins.c" />
+    <ClCompile Include="player\ssp_player_seeking.c" />
+    <ClCompile Include="player\ssp_player_stream.c" />
+    <ClCompile Include="player\ssp_playhead.c" />
+    <ClCompile Include="player\ssp_playlist.c" />
+    <ClCompile Include="player\ssp_playlistitem.c" />
+    <ClCompile Include="player\ssp_public.c" />
+    <ClCompile Include="player\ssp_util.c" />
+    <ClCompile Include="vector\vector.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bass\bass.h" />
+    <ClInclude Include="bass\bassenc.h" />
+    <ClInclude Include="bass\bassflac.h" />
+    <ClInclude Include="bass\bassmidi.h" />
+    <ClInclude Include="bass\bassmix.h" />
+    <ClInclude Include="bass\basswv.h" />
+    <ClInclude Include="bass\bass_fx.h" />
+    <ClInclude Include="jni\ssp_java.h" />
+    <ClInclude Include="player\ssp_bass.h" />
+    <ClInclude Include="player\ssp_callbacks.h" />
+    <ClInclude Include="player\ssp_convert.h" />
+    <ClInclude Include="player\ssp_decoder.h" />
+    <ClInclude Include="player\ssp_device.h" />
+    <ClInclude Include="player\ssp_enums.h" />
+    <ClInclude Include="player\ssp_eqpreset.h" />
+    <ClInclude Include="player\ssp_errors.h" />
+    <ClInclude Include="player\ssp_log.h" />
+    <ClInclude Include="player\ssp_loop.h" />
+    <ClInclude Include="player\ssp_mixer.h" />
+    <ClInclude Include="player\ssp_player.h" />
+    <ClInclude Include="player\ssp_playerhandles.h" />
+    <ClInclude Include="player\ssp_playhead.h" />
+    <ClInclude Include="player\ssp_playlist.h" />
+    <ClInclude Include="player\ssp_playlistitem.h" />
+    <ClInclude Include="player\ssp_privatestructs.h" />
+    <ClInclude Include="player\ssp_public.h" />
+    <ClInclude Include="player\ssp_structs.h" />
+    <ClInclude Include="player\ssp_util.h" />
+    <ClInclude Include="vector\vector.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AF6D071A-FD32-4EB7-AA58-8DA1CE7F6A04}</ProjectGuid>
+    <RootNamespace>libssp_player_tegra</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <ClCompile>
+      <CppLanguageStandard>gnu++11</CppLanguageStandard>
+      <CLanguageStandard>c99</CLanguageStandard>
+    </ClCompile>
+    <AntBuild>
+      <NativeLibDirectories>
+      </NativeLibDirectories>
+      <NativeLibDependencies>
+      </NativeLibDependencies>
+    </AntBuild>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Sources\MPfm\libssp_player\tegra\libs\armeabi-v7a;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bass;bass_fx;bassmix;bassenc;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <ClCompile>
+      <CppLanguageStandard>gnu++11</CppLanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -9,7 +9,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main); 
+		
+		int version = SSP.SSP_GetVersion();
 		
 		String path = getApplicationInfo().nativeLibraryDir;
 		int error = SSP.SSP_Init(path);
@@ -22,5 +24,5 @@ public class MainActivity extends Activity {
 		    // TODO: show message?
 		    return;
 		}
-	}
+ 	}
 }

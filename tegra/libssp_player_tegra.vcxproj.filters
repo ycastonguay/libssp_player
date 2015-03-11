@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="jni">
+      <UniqueIdentifier>4014b578-d3be-4366-b2d2-8903a055546f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>e99fe594-c2bf-4b17-9864-24d5741517f9</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>0b705d6c-089a-448c-9641-5c2845397780</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>830f4e5c-ba98-4725-a1e3-5e1e4e340701</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com">
+      <UniqueIdentifier>9f5e56c1-6baf-43d8-ab65-ddfe892aee2c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\example">
+      <UniqueIdentifier>0c45032f-6785-4d35-91a0-1acc69108003</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\example\hellojni">
+      <UniqueIdentifier>f2fd6c1a-9159-4882-8746-3eb8b98c125f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vector">
+      <UniqueIdentifier>{faebb8f4-85a3-483c-ae4c-e96e95296d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{8ffddef4-e524-411a-b04e-1e61a893bd30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\org">
+      <UniqueIdentifier>{54d75c8d-a623-49b9-b959-27251b06a122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\org\sessionsapp">
+      <UniqueIdentifier>{687d67ab-007a-4e0a-8a51-c53895a1f244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\org\sessionsapp\player">
+      <UniqueIdentifier>{0da94d19-bdc9-4c59-b1cb-1060accffb98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bass">
+      <UniqueIdentifier>{3085abb2-f9ef-48ee-be4a-eb0ebfecf42a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\com\example\hellojni\HelloJni.java">
+      <Filter>src\com\example\hellojni</Filter>
+    </JCompile>
+    <JCompile Include="src\org\sessionsapp\player\SSP.java">
+      <Filter>src\org\sessionsapp\player</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\HelloJni.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="vector\vector.c">
+      <Filter>vector</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_bass.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_convert.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_decoder.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_device.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_eqpreset.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_log.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_loop.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_mixer.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_playerhandles.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_bpm.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_callbacks.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_data.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_encoder.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_eq.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_loop.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_playback.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_playhead.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_plugins.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_seeking.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_player_stream.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_playhead.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_playlist.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_playlistitem.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_public.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\ssp_util.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\ssp_java.c">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vector\vector.h">
+      <Filter>vector</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\bass.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\bass_fx.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\bassenc.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\bassflac.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\bassmidi.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\bassmix.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="bass\basswv.h">
+      <Filter>bass</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_bass.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_callbacks.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_convert.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_decoder.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_device.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_enums.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_eqpreset.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_errors.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_log.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_loop.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_mixer.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_playerhandles.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_playhead.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_playlist.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_playlistitem.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_privatestructs.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_public.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_structs.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\ssp_util.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\ssp_java.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
