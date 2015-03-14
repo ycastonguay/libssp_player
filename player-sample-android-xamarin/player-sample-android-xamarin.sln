@@ -14,7 +14,4 @@ Global
 		{E8EC1B24-643B-4357-9571-37686557719C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8EC1B24-643B-4357-9571-37686557719C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = player-sample-android-xamarin.csproj
-	EndGlobalSection
 EndGlobal
