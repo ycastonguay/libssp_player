@@ -148,7 +148,7 @@ SSP_ERROR player_initDevice(SSP_PLAYER* player, int deviceId, int sampleRate, in
     playhead_reset(player->playhead);
 
     log_textf("player_initDevice: Initializing device (id: %d sampleRate: %d - bufferSize: %d - updatePeriod: %d - useFloatingPoint: %d)\n", deviceId, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
-    SSP_ERROR error = bass_init(deviceId, sampleRate, bufferSize, updatePeriod, useFloatingPoint);
+    SSP_ERROR error = bass_init(deviceId, sampleRate, bufferSize, updatePeriod);
     if(error != SSP_OK) {
         return error;
     }

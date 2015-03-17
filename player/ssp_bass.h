@@ -24,7 +24,7 @@
 #include "ssp_errors.h"
 
 int bass_getError(char* message);
-int bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
+int bass_init(int device, int sampleRate, int bufferSize, int updatePeriod);
 
 int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatingPoint, STREAMPROC *streamProc, void* user);
 int bass_createDecodeStream(char* filePath, bool useFloatingPoint);

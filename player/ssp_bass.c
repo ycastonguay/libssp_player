@@ -33,18 +33,36 @@ int bass_getError(char* message) {
     return error;
 }
 
-int bass_init(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint) {
+int bass_init(int device, int sampleRate, int bufferSize, int updatePeriod) {
     if (HIWORD(BASS_GetVersion()) != BASSVERSION) {
-        return bass_getError("bass_init");
+        return bass_getError("bass_init (BASS_GetVersion)");
     }
 
     if (!BASS_Init(device, sampleRate, 0, NULL, NULL)) {
-        return bass_getError("bass_init");
+        return bass_getError("bass_init (BASS_Init)");
     }
 
-    BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
-    BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
-    BASS_SetConfig(BASS_CONFIG_MIXER_BUFFER, 4); // 2 == default
+    bool success = BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
+    if(!success) {
+        return bass_getError("bass_init (BASS_SetConfig/BASS_CONFIG_BUFFER)");
+    }
+
+    success = BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
+    if(!success) {
+        return bass_getError("bass_init (BASS_SetConfig/BASS_CONFIG_UPDATEPERIOD)");
+    }
+
+    success = BASS_SetConfig(BASS_CONFIG_MIXER_BUFFER, 4); // 2 == default
+    if(!success) {
+        return bass_getError("bass_init (BASS_SetConfig/BASS_CONFIG_MIXER_BUFFER)");
+    }
+
+    #if __ANDROID__
+    success = BASS_SetConfig(BASS_CONFIG_DEV_BUFFER, 60); // 30 == default
+    if(!success) {
+        return bass_getError("bass_init (BASS_SetConfig/BASS_CONFIG_DEV_BUFFER)");
+    }
+    #endif
 
     return SSP_OK;
 }
@@ -72,7 +90,7 @@ int bass_createDecodeStream(char* filePath, bool useFloatingPoint) {
     }
     HSTREAM stream = BASS_StreamCreateFile(FALSE, filePath, offset, length, flags);
     if(stream == 0) {
-        bass_getError("bass_createDecodeStream");
+        bass_getError("bass_createDecodeStream (BASS_StreamCreateFile)");
         return 0;
     }
 
