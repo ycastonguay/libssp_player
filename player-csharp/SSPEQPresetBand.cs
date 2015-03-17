@@ -16,6 +16,7 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace org.sessionsapp.player
 {
@@ -32,8 +33,8 @@ namespace org.sessionsapp.player
 
         public string Label
         {
-            get { return _preset.Struct.bands[_bandIndex].label; }
-            set { _preset.Struct.bands[_bandIndex].label = value; }
+            get { return Marshal.PtrToStringAnsi(_preset.Struct.bands[_bandIndex].label); }
+            set { _preset.Struct.bands[_bandIndex].label = Marshal.StringToHGlobalAnsi(value); }
         }
 
         public float Bandwidth

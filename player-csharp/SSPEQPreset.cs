@@ -16,6 +16,7 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace org.sessionsapp.player
 {
@@ -23,16 +24,22 @@ namespace org.sessionsapp.player
     {
         internal SSP_EQPRESET Struct;
 
+        private string Id
+        {
+            get { return Marshal.PtrToStringAnsi(Struct.id); }
+            set { Struct.id = Marshal.StringToHGlobalAnsi(value); }
+        }
+
         public Guid EQPresetId
         {
-            get { return new Guid(Struct.id); }
-            set { Struct.id = value.ToString(); }
+            get { return new Guid(Id); }
+            set { Id = value.ToString(); }
         }
 
         public string Name
         {
-            get { return Struct.name; }
-            set { Struct.name = value; }
+            get { return Marshal.PtrToStringAnsi(Struct.name); }
+            set { Struct.name = Marshal.StringToHGlobalAnsi(value); }
         }
 
         public SSPEQPresetBand[] Bands

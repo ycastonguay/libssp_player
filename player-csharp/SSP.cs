@@ -322,8 +322,7 @@ namespace org.sessionsapp.player
     public struct SSP_EQPRESETBAND
     {
         public float center;
-        [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 128)]
-        public string label;
+        public IntPtr label;
         public float bandwidth;
         public float gain;
         public float q;
@@ -332,10 +331,8 @@ namespace org.sessionsapp.player
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct SSP_EQPRESET
     {
-        [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 38)]
-        public string id;
-        [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 128)]
-        public string name;
+        public IntPtr id;
+        public IntPtr name;
         [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 18)]
         public SSP_EQPRESETBAND[] bands;
     }
