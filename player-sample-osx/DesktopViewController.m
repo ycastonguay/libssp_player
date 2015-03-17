@@ -80,7 +80,7 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     if(error != SSP_OK) {
         NSString *message = [NSString stringWithFormat:@"An error occured in libssp_player:\n%@\nError code: %d", str, error];
         NSString *log = [NSString stringWithFormat:@"libssp_player error: [%@] code: [%d]", str, error];
-        NSLog(log);
+        NSLog(@"%@", log);
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:message];
         [alert runModal];
@@ -152,10 +152,10 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     error = SSP_Playlist_Clear();
     [self checkForError:error str:@"SSP_Playlist_Clear"];
 
-    if([panel runModal] == NSOKButton) {
+    if([panel runModal] == NSModalResponseOK) {
         for(int a = 0; a < panel.URLs.count; a++) {
             NSURL *url = [panel.URLs objectAtIndex:a];
-            error = SSP_Playlist_AddItem([url.path UTF8String]);
+            error = SSP_Playlist_AddItem((char *)[url.path UTF8String]);
             [self checkForError:error str:@"SSP_Playlist_AddItem"];
         }
     }

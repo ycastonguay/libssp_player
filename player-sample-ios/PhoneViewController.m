@@ -104,13 +104,13 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 - (void)buildPlaylist {
     SSP_Playlist_Clear();
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentsDirectory = paths[0];
     NSArray *array = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:documentsDirectory error:nil];
     for(NSString *filePath in array) {
         NSString *filePathWithDirectory = [NSString stringWithFormat:@"%@/%@", documentsDirectory, filePath];
         NSLog(@"filePath: %@", filePathWithDirectory);
         const char* str = [filePathWithDirectory UTF8String];
-        SSP_Playlist_AddItem(str);
+        SSP_Playlist_AddItem((char *)str);
     }
 }
 

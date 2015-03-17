@@ -61,7 +61,7 @@ void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
 
 SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     log_textf("playlistitem_load -- Creating stream for decoding (filePath: %s)...\n", item->filePath);
-    item->channel = bass_createDecodeStream(item->filePath, useFloatingPoint);
+    item->channel = bass_createDecodeStream((char *)item->filePath, useFloatingPoint);
     if(item->channel == 0) {
         return SSP_ERROR_FAILEDTOCREATEDECODESTREAM;
     }

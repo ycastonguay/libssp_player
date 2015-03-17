@@ -51,10 +51,10 @@ void playlist_free(SSP_PLAYLIST *playlist) {
         free(playlist->items);
         playlist->items = NULL;
     }
-    if(playlist->name) {
-        free(playlist->name);
-        playlist->name = NULL;
-    }
+//    if(playlist->name) {
+//        free(playlist->name);
+//        playlist->name = NULL;
+//    }
     playlist->callbackPlaylistIndexChanged = NULL;
     playlist->callbackPlaylistIndexChangedUser = NULL;
     playlist->callbackPlaylistEnded = NULL;

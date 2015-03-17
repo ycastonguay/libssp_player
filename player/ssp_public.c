@@ -31,6 +31,7 @@
 #include "ssp_mixer.h"
 #include "ssp_structs.h"
 #include "ssp_decoder.h"
+#include "ssp_util.h"
 
 static SSP_PLAYER* sspPlayer = NULL;
 
@@ -45,12 +46,7 @@ SSP_ERROR SSP_Init(const char* pathForPlugins) {
         sspPlayer = player_create();
     }
 
-    if(pathForPlugins != NULL) {
-        size_t len = strlen(pathForPlugins) + 1;
-        sspPlayer->pathForPlugins = malloc(len);
-        memcpy(sspPlayer->pathForPlugins, pathForPlugins, len);
-    }
-
+    copystr((char *)sspPlayer->pathForPlugins, pathForPlugins);
     return player_init(sspPlayer);
 }
 
