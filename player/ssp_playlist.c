@@ -26,6 +26,7 @@
 #include "ssp_bass.h"
 #include "ssp_playlistitem.h"
 #include "ssp_log.h"
+#include "ssp_util.h"
 
 SSP_PLAYLIST* playlist_create() {
     SSP_PLAYLIST* playlist = malloc(sizeof(SSP_PLAYLIST));
@@ -85,8 +86,7 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
 SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
     SSP_PLAYLISTITEM *item = playlistitem_create();
 	item->id = playlist->nextId++;
-    item->filePath = malloc(strlen(filePath));
-    strcpy(item->filePath, filePath);
+    item->filePath = copystr((char *) item->filePath, filePath);
     vector_add(playlist->items, item);
 
     return SSP_OK;
@@ -96,7 +96,7 @@ SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int inde
     SSP_PLAYLISTITEM *item = playlistitem_create();
     item->filePath = malloc(strlen(filePath));
 	item->id = playlist->nextId++;
-    strcpy(item->filePath, filePath);
+    item->filePath = copystr((char *) item->filePath, filePath);
     vector_insert(playlist->items, index, item);
 
     return SSP_OK;

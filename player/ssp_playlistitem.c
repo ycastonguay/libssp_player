@@ -26,6 +26,7 @@
 #include "ssp_bass.h"
 #include "ssp_playlistitem.h"
 #include "ssp_log.h"
+#include "ssp_util.h"
 
 SSP_PLAYLISTITEM* playlistitem_create() {
     SSP_PLAYLISTITEM* item = malloc(sizeof(SSP_PLAYLISTITEM));
@@ -55,13 +56,7 @@ void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
     itemDest->numberOfChannels = itemSrc->numberOfChannels;
     itemDest->bitsPerSample = itemSrc->bitsPerSample;
     itemDest->sampleRate = itemSrc->sampleRate;
-
-    if(itemSrc->filePath != NULL) {
-        size_t len = strlen(itemSrc->filePath) + 1;
-        itemDest->filePath = malloc(len);
-        memcpy(itemDest->filePath, itemSrc->filePath, len);
-    }
-//    strncpy(itemDest->filePath, itemSrc->filePath, sizeof(itemSrc->filePath));
+    itemDest->filePath = copystr((char *) itemDest->filePath, itemSrc->filePath);
 }
 
 SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
