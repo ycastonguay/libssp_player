@@ -31,8 +31,8 @@ void eqpreset_free(SSP_EQPRESET *preset) {
 }
 
 void eqpreset_copy(SSP_EQPRESET* dest, SSP_EQPRESET* src) {
-    copystr((char *)dest->id, src->id);
-    copystr((char *)dest->name, src->name);
+    dest->id = copystr((char *)dest->id, src->id);
+    dest->name = copystr((char *)dest->name, src->name);
 
     int numberOfBands = sizeof(src->bands) / sizeof(src->bands[0]);
     for (int a = 0; a < numberOfBands; a++) {
@@ -40,7 +40,7 @@ void eqpreset_copy(SSP_EQPRESET* dest, SSP_EQPRESET* src) {
         dest->bands[a].gain = src->bands[a].gain;
         dest->bands[a].q = src->bands[a].q;
         dest->bands[a].center = src->bands[a].center;
-        copystr((char*) dest->bands[a].label, src->bands[a].label);
+        dest->bands[a].label = copystr((char*) dest->bands[a].label, src->bands[a].label);
     }
 }
 
