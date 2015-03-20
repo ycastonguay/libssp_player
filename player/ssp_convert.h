@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "ssp_structs.h"
 
 uint64_t convert_toSamples(uint64_t milliseconds, int sampleRate);
 uint64_t convert_toSamplesFromBytes(uint64_t bytes, int bitsPerSample, int channelCount);
@@ -31,5 +32,6 @@ float convert_levelToDB(float level, float maxLevel);
 void convert_toStringFromMS(uint64_t milliseconds, char *str);
 uint64_t convert_toMSFromString(const char *string);
 void convert_toString(char *str, uint64_t bytes, int bitsPerSample, int channelCount, int sampleRate);
+void convert_toPeakInfo(SSP_PEAKINFO* peakInfo, void* waveDataLeft, void* waveDataRight, int length, bool convertNegativeToPositive);
 
 #endif /* defined(__player__ssp_convertaudio__) */

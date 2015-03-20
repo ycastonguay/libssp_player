@@ -46,7 +46,7 @@ SSP_ERROR SSP_Init(const char* pathForPlugins) {
         sspPlayer = player_create();
     }
 
-    copystr((char *)sspPlayer->pathForPlugins, pathForPlugins);
+    sspPlayer->pathForPlugins = copystr((char *)sspPlayer->pathForPlugins, pathForPlugins);
     return player_init(sspPlayer);
 }
 

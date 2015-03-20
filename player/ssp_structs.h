@@ -81,4 +81,13 @@ typedef struct {
     uint64_t length;
 } SSP_PLAYLISTITEM;
 
+typedef struct {
+    float leftMin;
+    float leftMax;
+    float rightMin;
+    float rightMax;
+    float mixMin;
+    float mixMax;
+} SSP_PEAKINFO;
+
 #endif

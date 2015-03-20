@@ -16,7 +16,9 @@
 // along with Sessions. If not, see <http://www.gnu.org/licenses/>.
 
 #include <math.h>
+#include <stdbool.h>
 #include "ssp_convert.h"
+#include "ssp_structs.h"
 
 uint64_t convert_toSamples(uint64_t milliseconds, int sampleRate) {
     return milliseconds * (sampleRate / 1000);
@@ -126,3 +128,49 @@ void convert_toString(char *str, uint64_t bytes, int bitsPerSample, int channelC
     convert_toStringFromMS(milliseconds, str);
 }
 
+void convert_toPeakInfo(SSP_PEAKINFO* peakInfo, void* waveDataLeft, void* waveDataRight, int length, bool convertNegativeToPositive) {
+    // Watch out when using this function, if P/Invoke calls this method in a secondary thread, is this running on the same thread or on the main thread?
+    float* dataLeft = (float*)waveDataLeft;
+    float* dataRight = (float*)waveDataRight;
+
+    float left = 0;
+    float right = 0;
+    for(int a = 0; a < length; a++) {
+        left = dataLeft[a];
+        right = dataRight[a];
+
+        if(convertNegativeToPositive) {
+            if (left < 0) {
+                left = -left;
+            }
+            if (right < 0) {
+                right = -right;
+            }
+        }
+
+        if (left < peakInfo->leftMin) {
+            peakInfo->leftMin = left;
+        }
+        if (left > peakInfo->leftMax) {
+            peakInfo->leftMax = left;
+        }
+        if (right < peakInfo->rightMin) {
+            peakInfo->rightMin = right;
+        }
+        if (right > peakInfo->rightMax) {
+            peakInfo->rightMax = right;
+        }
+        if (left < peakInfo->mixMin) {
+            peakInfo->mixMin = left;
+        }
+        if (right < peakInfo->mixMin) {
+            peakInfo->mixMin = right;
+        }
+        if (left > peakInfo->mixMax) {
+            peakInfo->mixMax = left;
+        }
+        if (right > peakInfo->mixMax) {
+            peakInfo->mixMax = right;
+        }
+    }
+}

@@ -37,7 +37,7 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetVersion();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_Init(string pathForPlugins);
+        public static extern int SSP_Init([MarshalAsAttribute(UnmanagedType.LPStr)] string pathForPlugins);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_InitDevice(int device, int sampleRate, int bufferSize, int updatePeriod, bool useFloatingPoint);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
