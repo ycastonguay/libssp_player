@@ -118,6 +118,34 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 
     SSP_DEVICE device;
     SSP_GetDevice(&device);
+
+    SSP_EQPRESET preset;
+    SSP_ResetEQPreset(&preset);
+    preset.name = "Hello world";
+    preset.bands[0].gain = 4;
+    preset.bands[1].gain = 4;
+    preset.bands[2].gain = 4;
+    preset.bands[3].gain = 3;
+    preset.bands[4].gain = 2;
+    preset.bands[5].gain = 1;
+    preset.bands[6].gain = 0;
+    preset.bands[7].gain = 0;
+    preset.bands[8].gain = 4;
+    preset.bands[9].gain = 4;
+    preset.bands[10].gain = 3;
+    preset.bands[11].gain = 2;
+    preset.bands[12].gain = 1;
+    preset.bands[13].gain = 1;
+    preset.bands[14].gain = 0;
+    preset.bands[15].gain = 4;
+    preset.bands[16].gain = 4;
+    preset.bands[17].gain = 2;
+    SSP_SetEQPreset(&preset);
+    SSP_SetEQEnabled(true);
+    SSP_NormalizeEQ();
+    SSP_EQPRESET presetNormalized;
+    SSP_GetEQPreset(&presetNormalized);
+
     NSLog(@"Player initialization successful!");
 }
 

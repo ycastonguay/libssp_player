@@ -78,14 +78,9 @@ namespace org.sessionsapp.player
         public SSPEQPreset()
         {
             Struct.bands = new SSP_EQPRESETBAND[18];
-            Reset();
+            SSP.SSP_ResetEQPreset(ref Struct);
             EQPresetId = Guid.NewGuid();
             Name = "New preset";
-        }
-
-        public void Reset()
-        {
-            SSP.SSP_ResetEQPreset(ref Struct);
         }
     }
 }

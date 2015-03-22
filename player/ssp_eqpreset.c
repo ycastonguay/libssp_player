@@ -98,19 +98,20 @@ void eqpreset_reset(SSP_EQPRESET* preset) {
 };
 
 void eqpreset_normalize(SSP_EQPRESET* preset) {
-    float highestValue = -6;
+    const float lowestPossibleValue = -6;
+    float lowestValue = 6;
     float value = 0;
 
-    // Try to find the highest value in all bands
     int numberOfBands = sizeof(preset->bands) / sizeof(preset->bands[0]);
     for (int a = 0; a < numberOfBands; a++) {
         value = preset->bands[a].gain;
-        if (value > highestValue)
-            highestValue = value;
+        if (value < lowestValue)
+            lowestValue = value;
     }
 
     // Normalize bands
+    float diff = lowestPossibleValue - lowestValue;
     for (int b = 0; b < numberOfBands; b++) {
-        preset->bands[b].gain = preset->bands[b].gain - highestValue;
+        preset->bands[b].gain = preset->bands[b].gain + diff;
     }
 }
