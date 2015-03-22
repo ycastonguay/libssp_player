@@ -91,7 +91,7 @@ uint64_t player_getDataAvailable(SSP_PLAYER* player);
 SSP_ERROR player_createEQStage(SSP_PLAYER* player);
 SSP_ERROR player_removeEQStage(SSP_PLAYER* player);
 SSP_ERROR player_updateEQBand(SSP_PLAYER* player, int band, float gain);
-SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset);
+SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset, bool copyPreset);
 SSP_ERROR player_resetEQ(SSP_PLAYER* player);
 SSP_ERROR player_enableEQ(SSP_PLAYER* player, bool enabled);
 SSP_ERROR player_normalizeEQ(SSP_PLAYER* player);

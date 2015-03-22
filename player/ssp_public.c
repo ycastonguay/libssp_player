@@ -273,7 +273,7 @@ void SSP_GetEQPreset(SSP_EQPRESET* preset) {
 }
 
 SSP_ERROR SSP_SetEQPreset(SSP_EQPRESET* preset) {
-    return player_applyEQ(sspPlayer, preset);
+    return player_applyEQ(sspPlayer, preset, true);
 }
 
 SSP_ERROR SSP_SetEQPresetBand(int band, float gain) {

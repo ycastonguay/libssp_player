@@ -85,11 +85,18 @@ SSP_ERROR player_updateEQBand(SSP_PLAYER* player, int band, float gain) {
     return SSP_OK;
 }
 
-SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset) {
-    eqpreset_copy(player->eqPreset, eqpreset);
+SSP_ERROR player_applyEQ(SSP_PLAYER* player, SSP_EQPRESET* eqpreset, bool copyPreset) {
+    if(copyPreset) {
+        eqpreset_copy(player->eqPreset, eqpreset);
+    }
 
     // Do not apply the new preset to the EQ stage as it doesn't exist
     if(player->handles->eqFX == 0) {
+        return SSP_OK;
+    }
+
+    // Do not apply the new preset to the EQ stage if it is disabled
+    if(!player->playhead->isEQEnabled) {
         return SSP_OK;
     }
 
@@ -140,10 +147,11 @@ SSP_ERROR player_enableEQ(SSP_PLAYER* player, bool enabled) {
 
     player->playhead->isEQEnabled = enabled;
     if(enabled) {
-        error = player_applyEQ(player, player->eqPreset);
+        error = player_applyEQ(player, player->eqPreset, false);
     }
     else {
-        error = player_resetEQ(player);
+        SSP_EQPRESET* emptyPreset = eqpreset_create();
+        error = player_applyEQ(player, emptyPreset, false);
     }
 
     return error;
@@ -151,5 +159,5 @@ SSP_ERROR player_enableEQ(SSP_PLAYER* player, bool enabled) {
 
 SSP_ERROR player_normalizeEQ(SSP_PLAYER* player) {
     eqpreset_normalize(player->eqPreset);
-    return player_applyEQ(player, player->eqPreset);
+    return player_applyEQ(player, player->eqPreset, false);
 }

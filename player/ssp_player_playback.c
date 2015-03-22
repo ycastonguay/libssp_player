@@ -171,7 +171,7 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
     }
 
     if(player->playhead->isEQEnabled) {
-        error = player_applyEQ(player, player->eqPreset);
+        error = player_applyEQ(player, player->eqPreset, false);
         if (error != SSP_OK) {
             return error;
         }
