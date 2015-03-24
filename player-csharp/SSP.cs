@@ -184,9 +184,9 @@ namespace org.sessionsapp.player
 
         // Playlist
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_Playlist_AddItem([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath);
+        public static extern int SSP_Playlist_AddItem([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath, [MarshalAsAttribute(UnmanagedType.LPStr)] string audioFileId);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SSP_Playlist_InsertItemAt([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath, int index);
+        public static extern int SSP_Playlist_InsertItemAt([MarshalAsAttribute(UnmanagedType.LPStr)] string filePath, [MarshalAsAttribute(UnmanagedType.LPStr)] string audioFileId, int index);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_Playlist_RemoveItemAt(int index);
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
@@ -369,6 +369,7 @@ namespace org.sessionsapp.player
     {
         public bool isLoaded;
         public IntPtr filePath;
+        public IntPtr audioFileId;
         public int id;
         public int sampleRate;
         public int numberOfChannels;

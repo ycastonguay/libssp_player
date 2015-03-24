@@ -47,6 +47,12 @@ namespace org.sessionsapp.player
             set { Struct.filePath = Marshal.StringToHGlobalAnsi(value); }
         }
 
+        public string AudioFileId
+        {
+            get { return Marshal.PtrToStringAnsi(Struct.audioFileId); }
+            set { Struct.audioFileId = Marshal.StringToHGlobalAnsi(value); }
+        }
+
         public bool IsLoaded
         {
             get { return Struct.isLoaded; }

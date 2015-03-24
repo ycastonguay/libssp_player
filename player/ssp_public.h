@@ -23,7 +23,7 @@
 #include "ssp_structs.h"
 #include "ssp_errors.h"
 
-#define SSP_VERSION 22
+#define SSP_VERSION 23
 
 #ifdef _WIN32
 #    ifdef LIBRARY_EXPORTS
@@ -85,7 +85,7 @@ LIBRARY_API SSP_ERROR SSP_Stop();
 LIBRARY_API SSP_ERROR SSP_Previous();
 LIBRARY_API SSP_ERROR SSP_Next();
 LIBRARY_API SSP_ERROR SSP_GoTo(int index);
-//void SSP_GoTo(int playlistItemId); // how do we manage ids?
+//LIBRARY_API SSP_ERROR SSP_GoToPlaylistItemId(int id);
 
 // Playhead
 LIBRARY_API bool SSP_GetIsShuffle();
@@ -126,8 +126,8 @@ LIBRARY_API SSP_ERROR SSP_StartCast(SSP_CAST_SERVER* server);
 LIBRARY_API SSP_ERROR SSP_StopCast();
 
 // Playlist
-LIBRARY_API SSP_ERROR SSP_Playlist_AddItem(char* filePath);
-LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index);
+LIBRARY_API SSP_ERROR SSP_Playlist_AddItem(char* filePath, char* audioFileId);
+LIBRARY_API SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, char* audioFileId, int index);
 LIBRARY_API SSP_ERROR SSP_Playlist_RemoveItemAt(int index);
 LIBRARY_API SSP_ERROR SSP_Playlist_Clear();
 LIBRARY_API void SSP_Playlist_GetItemAt(int index, SSP_PLAYLISTITEM* item);

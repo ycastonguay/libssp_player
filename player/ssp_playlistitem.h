@@ -27,6 +27,5 @@ void playlistitem_free(SSP_PLAYLISTITEM *item);
 void playlistitem_reset(SSP_PLAYLISTITEM *item);
 void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest);
 SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint);
-SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item);
 
 #endif /* defined(__player__ssp_playlistitem__) */

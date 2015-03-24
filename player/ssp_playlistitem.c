@@ -46,10 +46,11 @@ void playlistitem_reset(SSP_PLAYLISTITEM *item) {
     item->bitsPerSample = 0;
     item->sampleRate = 0;
     item->filePath = NULL;
+	item->audioFileId = NULL;
 }
 
 void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
-    // TODO: Is there a better way? memcpy?
+	itemDest->id = itemSrc->id;
     itemDest->isLoaded = itemSrc->isLoaded;
     itemDest->channel = itemSrc->channel;
     itemDest->length = itemSrc->length;
@@ -57,6 +58,7 @@ void playlistitem_copy(SSP_PLAYLISTITEM *itemSrc, SSP_PLAYLISTITEM *itemDest) {
     itemDest->bitsPerSample = itemSrc->bitsPerSample;
     itemDest->sampleRate = itemSrc->sampleRate;
     itemDest->filePath = copystr((char *) itemDest->filePath, itemSrc->filePath);
+	itemDest->audioFileId = copystr((char *)itemDest->audioFileId, itemSrc->audioFileId);
 }
 
 SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
@@ -67,13 +69,15 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     }
 
     BASS_CHANNELINFO info;
-    BASS_ChannelGetInfo(item->channel, &info);
+    bool success = BASS_ChannelGetInfo(item->channel, &info);
+	if (!success) {
+		return SSP_ERROR_FAILEDTOGETCHANNELINFO;
+	}
 
     item->sampleRate = info.freq;
     item->numberOfChannels = info.chans;
-    item->bitsPerSample = 16; // TODO: Fill this correctly, I can't find a method in BASS for this...
+	item->bitsPerSample = info.origres;
     item->isLoaded = true;
-
     item->length = BASS_ChannelGetLength(item->channel, BASS_POS_BYTE);
     if(item->length == -1) {
         return SSP_ERROR_FAILEDTOGETLENGTH;
@@ -84,19 +88,3 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
     return SSP_OK;
 }
 
-SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist) {
-    SSP_ERROR error;
-    if(playlist->items != NULL) {
-        for(int a = 0; a < playlist_getCount(playlist); a++) {
-            SSP_PLAYLISTITEM *item = playlist_getItemAt(playlist, a);
-            if(item->isLoaded) {
-                error = playlistitem_disposeChannel(item);
-                if (error != SSP_OK) {
-                    return error;
-                }
-            }
-        }
-    }
-
-    return SSP_OK;
-}

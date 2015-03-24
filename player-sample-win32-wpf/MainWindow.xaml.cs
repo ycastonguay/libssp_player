@@ -176,7 +176,7 @@ namespace player_sample_win32_wpf
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            CheckForError(SSP.SSP_Previous());
+            CheckForError(SSP.SSP_Next());
         }
     }
 }

@@ -224,12 +224,12 @@ SSP_ERROR SSP_GoTo(int index) {
 
 #pragma mark Playlist
 
-SSP_ERROR SSP_Playlist_AddItem(char* filePath) {
-    return playlist_addItem(sspPlayer->playlist, filePath);
+SSP_ERROR SSP_Playlist_AddItem(char* filePath, char* audioFileId) {
+    return playlist_addItem(sspPlayer->playlist, filePath, audioFileId);
 }
 
-SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, int index) {
-    return playlist_insertItemAt(sspPlayer->playlist, filePath, index);
+SSP_ERROR SSP_Playlist_InsertItemAt(char* filePath, char* audioFileId, int index) {
+    return playlist_insertItemAt(sspPlayer->playlist, filePath, audioFileId, index);
 }
 
 SSP_ERROR SSP_Playlist_RemoveItemAt(int index) {

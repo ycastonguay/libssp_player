@@ -83,20 +83,21 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
     return SSP_OK;
 }
 
-SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath) {
+SSP_ERROR playlist_addItem(SSP_PLAYLIST *playlist, char *filePath, char* audioFileId) {
     SSP_PLAYLISTITEM *item = playlistitem_create();
 	item->id = playlist->nextId++;
     item->filePath = copystr((char *) item->filePath, filePath);
+	item->audioFileId = copystr((char *)item->audioFileId, audioFileId);
     vector_add(playlist->items, item);
 
     return SSP_OK;
 }
 
-SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, int index) {
+SSP_ERROR playlist_insertItemAt(SSP_PLAYLIST *playlist, char* filePath, char* audioFileId, int index) {
     SSP_PLAYLISTITEM *item = playlistitem_create();
-    item->filePath = malloc(strlen(filePath));
 	item->id = playlist->nextId++;
     item->filePath = copystr((char *) item->filePath, filePath);
+	item->audioFileId = copystr((char *)item->audioFileId, audioFileId);
     vector_insert(playlist->items, index, item);
 
     return SSP_OK;
@@ -164,5 +165,22 @@ int playlist_getIndexFromId(SSP_PLAYLIST *playlist, int id) {
 
 int playlist_getCount(SSP_PLAYLIST *playlist) {
     return vector_total(playlist->items);
+}
+
+SSP_ERROR playlist_disposeChannels(SSP_PLAYLIST *playlist) {
+	SSP_ERROR error;
+	if (playlist->items != NULL) {
+		for (int a = 0; a < playlist_getCount(playlist); a++) {
+			SSP_PLAYLISTITEM *item = playlist_getItemAt(playlist, a);
+			if (item->isLoaded) {
+				error = playlistitem_disposeChannel(item);
+				if (error != SSP_OK) {
+					return error;
+				}
+			}
+		}
+	}
+
+	return SSP_OK;
 }
 

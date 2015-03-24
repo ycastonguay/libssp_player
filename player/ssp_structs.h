@@ -73,6 +73,7 @@ typedef struct {
 typedef struct {
     bool isLoaded;
     const char* filePath;
+	const char* audioFileId;
 	int id;
     int sampleRate;
     int numberOfChannels;
