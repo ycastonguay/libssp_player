@@ -69,6 +69,16 @@ SSP_ERROR SSP_Free() {
     return SSP_OK;
 }
 
+#pragma mark Performance
+
+float SSP_GetCPU() {
+    return BASS_GetCPU();
+}
+
+uint32_t SSP_GetBufferDataAvailable() {
+    return BASS_ChannelGetData(sspPlayer->handles->mixerChannel, NULL, BASS_DATA_AVAILABLE);
+}
+
 #pragma mark iOS
 
 void player_ios_notifyProc(DWORD status) {

@@ -84,7 +84,7 @@ int bass_createMemoryStream(int frequency, int numberOfChannels, bool useFloatin
 int bass_createDecodeStream(char* filePath, bool useFloatingPoint) {
     QWORD offset = 0;
     QWORD length = 0;
-    DWORD flags = BASS_STREAM_DECODE | BASS_STREAM_PRESCAN;
+    DWORD flags = BASS_STREAM_DECODE | BASS_STREAM_PRESCAN | BASS_ASYNCFILE;
     if(useFloatingPoint) {
         flags |= BASS_SAMPLE_FLOAT;
     }

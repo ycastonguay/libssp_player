@@ -47,6 +47,12 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern SSPPlayerState SSP_GetState();
 
+        // Performance
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern float SSP_GetCPU();
+        [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        public static extern UInt32 SSP_GetBufferDataAvailable();
+
         // iOS-only
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_IOS_ConfigureAirPlay(bool enable);

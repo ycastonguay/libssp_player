@@ -74,8 +74,11 @@ namespace playersampleosxxamarin
             var position = new SSPPosition();
             SSP.SSP_GetPosition(ref position.Struct);
 
+            float cpu = SSP.SSP_GetCPU();
+            UInt32 bufferDataAvailable = SSP.SSP_GetBufferDataAvailable();
+
             InvokeOnMainThread(() => {
-                lblPosition.StringValue = string.Format("Position: {0}", position.Str);
+                lblPosition.StringValue = string.Format("Position: {0} - CPU: {1:0.0} - Buffer: {2}", position.Str, cpu, bufferDataAvailable);
             });
         }
 

@@ -152,7 +152,11 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
 - (void)timerRefreshPositionElapsed {
     SSP_POSITION pos;
     SSP_GetPosition(&pos);
-    self.lblPosition.stringValue = [NSString stringWithFormat:@"Position: %s", pos.str];
+
+    float cpu = SSP_GetCPU();
+    uint32_t bufferDataAvailable = SSP_GetBufferDataAvailable();
+
+    self.lblPosition.stringValue = [NSString stringWithFormat:@"Position: %s - CPU: %f - buffer: %d", pos.str, cpu, bufferDataAvailable];
 }
 
 - (void)setRepresentedObject:(id)representedObject {

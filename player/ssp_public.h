@@ -46,6 +46,10 @@ LIBRARY_API SSP_ERROR SSP_InitDevice(int deviceId, int sampleRate, int bufferSiz
 LIBRARY_API SSP_ERROR SSP_FreeDevice();
 LIBRARY_API SSP_ERROR SSP_Free();
 
+// Performance
+LIBRARY_API float SSP_GetCPU();
+LIBRARY_API uint32_t SSP_GetBufferDataAvailable();
+
 // iOS-only
 LIBRARY_API SSP_ERROR SSP_IOS_ConfigureAirPlay(bool enable);
 LIBRARY_API SSP_ERROR SSP_IOS_ConfigureAudioInterruptionNotification(bool enable);
