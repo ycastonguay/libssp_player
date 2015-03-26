@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
-#include <string.h>
 #include "../bass/bass.h"
 #include "ssp_errors.h"
 #include "ssp_structs.h"
@@ -74,9 +73,9 @@ SSP_ERROR playlistitem_load(SSP_PLAYLISTITEM *item, bool useFloatingPoint) {
 		return SSP_ERROR_FAILEDTOGETCHANNELINFO;
 	}
 
-    item->sampleRate = info.freq;
-    item->numberOfChannels = info.chans;
-	item->bitsPerSample = info.origres;
+    item->sampleRate = info.freq >= 44100 && info.freq <= 96000 ? info.freq : 44100;
+    item->numberOfChannels = info.chans >= 1 && info.chans <= 2 ? info.chans : 2;
+	item->bitsPerSample = info.origres == 16 || info.origres == 24 ? info.origres : 16; // sometimes BASS cannot detect origres correctly on OSX.
     item->isLoaded = true;
     item->length = BASS_ChannelGetLength(item->channel, BASS_POS_BYTE);
     if(item->length == -1) {

@@ -201,7 +201,7 @@ namespace playersampleosxxamarin
 
             foreach(var url in panel.Urls)
             {
-                SSP.SSP_Playlist_AddItem(url.Path);
+                SSP.SSP_Playlist_AddItem(url.Path, string.Empty);
             }
         }
 

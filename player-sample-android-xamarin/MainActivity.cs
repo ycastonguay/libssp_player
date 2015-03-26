@@ -153,7 +153,7 @@ namespace playersampleandroidxamarin
             foreach (string file in files)
             {
                 Console.WriteLine("File: {0}", file);
-                SSP.SSP_Playlist_AddItem(file);
+                SSP.SSP_Playlist_AddItem(file, string.Empty);
             }
         }
 

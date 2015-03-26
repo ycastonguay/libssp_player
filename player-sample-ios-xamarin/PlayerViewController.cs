@@ -164,7 +164,7 @@ namespace playersampleiosxamarin
             foreach (string file in Directory.EnumerateFiles(documents, "*.*", SearchOption.AllDirectories)
                 .Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
             {
-                SSP.SSP_Playlist_AddItem(file);
+                SSP.SSP_Playlist_AddItem(file, string.Empty);
             }
 
             SSP.SSP_Play();

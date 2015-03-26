@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "../vector/vector.h"
 #include "ssp_playerhandles.h"
+#include "ssp_privatestructs.h"
 
 SSP_PLAYER_HANDLES *playerHandles_create() {
     SSP_PLAYER_HANDLES *handles = malloc(sizeof(SSP_PLAYER_HANDLES));
@@ -42,10 +43,13 @@ void playerHandles_reset(SSP_PLAYER_HANDLES *handles) {
     handles->fxChannel = 0;
     handles->mixerChannel = 0;
 
+    handles->aacPlugin = 0;
     handles->apePlugin = 0;
+    handles->alacPlugin = 0;
     handles->flacPlugin = 0;
     handles->mpcPlugin = 0;
     handles->ttaPlugin = 0;
+    handles->wmaPlugin = 0;
     handles->wvPlugin = 0;
 
     handles->eqFX = 0;

@@ -183,7 +183,7 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
     if([panel runModal] == NSModalResponseOK) {
         for(int a = 0; a < panel.URLs.count; a++) {
             NSURL *url = [panel.URLs objectAtIndex:a];
-            error = SSP_Playlist_AddItem((char *)[url.path UTF8String]);
+            error = SSP_Playlist_AddItem((char *)[url.path UTF8String], "");
             [self checkForError:error str:@"SSP_Playlist_AddItem"];
         }
     }

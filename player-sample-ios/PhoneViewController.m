@@ -110,7 +110,7 @@ void stateChangedCallback(void *user, ssp_player_state_t state) {
         NSString *filePathWithDirectory = [NSString stringWithFormat:@"%@/%@", documentsDirectory, filePath];
         NSLog(@"filePath: %@", filePathWithDirectory);
         const char* str = [filePathWithDirectory UTF8String];
-        SSP_Playlist_AddItem((char *)str);
+        SSP_Playlist_AddItem((char *)str, "");
     }
 }
 

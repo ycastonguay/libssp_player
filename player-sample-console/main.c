@@ -72,10 +72,10 @@ int initializePlayer() {
     SSP_GetDevice(&device2);
 
     printf("Adding items to playlist...\n");
-    //SSP_Playlist_AddItem("/Users/usr/Documents/mp3/1.mp3");
-    //SSP_Playlist_AddItem("/Users/usr/Documents/mp3/2.mp3");
-    SSP_Playlist_AddItem("/media/Music/Jaga Jazzist/One-Armed Bandit/01 The Thing Introduces.mp3");
-    SSP_Playlist_AddItem("/media/Music/Jaga Jazzist/One-Armed Bandit/02 One-Armed Bandit.mp3");
+//    SSP_Playlist_AddItem("/media/Music/Jaga Jazzist/One-Armed Bandit/01 The Thing Introduces.mp3");
+//    SSP_Playlist_AddItem("/media/Music/Jaga Jazzist/One-Armed Bandit/02 One-Armed Bandit.mp3");
+    SSP_Playlist_AddItem("/Users/usr/Music/Jaga Jazzist/One-Armed Bandit/01 The Thing Introduces.mp3", "");
+    SSP_Playlist_AddItem("/Users/usr/Music/Jaga Jazzist/One-Armed Bandit/02 One-Armed Bandit.mp3", "");
 
     printf("Starting playback...\n");
     error = SSP_Play();
