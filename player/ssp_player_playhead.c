@@ -65,10 +65,10 @@ float player_getVolume(SSP_PLAYER* player) {
 SSP_ERROR player_setVolume(SSP_PLAYER* player, float volume) {
     player->playhead->volume = volume;
     // TODO: Should we keep this in SSP_PLAYHEAD when the value is found in BASS?
-    bool success = BASS_ChannelGetAttribute(player->handles->mixerChannel, BASS_ATTRIB_VOL, &volume);
+	bool success = BASS_ChannelSetAttribute(player->handles->mixerChannel, BASS_ATTRIB_VOL, volume);
     if(!success) {
         bass_getError("player_setVolume");
-        return SSP_ERROR_PLAYHEAD_FAILEDTOSETVOLUME;
+        return SSP_ERROR_FAILEDTOSETVOLUME;
     }
 
     return SSP_OK;
@@ -89,7 +89,7 @@ SSP_ERROR player_setTimeShifting(SSP_PLAYER* player, float timeShifting) {
     bool success = BASS_ChannelSetAttribute(player->handles->fxChannel, BASS_ATTRIB_TEMPO, timeShifting);
     if(!success) {
         bass_getError("player_setTimeShifting");
-        return SSP_ERROR_PLAYHEAD_FAILEDTOSETTIMESHIFTING;
+        return SSP_ERROR_FAILEDTOSETTIMESHIFTING;
     }
 
     error = player_addBPMCallbacks(player);
@@ -115,7 +115,7 @@ SSP_ERROR player_setPitchShifting(SSP_PLAYER* player, int pitchShifting) {
     bool success = BASS_ChannelSetAttribute(player->handles->fxChannel, BASS_ATTRIB_TEMPO_PITCH, pitchShifting);
     if(!success) {
         bass_getError("player_setPitchShifting");
-        return SSP_ERROR_PLAYHEAD_FAILEDTOSETPITCHSHIFTING;
+        return SSP_ERROR_FAILEDTOSETPITCHSHIFTING;
     }
 
     error = player_addBPMCallbacks(player);

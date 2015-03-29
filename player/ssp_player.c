@@ -190,7 +190,7 @@ SSP_ERROR player_setBufferSize(SSP_PLAYER* player, int bufferSize) {
     bool success = BASS_SetConfig(BASS_CONFIG_BUFFER, bufferSize);
     if(!success) {
         bass_getError("BASS_SetConfig");
-        return SSP_ERROR_PLAYHEAD_FAILEDTOSETBUFFERSIZE;
+        return SSP_ERROR_FAILEDTOSETBUFFERSIZE;
     }
 
     return SSP_OK;
@@ -206,7 +206,7 @@ SSP_ERROR player_setUpdatePeriod(SSP_PLAYER* player, int updatePeriod) {
     bool success = BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, updatePeriod);
     if(!success) {
         bass_getError("BASS_SetConfig");
-        return SSP_ERROR_PLAYHEAD_FAILEDTOSETUPDATEPERIOD;
+        return SSP_ERROR_FAILEDTOSETUPDATEPERIOD;
     }
 
     return SSP_OK;

@@ -29,7 +29,7 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
         bool success = BASS_Pause();
         if(!success) {
             bass_getError("BASS_Pause");
-            return SSP_ERROR_PLAYBACK_PAUSE_FAILEDTOPAUSE;
+            return SSP_ERROR_FAILEDTOPAUSE;
         }
         player_updateState(player, SSP_PLAYER_STATE_PAUSED);
     }
@@ -37,7 +37,7 @@ SSP_ERROR player_pause(SSP_PLAYER* player) {
         bool success = BASS_Start();
         if(!success) {
             bass_getError("BASS_Start");
-            return SSP_ERROR_PLAYBACK_PAUSE_FAILEDTOSTART;
+            return SSP_ERROR_FAILEDTOSTART;
         }
         player_setPosition(player, player->playhead->positionAfterUnpause);
         player_updateState(player, SSP_PLAYER_STATE_PLAYING);
@@ -59,32 +59,32 @@ SSP_ERROR player_stop(SSP_PLAYER* player) {
 
     bool success = BASS_ChannelStop(player->handles->mixerChannel);
     if(!success) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOSTOPCHANNEL;
+        return SSP_ERROR_FAILEDTOSTOPCHANNEL;
     }
 
     success = BASS_Stop();
     if(!success) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOSTOPCHANNEL;
+        return SSP_ERROR_FAILEDTOSTOPCHANNEL;
     }
 
     error = player_removeSyncCallbacks(player);
     if(error != SSP_OK) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVESYNCCALLBACKS;
+        return SSP_ERROR_FAILEDTOREMOVESYNCCALLBACKS;
     }
 
     error = player_removeBPMCallbacks(player);
     if(error != SSP_OK) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOREMOVEBPMCALLBACKS;
+        return SSP_ERROR_FAILEDTOREMOVEBPMCALLBACKS;
     }
 
     success = BASS_StreamFree(player->handles->fxChannel);
     if(!success) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTOFREESTREAM;
+        return SSP_ERROR_FAILEDTOFREESTREAM;
     }
 
     error = playlist_disposeChannels(player->playlist);
     if(error != SSP_OK) {
-        return SSP_ERROR_PLAYBACK_STOP_FAILEDTODISPOSECHANNELS;
+        return SSP_ERROR_FAILEDTODISPOSECHANNELS;
     }
 
     player->loop = NULL;
@@ -121,7 +121,7 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
 
     if(channelsToLoad == 0) {
         log_text("player_play - ERROR: There are no channels to play!\n");
-        return SSP_ERROR_PLAYBACK_PLAY_NOCHANNELSTOPLAY;
+        return SSP_ERROR_NOCHANNELSTOPLAY;
     }
 
     SSP_PLAYLISTITEM* firstItem = playlist_getItemAt(player->playlist, startIndex);
@@ -138,24 +138,24 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
     player->handles->streamProc = (STREAMPROC*)player_streamProc;
     player->handles->streamChannel = bass_createMemoryStream(firstItem->sampleRate, 2, player->mixer->useFloatingPoint, player->handles->streamProc, player);
     if(player->handles->streamChannel == 0) {
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEMEMORYSTREAM;
+        return SSP_ERROR_FAILEDTOCREATEMEMORYSTREAM;
     }
 
     // FX channel is for pitch and time shifting
     player->handles->fxChannel = bass_createStreamForTimeShifting(player->handles->streamChannel, true, player->mixer->useFloatingPoint);
     if(player->handles->fxChannel == 0) {
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEFXCHANNEL;
+        return SSP_ERROR_FAILEDTOCREATEFXCHANNEL;
     }
 
     player->handles->mixerChannel = bass_createMixerStream(player->mixer->sampleRate, 2, false, player->mixer->useFloatingPoint);
     if(player->handles->mixerChannel == 0) {
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOCREATEMIXERCHANNEL;
+        return SSP_ERROR_FAILEDTOCREATEMIXERCHANNEL;
     }
 
     bool success = BASS_Mixer_StreamAddChannel(player->handles->mixerChannel, player->handles->fxChannel, BASS_MIXER_BUFFER);
     if(!success) {
         bass_getError("BASS_Mixer_StreamAddChannel");
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOADDSTREAMTOMIXER;
+        return SSP_ERROR_FAILEDTOADDSTREAMTOMIXER;
     }
 
     error = player_addBPMCallbacks(player);
@@ -181,7 +181,7 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
         int result = BASS_ChannelFlags(firstItem->channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
         if (result == -1) {
             bass_getError("BASS_ChannelFlags");
-            return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSETREPEATTYPE;
+            return SSP_ERROR_FAILEDTOSETREPEATTYPE;
         }
     }
 
@@ -191,19 +191,19 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
     SSP_PLAYLISTITEM* currentItem = playlist_getCurrentItem(player->playlist);
     error = player_setSyncCallback(player, currentItem->length);
     if(error != SSP_OK) {
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSETSYNCCALLBACK;
+        return SSP_ERROR_FAILEDTOSETSYNCCALLBACK;
     }
 
     success = BASS_Start();
     if(!success) {
         bass_getError("BASS_Start");
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSTART;
+        return SSP_ERROR_FAILEDTOSTART;
     }
 
     success = BASS_ChannelPlay(player->handles->mixerChannel, false);
     if(!success) {
         bass_getError("BASS_ChannelPlay");
-        return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOPLAYCHANNEL;
+        return SSP_ERROR_FAILEDTOPLAYCHANNEL;
     }
 
     if (startPaused) {
@@ -217,7 +217,7 @@ SSP_ERROR player_playWithOptions(SSP_PLAYER* player, int startIndex, uint64_t st
         success = BASS_Pause();
         if(!success) {
             bass_getError("BASS_Pause");
-            return SSP_ERROR_PLAYBACK_PLAY_FAILEDTOSTARTPAUSED;
+            return SSP_ERROR_FAILEDTOSTARTPAUSED;
         }
     }
 

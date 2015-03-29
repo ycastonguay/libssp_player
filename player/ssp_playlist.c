@@ -65,13 +65,13 @@ SSP_ERROR playlistitem_disposeChannel(SSP_PLAYLISTITEM *item) {
     bool success = BASS_ChannelStop(item->channel);
     if(!success) {
         bass_getError("BASS_ChannelStop");
-        return SSP_ERROR_PLAYLISTITEM_DISPOSE_FAILEDTOSTOPCHANNEL;
+        return SSP_ERROR_FAILEDTOSTOPCHANNEL;
     }
 
     success = BASS_StreamFree(item->channel);
     if(!success) {
         bass_getError("BASS_StreamFree");
-        return SSP_ERROR_PLAYLISTITEM_DISPOSE_FAILEDTOFREESTREAM;
+        return SSP_ERROR_FAILEDTOFREESTREAM;
     }
 
     item->isLoaded = false;

@@ -117,7 +117,7 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     success = BASS_ChannelLock(player->handles->mixerChannel, true);
     if(!success) {
         bass_getError("BASS_ChannelLock");
-        return SSP_ERROR_SETPOSITION_FAILEDTOLOCKCHANNEL;
+        return SSP_ERROR_FAILEDTOLOCKCHANNEL;
     }
 
     player->playhead->isSettingPosition = true;
@@ -129,31 +129,31 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
     success = BASS_ChannelStop(player->handles->mixerChannel);
     if(!success) {
         bass_getError("BASS_ChannelStop");
-        return SSP_ERROR_SETPOSITION_FAILEDTOSTOPCHANNEL;
+        return SSP_ERROR_FAILEDTOSTOPCHANNEL;
     }
 
     // Flush buffer
     success = BASS_ChannelSetPosition(currentItem->channel, 0, BASS_POS_BYTE);
     if(!success) {
         bass_getError("BASS_ChannelSetPosition (currentItem->channel)");
-        return SSP_ERROR_SETPOSITION_FAILEDTOFLUSHBUFFER;
+        return SSP_ERROR_FAILEDTOFLUSHBUFFER;
     }
     success = BASS_ChannelSetPosition(player->handles->fxChannel, 0, BASS_POS_BYTE);
     if(!success) {
         bass_getError("BASS_ChannelSetPosition (fxChannel)");
-        return SSP_ERROR_SETPOSITION_FAILEDTOFLUSHBUFFER;
+        return SSP_ERROR_FAILEDTOFLUSHBUFFER;
     }
     success = BASS_ChannelSetPosition(player->handles->mixerChannel, 0, BASS_POS_BYTE);
     if(!success) {
         bass_getError("BASS_ChannelSetPosition (mixerChannel)");
-        return SSP_ERROR_SETPOSITION_FAILEDTOFLUSHBUFFER;
+        return SSP_ERROR_FAILEDTOFLUSHBUFFER;
     }
 
     // Set position for decode channel
     success = BASS_ChannelSetPosition(currentItem->channel, position, BASS_POS_BYTE);
     if(!success) {
         bass_getError("BASS_ChannelSetPosition (currentItem->channel)");
-        return SSP_ERROR_SETPOSITION_FAILEDTOSETPOSITION;
+        return SSP_ERROR_FAILEDTOSETPOSITION;
     }
 
     uint64_t bytesSync = currentItem->length - position;
@@ -166,14 +166,14 @@ SSP_ERROR player_setPosition(SSP_PLAYER* player, uint64_t position) {
         success = BASS_ChannelPlay(player->handles->mixerChannel, false);
         if(!success) {
             bass_getError("BASS_ChannelPlay");
-            return SSP_ERROR_SETPOSITION_FAILEDTOPLAYCHANNEL;
+            return SSP_ERROR_FAILEDTOPLAYCHANNEL;
         }
     }
 
     success = BASS_ChannelLock(player->handles->mixerChannel, false);
     if(!success) {
         bass_getError("BASS_ChannelLock");
-        return SSP_ERROR_SETPOSITION_FAILEDTOLOCKCHANNEL;
+        return SSP_ERROR_FAILEDTOLOCKCHANNEL;
     }
 
     player->playhead->isSettingPosition = false;

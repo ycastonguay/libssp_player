@@ -72,4 +72,10 @@ namespace org.sessionsapp.player
             Length = "0:00.000";
         }
     }
+
+    public enum SSPLoopSegmentType
+    {
+        Start = 0,
+        End = 1
+    }
 }
