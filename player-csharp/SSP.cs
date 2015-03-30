@@ -82,6 +82,7 @@ namespace org.sessionsapp.player
         public static extern int SSP_ResetEQPreset(ref SSP_EQPRESET preset);
 
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SSP_GetEQEnabled();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetEQEnabled(bool enabled);
@@ -119,6 +120,7 @@ namespace org.sessionsapp.player
 
         // Playhead
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SSP_GetIsShuffle();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_SetIsShuffle(bool shuffle);
@@ -146,8 +148,10 @@ namespace org.sessionsapp.player
         public static extern int SSP_SetPitchShifting(int pitchShifting);
 
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SSP_GetIsSettingPosition();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SSP_GetIsPlayingLoop();
 
         // Position
@@ -186,6 +190,7 @@ namespace org.sessionsapp.player
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SSP_GetOutputDeviceCount();
         [DllImport(DllImportValue, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SSP_GetOutputDevice(int index, ref SSP_DEVICE device);
 
         // Playlist
