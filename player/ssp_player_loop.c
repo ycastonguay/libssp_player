@@ -102,7 +102,7 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
 
     // Skip to the start position of the loop
     if(skipToStartPosition) {
-        success = BASS_ChannelSetPosition(currentItem->channel, startPosition * 2, BASS_POS_BYTE);
+        success = BASS_ChannelSetPosition(currentItem->channel, startPosition, BASS_POS_BYTE);
         if(!success) {
             bass_getError("BASS_ChannelSetPosition");
             return SSP_ERROR_FAILEDTOSETPOSITION;
@@ -123,7 +123,7 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
     }
 
     // Create a new sync call back for the loop end position
-    uint64_t syncPosition = (endPosition - startPosition) * 2;
+    uint64_t syncPosition = (endPosition - startPosition);
 
     player->handles->syncProcLoop = BASS_ChannelSetSync(player->handles->fxChannel, BASS_SYNC_POS | BASS_SYNC_MIXTIME, syncPosition, player_loopSyncProc, player);
     if(player->handles->syncProcLoop == 0) {
@@ -132,7 +132,7 @@ SSP_ERROR player_setLoopSyncPoint(SSP_PLAYER* player, uint64_t startPosition, ui
     }
 
     // Create a new sync call back for the song end position
-    uint64_t syncPositionEnd = (currentItem->length - (endPosition * 2)); // + buffered);
+    uint64_t syncPositionEnd = (currentItem->length - (endPosition)); // + buffered);
     error = player_setSyncCallback(player, syncPositionEnd);
     if(error != SSP_OK) {
         return error;
